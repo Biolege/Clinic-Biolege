@@ -14,8 +14,7 @@ class EmailViewModel extends BaseViewModel {
   final emailFormKey = GlobalKey<FormState>();
   String logo = "asset/images/logo.png";
 
-  void navigateToGenderDOBView() async {
-    await _authenticationService.signOut();
-    // _navigatorService.navigateTo(Routes.genderScreenView);
+  void navigateToGenderDOBView() {
+    _navigatorService.navigateTo(Routes.genderScreenView);
   }
 }

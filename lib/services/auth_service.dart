@@ -1,9 +1,8 @@
-import 'package:clinicapp/app/locator.dart';
-import 'package:clinicapp/app/router.gr.dart';
-import 'package:clinicapp/widgets/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stacked_services/stacked_services.dart';
-
+import '../app/locator.dart';
+import '../app/router.gr.dart';
+import '../widgets/dialog.dart';
 import 'errors/errors.dart';
 
 class AuthenticationService {

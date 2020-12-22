@@ -1,13 +1,11 @@
-import 'dart:async';
-import 'package:sms_autofill/sms_autofill.dart';
-
-import '../../../app/router.gr.dart';
-import '../../../services/auth_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'dart:async';
+import '../../../app/router.gr.dart';
+import '../../../services/auth_service.dart';
 import '../../../app/locator.dart';
 
 class OTPScreenViewModel extends BaseViewModel {
@@ -18,11 +16,10 @@ class OTPScreenViewModel extends BaseViewModel {
       locator<AuthenticationService>();
   // __________________________________________________________________________
   // Variables Initialisation
-  var onTapRecognizer;
+  dynamic onTapRecognizer;
   bool _hasError = false;
   String _currentText = "";
   int _otpCounter = 30;
-  int _otpRequestCount = 0;
   String _enteredPhoneNumber;
   // __________________________________________________________________________
   // Controllers
@@ -82,6 +79,7 @@ class OTPScreenViewModel extends BaseViewModel {
     });
   }
 
+  // __________________________________________________________________________
   @override
   void dispose() {
     errorController.close();

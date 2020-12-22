@@ -1,7 +1,5 @@
-import 'package:clinicapp/app/size_configuration.dart';
 import 'package:clinicapp/widgets/dialog.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'screens/splashScreen/splashScreenView.dart';
 import 'theme/theme.dart';
 import 'package:stacked_services/stacked_services.dart';
