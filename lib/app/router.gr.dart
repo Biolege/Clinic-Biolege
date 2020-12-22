@@ -22,6 +22,7 @@ import '../screens/homeScreens/doctorsListTabScreens/doctorsListScreen/doctorLis
 import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../screens/homeScreens/homeScreenView.dart';
 import '../screens/homeScreens/patientDetailsScreen/patientDetailsScreenView.dart';
+import '../screens/onBoardingScreen/onBoardingScreenView.dart';
 import '../screens/profileScreens/addressScreen/addressScreenView.dart';
 import '../screens/profileScreens/createSearchClinic/clinicDescriptionScreen/enterClinicDescriptionScreenView.dart';
 import '../screens/profileScreens/createSearchClinic/createClinicScreen/createClinicScreenView.dart';
@@ -36,6 +37,7 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
 import '../screens/welcomeScreen/welcomeScreenView.dart';
 
 class Routes {
+  static const String onBoardingScreen = '/onBoardingScreen';
   static const String phoneScreenView = '/phoneScreenView';
   static const String oTPScreenView = '/otpScreenView';
   static const String nameScreenView = '/nameScreenView';
@@ -69,6 +71,7 @@ class Routes {
   static const String doctorsListScreenView = '/doctorsListScreenView';
   static const String doctorsProfileScreenView = '/doctorsProfileScreenView';
   static const all = <String>{
+    onBoardingScreen,
     phoneScreenView,
     oTPScreenView,
     nameScreenView,
@@ -101,6 +104,7 @@ class Router extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
+    RouteDef(Routes.onBoardingScreen, page: OnBoardingScreen),
     RouteDef(Routes.phoneScreenView, page: PhoneScreenView),
     RouteDef(Routes.oTPScreenView, page: OTPScreenView),
     RouteDef(Routes.nameScreenView, page: NameScreenView),
@@ -137,6 +141,12 @@ class Router extends RouterBase {
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
+    OnBoardingScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OnBoardingScreen(),
+        settings: data,
+      );
+    },
     PhoneScreenView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => PhoneScreenView(),

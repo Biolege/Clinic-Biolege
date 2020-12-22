@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'addressScreenViewModel.dart';
@@ -81,7 +82,8 @@ class AddressScreenView extends StatelessWidget {
                               0.9,
                               TextFormField(
                                 maxLength: 40,
-                                maxLengthEnforced: true,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
                                 keyboardType: TextInputType.text,
                                 decoration: buildInputDecoration(
                                     "State",
@@ -109,7 +111,8 @@ class AddressScreenView extends StatelessWidget {
                               1.2,
                               TextFormField(
                                 maxLength: 40,
-                                maxLengthEnforced: true,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
                                 keyboardType: TextInputType.text,
                                 decoration: buildInputDecoration(
                                     "City Name",
@@ -137,7 +140,8 @@ class AddressScreenView extends StatelessWidget {
                               1.5,
                               TextFormField(
                                 maxLength: 10,
-                                maxLengthEnforced: true,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
                                 keyboardType: TextInputType.number,
                                 decoration: buildInputDecoration(
                                     "Pincode",
@@ -165,7 +169,8 @@ class AddressScreenView extends StatelessWidget {
                               1.8,
                               TextFormField(
                                 maxLength: 150,
-                                maxLengthEnforced: true,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
                                 keyboardType: TextInputType.text,
                                 decoration: buildInputDecoration(
                                     "Home Address",

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:sms_autofill/sms_autofill.dart';
+
 import '../../../app/router.gr.dart';
 import '../../../services/auth_service.dart';
 import 'package:flutter/gestures.dart';
@@ -15,17 +17,26 @@ class OTPScreenViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   // __________________________________________________________________________
-
+  // Variables Initialisation
   var onTapRecognizer;
   bool _hasError = false;
   String _currentText = "";
-  StreamController<ErrorAnimationType> errorController;
+  int _otpCounter = 30;
+  int _otpRequestCount = 0;
+  String _enteredPhoneNumber;
+  // __________________________________________________________________________
+  // Controllers
+  StreamController<ErrorAnimationType> errorController =
+      StreamController<ErrorAnimationType>();
   TextEditingController otpTextController = TextEditingController();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey otpFormKey = GlobalKey<FormState>();
-
+  // __________________________________________________________________________
+  // Getters
   bool get getErrorStatus => _hasError;
-
+  int get getOtpCount => _otpCounter;
+  String get getEnteredPhoneNumber => _enteredPhoneNumber;
+  // __________________________________________________________________________
   void onComplete() {
     _hasError = _currentText.length < 6 ? false : true;
     notifyListeners();
@@ -41,21 +52,39 @@ class OTPScreenViewModel extends BaseViewModel {
     _navigatorService.navigateTo(Routes.nameScreenView);
   }
 
-  void verifyOTP() {
-    _authenticationService.signInPhoneNumberWithOTP(otpTextController.text);
+  void startVerifingOTP() async {
+    var result = await _authenticationService
+        .signInPhoneNumberWithOTP(otpTextController.text);
+
+    if (result == true) _navigatorService.navigateTo(Routes.emailScreenView);
+  }
+
+  void resendOTP() async {
+    await _authenticationService.resendOTP();
+  }
+
+  // __________________________________________________________________________
+  // Init State Function
+  void initialise(BuildContext context) async {
+    _enteredPhoneNumber = _authenticationService.getEnteredPhoneNumber;
+    onTapRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        Navigator.pop(context);
+      };
+    errorController = StreamController<ErrorAnimationType>();
+    // Counter for 30 seconds
+    Timer.periodic(new Duration(seconds: 1), (timer) {
+      if (_otpCounter != 0) {
+        _otpCounter--;
+        notifyListeners();
+      } else
+        timer.cancel();
+    });
   }
 
   @override
   void dispose() {
     errorController.close();
     super.dispose();
-  }
-
-  void initialise(BuildContext context) {
-    onTapRecognizer = TapGestureRecognizer()
-      ..onTap = () {
-        Navigator.pop(context);
-      };
-    errorController = StreamController<ErrorAnimationType>();
   }
 }

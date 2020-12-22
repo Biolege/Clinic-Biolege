@@ -5,7 +5,7 @@ import 'onBoardingView.dart';
 import 'onBoardingScreenViewModel.dart';
 
 class OnBoardingScreen extends StatelessWidget {
-  static const route = "/onBoardingScreen";
+  static const routeName = "/onBoardingScreen";
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../widgets/reusables.dart';
@@ -46,7 +47,7 @@ class SearchClinicScreenView extends StatelessWidget {
                   ),
                   TextFormField(
                     maxLength: 50,
-                    maxLengthEnforced: true,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     keyboardType: TextInputType.text,
                     decoration: buildInputDecoration(
                         "Search Clinic",

@@ -11,4 +11,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => ThemeService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => AuthenticationService());
+  locator.registerLazySingleton(() => DialogService());
+  locator.registerLazySingleton(() => SnackbarService());
 }

@@ -47,7 +47,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                     FadeInLTR(
                       0.6,
                       Text(
-                        "Enter the 6 digit OTP sent on \n9876543214 to proceed",
+                        'Enter the 6 digit OTP sent on \n ${model.getEnteredPhoneNumber} to proceed',
                         style: TextStyle(fontSize: 14),
                       ),
                     ),
@@ -59,10 +59,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                       Form(
                         key: model.otpFormKey,
                         child: PinCodeTextField(
+                          enableActiveFill: true,
                           keyboardType: TextInputType.number,
                           appContext: context,
                           length: 6,
-                          obscureText: false,
                           animationType: AnimationType.fade,
                           pinTheme: PinTheme(
                             shape: PinCodeFieldShape.underline,
@@ -77,13 +77,13 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                           ),
                           animationDuration: Duration(milliseconds: 100),
                           backgroundColor: Colors.transparent,
-                          enableActiveFill: true,
                           errorAnimationController: model.errorController,
                           controller: model.otpTextController,
                           textStyle: TextStyle(
                             color: offWhite,
                             fontSize: 20,
                           ),
+                          cursorColor: Colors.black,
                           cursorWidth: 1,
                           onCompleted: (v) {
                             model.onComplete();
@@ -111,8 +111,13 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                             style: TextStyle(fontSize: 14),
                           ),
                           InkWell(
+                            onTap: () => model.getOtpCount != 0
+                                ? null
+                                : model.resendOTP(),
                             child: Text(
-                              "Resend OTP",
+                              model.getOtpCount != 0
+                                  ? 'wait ${model.getOtpCount} seconds'
+                                  : "Resend OTP",
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w600),
                             ),
@@ -130,7 +135,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                           !model.getErrorStatus
                               ? null
                               : () {
-                                  model.verifyOTP();
+                                  model.startVerifingOTP();
                                 },
                         )),
                     SizedBox(
@@ -150,6 +155,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           )),
         );
       },
+      createNewModelOnInsert: true,
       onModelReady: (model) => model.initialise(context),
       viewModelBuilder: () => OTPScreenViewModel(),
     );

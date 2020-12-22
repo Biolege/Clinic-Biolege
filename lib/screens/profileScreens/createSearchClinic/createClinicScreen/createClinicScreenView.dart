@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -75,7 +76,8 @@ class CreateClinicScreenView extends StatelessWidget {
                             0.9,
                             TextFormField(
                               maxLength: 5,
-                              maxLengthEnforced: true,
+                              maxLengthEnforcement:
+                                  MaxLengthEnforcement.enforced,
                               keyboardType: TextInputType.name,
                               decoration: buildInputDecoration(
                                   "Clinic Name",
@@ -103,7 +105,8 @@ class CreateClinicScreenView extends StatelessWidget {
                             1.2,
                             TextFormField(
                               maxLength: 5,
-                              maxLengthEnforced: true,
+                              maxLengthEnforcement:
+                                  MaxLengthEnforcement.enforced,
                               keyboardType: TextInputType.streetAddress,
                               decoration: buildInputDecoration(
                                   "Clinic Address",

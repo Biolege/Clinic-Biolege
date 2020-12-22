@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -53,7 +54,8 @@ class PhoneScreenView extends StatelessWidget {
                       Form(
                           key: model.phoneNumberFormKey,
                           child: TextFormField(
-                            maxLength: 12,
+                            maxLength: 10,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             keyboardType: TextInputType.phone,
                             decoration: buildInputDecoration(
                                 "Mobile Number",

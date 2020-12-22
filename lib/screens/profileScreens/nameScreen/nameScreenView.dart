@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'nameScreenViewModel.dart';
@@ -64,7 +65,7 @@ class NameScreenView extends StatelessWidget {
                           key: model.nameFormKey,
                           child: TextFormField(
                             maxLength: 5,
-                            maxLengthEnforced: true,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             keyboardType: TextInputType.text,
                             decoration: buildInputDecoration(
                                 "Name",

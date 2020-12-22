@@ -1,3 +1,5 @@
+import 'package:clinicapp/app/size_configuration.dart';
+import 'package:clinicapp/widgets/dialog.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'screens/splashScreen/splashScreenView.dart';
@@ -11,9 +13,9 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  setupLocator();
-  WidgetsFlutterBinding.ensureInitialized();
   await ThemeManager.initialise();
+  setupLocator();
+  setupDialogUi();
   runApp(MyApp());
 }
 

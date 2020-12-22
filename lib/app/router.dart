@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:clinicapp/screens/onBoardingScreen/onBoardingScreenView.dart';
 import '../screens/homeScreens/doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/confirmationScreen/confirmScreenView.dart';
@@ -26,6 +27,10 @@ import '../screens/signUpScreens/otpScreen/otpScreenView.dart';
 import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
 
 @MaterialAutoRouter(routes: <AutoRoute>[
+  MaterialRoute(
+    path: OnBoardingScreen.routeName,
+    page: OnBoardingScreen,
+  ),
   MaterialRoute(
     path: PhoneScreenView.routeName,
     page: PhoneScreenView,
