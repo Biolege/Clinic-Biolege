@@ -1,6 +1,5 @@
-# clinicapp
+# Clinic App for Biolege
 
-A new Flutter project.
 
 ## Getting Started
 
