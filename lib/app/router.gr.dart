@@ -9,6 +9,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/addClinicEmployeeProfileScreens/addressScreen/addressScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDescriptionScreen/enterClinicDescriptionScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/createClinicScreen/createClinicScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/createOrSearchClinicScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/searchClinicScreen/searchClinicScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/emailScreen/emailScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/genderScreen/genderScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/nameScreen/nameScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/roleSelectScreen/roleSelectScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addBiolegeCardAddNameScreen/addBiolegeCardAddNameScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addBiolegeCardScreen/addBiolegeScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerDetailsScreen/addCustomerDetailsScreenView.dart';
@@ -23,15 +32,6 @@ import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctor
 import '../screens/homeScreens/homeScreenView.dart';
 import '../screens/homeScreens/patientDetailsScreen/patientDetailsScreenView.dart';
 import '../screens/onBoardingScreen/onBoardingScreenView.dart';
-import '../screens/profileScreens/addressScreen/addressScreenView.dart';
-import '../screens/profileScreens/createSearchClinic/clinicDescriptionScreen/enterClinicDescriptionScreenView.dart';
-import '../screens/profileScreens/createSearchClinic/createClinicScreen/createClinicScreenView.dart';
-import '../screens/profileScreens/createSearchClinic/createOrSearchClinicScreenView.dart';
-import '../screens/profileScreens/createSearchClinic/searchClinicScreen/searchClinicScreenView.dart';
-import '../screens/profileScreens/emailScreen/emailScreenView.dart';
-import '../screens/profileScreens/genderScreen/genderScreenView.dart';
-import '../screens/profileScreens/nameScreen/nameScreenView.dart';
-import '../screens/profileScreens/roleSelectScreen/roleSelectScreenView.dart';
 import '../screens/signUpScreens/otpScreen/otpScreenView.dart';
 import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
 import '../screens/welcomeScreen/welcomeScreenView.dart';
