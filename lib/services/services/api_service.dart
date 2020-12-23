@@ -1,8 +1,8 @@
 import 'package:stacked_services/stacked_services.dart';
 import 'package:http/http.dart' as http;
-import '../app/locator.dart';
-import '../model/clinicEmployee.dart';
-import '../services/local_storage.dart';
+import '../../app/locator.dart';
+import '../../model/clinicEmployee.dart';
+import 'local_storage.dart';
 
 class APIServices {
   // __________________________________________________________________________

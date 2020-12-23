@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import '../../../services/auth_service.dart';
+import '../../../services/services/auth_service.dart';
 import '../../../app/locator.dart';
 
 class PhoneViewModel extends BaseViewModel {

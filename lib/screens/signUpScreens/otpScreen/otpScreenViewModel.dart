@@ -5,7 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'dart:async';
 import '../../../app/router.gr.dart';
-import '../../../services/auth_service.dart';
+import '../../../services/services/auth_service.dart';
 import '../../../app/locator.dart';
 
 class OTPScreenViewModel extends BaseViewModel {

@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../../../theme/theme.dart';
 import '../../../widgets/animations.dart';
+import '../../../main.dart';
 import 'genderScreenViewModel.dart';
 import '../../../widgets/reusables.dart';
 import '../../../app/size_configuration.dart';
@@ -43,7 +44,7 @@ class GenderScreenView extends StatelessWidget {
                       FadeInLTR(
                         0.6,
                         Image.asset(
-                          model.logo,
+                          mainLogo,
                           height: getProportionateScreenHeight(30),
                         ),
                       ),
@@ -101,11 +102,14 @@ class GenderScreenView extends StatelessWidget {
                                   height: getProportionateScreenHeight(20),
                                 ),
                                 TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) => model.validateDate(),
                                   onTap: () =>
                                       model.selectAssignedDate(context),
                                   controller: model.dob,
                                   readOnly: true,
-                                  keyboardType: TextInputType.emailAddress,
+                                  keyboardType: TextInputType.datetime,
                                   decoration: buildInputDecoration(
                                       "Select Date",
                                       Icon(
@@ -121,10 +125,11 @@ class GenderScreenView extends StatelessWidget {
                       ),
                       Spacer(),
                       FadeInLTR(
-                        1.2,
-                        buildOutlineButton(
-                            "Continue", model.navigateToAddressView),
-                      ),
+                          1.2,
+                          buildOutlineButton(
+                            "Continue",
+                            model.saveDobAndGender,
+                          )),
                     ],
                   ),
                 ),

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-// To parse this JSON data, do
+// To parse this JSON data, use this line
 // final clinicEmployee = clinicEmployeeFromJson(jsonString);
 
 ClinicEmployee clinicEmployeeFromJson(String str) =>

@@ -1,9 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_themes/stacked_themes.dart';
-import 'api_service.dart';
-import 'auth_service.dart';
-import 'local_storage.dart';
+import 'services/api_service.dart';
+import 'services/auth_service.dart';
+import 'services/local_storage.dart';
 
 abstract class ThirdPartyServicesModule {
   @lazySingleton

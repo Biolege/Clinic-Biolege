@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../services/local_storage.dart';
+import '../../../services/services/local_storage.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
 
@@ -38,9 +38,8 @@ class NameViewModel extends BaseViewModel {
         .whenComplete(() => navigateToEmailScreenView());
   }
 
-  // _________________________________________________________________________
-
   void navigateToEmailScreenView() {
     _navigatorService.navigateTo(Routes.emailScreenView);
   }
+  // _________________________________________________________________________
 }

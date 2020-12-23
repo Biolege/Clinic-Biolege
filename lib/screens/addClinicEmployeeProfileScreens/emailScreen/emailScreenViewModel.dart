@@ -4,7 +4,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:validators/validators.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
-import '../../../services/local_storage.dart';
+import '../../../services/services/local_storage.dart';
 
 class EmailViewModel extends BaseViewModel {
   // _________________________________________________________________________
@@ -14,7 +14,7 @@ class EmailViewModel extends BaseViewModel {
   final StorageService _storageService = locator<StorageService>();
   // final SnackbarService _snackBarService = locator<SnackbarService>();
   // _________________________________________________________________________
-  // Controllers
+  // Controllers and Variables
 
   TextEditingController email = TextEditingController();
   final emailFormKey = GlobalKey<FormState>();

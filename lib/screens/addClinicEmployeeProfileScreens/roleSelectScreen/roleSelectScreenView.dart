@@ -7,6 +7,7 @@ import '../../../widgets/animations.dart';
 import 'roleSelectScreenViewModel.dart';
 import '../../../widgets/reusables.dart';
 import '../../../app/size_configuration.dart';
+import '../../../main.dart';
 
 class RoleSelectScreenView extends StatelessWidget {
   static const routeName = "/roleSelectScreenView";
@@ -42,7 +43,7 @@ class RoleSelectScreenView extends StatelessWidget {
                                 height: getProportionateScreenHeight(10),
                               ),
                               Image.asset(
-                                model.logo,
+                                mainLogo,
                                 height: getProportionateScreenHeight(30),
                               ),
                             ],
@@ -90,11 +91,10 @@ class RoleSelectScreenView extends StatelessWidget {
                                 labels: ['Admin', 'Staff', 'Receiptionist'],
                                 onToggle: (index) => {
                                       index == 0
-                                          ? model.setRoleValue("ADMIN")
+                                          ? model.setRoleValue(0)
                                           : index == 1
-                                              ? model.setRoleValue("STAFF")
-                                              : model
-                                                  .setRoleValue("RECEIPTIONIST")
+                                              ? model.setRoleValue(1)
+                                              : model.setRoleValue(2)
                                     }),
                           ),
                         ],

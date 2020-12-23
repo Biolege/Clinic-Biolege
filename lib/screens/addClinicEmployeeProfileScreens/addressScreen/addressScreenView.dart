@@ -6,6 +6,7 @@ import 'addressScreenViewModel.dart';
 import '../../../widgets/reusables.dart';
 import '../../../app/size_configuration.dart';
 import '../../../theme/theme.dart';
+import '../../../main.dart';
 import '../../../widgets/animations.dart';
 
 class AddressScreenView extends StatelessWidget {
@@ -41,7 +42,7 @@ class AddressScreenView extends StatelessWidget {
                                 height: getProportionateScreenHeight(10),
                               ),
                               Image.asset(
-                                model.logo,
+                                mainLogo,
                                 height: getProportionateScreenHeight(30),
                               ),
                             ],
@@ -63,7 +64,7 @@ class AddressScreenView extends StatelessWidget {
                       height: getProportionateScreenHeight(30),
                     ),
                     Form(
-                        key: model.address,
+                        key: model.addressFormKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +82,11 @@ class AddressScreenView extends StatelessWidget {
                             FadeInLTR(
                               0.9,
                               TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 maxLength: 40,
+                                validator: (value) =>
+                                    model.validateState(value),
                                 maxLengthEnforcement:
                                     MaxLengthEnforcement.enforced,
                                 keyboardType: TextInputType.text,
@@ -110,7 +115,10 @@ class AddressScreenView extends StatelessWidget {
                             FadeInLTR(
                               1.2,
                               TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 maxLength: 40,
+                                validator: (value) => model.validateCity(value),
                                 maxLengthEnforcement:
                                     MaxLengthEnforcement.enforced,
                                 keyboardType: TextInputType.text,
@@ -139,7 +147,11 @@ class AddressScreenView extends StatelessWidget {
                             FadeInLTR(
                               1.5,
                               TextFormField(
-                                maxLength: 10,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                maxLength: 6,
+                                validator: (value) =>
+                                    model.validatePincode(value),
                                 maxLengthEnforcement:
                                     MaxLengthEnforcement.enforced,
                                 keyboardType: TextInputType.number,
@@ -168,7 +180,11 @@ class AddressScreenView extends StatelessWidget {
                             FadeInLTR(
                               1.8,
                               TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 maxLength: 150,
+                                validator: (value) =>
+                                    model.validateHomeAddress(value),
                                 maxLengthEnforcement:
                                     MaxLengthEnforcement.enforced,
                                 keyboardType: TextInputType.text,
@@ -190,7 +206,7 @@ class AddressScreenView extends StatelessWidget {
                       2.1,
                       buildOutlineButton(
                         "Continue",
-                        model.navigateToRoleSelectView,
+                        model.saveAddressDetails,
                       ),
                     )
                   ],

@@ -68,6 +68,8 @@ class NameScreenView extends StatelessWidget {
                             maxLength: 30,
                             validator: (value) => model.validateName(value),
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             keyboardType: TextInputType.text,
                             decoration: buildInputDecoration(
                                 "Name",

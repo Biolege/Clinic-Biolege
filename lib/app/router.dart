@@ -1,3 +1,8 @@
+// This files contains all the routes of the app
+// Simply add a Material Route Constructor with Classname and Routename
+// and run the below command
+// flutter pub run build_runner build --delete-conflicting-outputs
+// _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
 import '../screens/addClinicEmployeeProfileScreens/addressScreen/addressScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDescriptionScreen/enterClinicDescriptionScreenView.dart';
@@ -27,10 +32,12 @@ import '../screens/signUpScreens/otpScreen/otpScreenView.dart';
 import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
 
 @MaterialAutoRouter(routes: <AutoRoute>[
+  // ___________________________________________________________________________
   MaterialRoute(
     path: OnBoardingScreen.routeName,
     page: OnBoardingScreen,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: PhoneScreenView.routeName,
     page: PhoneScreenView,
@@ -39,6 +46,7 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     path: OTPScreenView.routeName,
     page: OTPScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: NameScreenView.routeName,
     page: NameScreenView,
@@ -59,14 +67,17 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     path: RoleSelectScreenView.routeName,
     page: RoleSelectScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: CreateOrSearchClinicScreenView.routeName,
     page: CreateOrSearchClinicScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: SearchClinicScreenView.routeName,
     page: SearchClinicScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: CreateClinicScreenView.routeName,
     page: CreateClinicScreenView,
@@ -75,18 +86,22 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     path: AddClinicDescriptionScreenView.routeName,
     page: AddClinicDescriptionScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: WelcomeScreenView.routeName,
     page: WelcomeScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: HomeScreenView.routeName,
     page: HomeScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: AppointmentHomeScreenView.routeName,
     page: AppointmentHomeScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: PatientDetailsScreenView.routeName,
     page: PatientDetailsScreenView,
@@ -123,6 +138,7 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     path: ConfirmScreenView.routeName,
     page: ConfirmScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: DoctorsListScreenView.routeName,
     page: DoctorsListScreenView,
@@ -131,5 +147,6 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     path: DoctorsProfileScreenView.routeName,
     page: DoctorsProfileScreenView,
   ),
+  // ___________________________________________________________________________
 ])
 class $Router {}

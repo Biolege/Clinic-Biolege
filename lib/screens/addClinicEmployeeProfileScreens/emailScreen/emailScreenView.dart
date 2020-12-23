@@ -65,6 +65,8 @@ class EmailScreenView extends StatelessWidget {
                             key: model.emailFormKey,
                             child: TextFormField(
                               validator: (value) => model.validateEmail(value),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               keyboardType: TextInputType.emailAddress,
                               decoration: buildInputDecoration(
                                   "Email",
