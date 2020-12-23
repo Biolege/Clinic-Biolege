@@ -16,7 +16,7 @@ class RootViewModel extends BaseViewModel {
     var hasLoggedIn = await _authenticationService.isUserLoggedIn();
 
     if (hasLoggedIn)
-      _navigatorService.navigateTo(Routes.emailScreenView);
+      _navigatorService.navigateTo(Routes.nameScreenView);
     else
       _navigatorService.navigateTo(Routes.onBoardingScreen);
   }

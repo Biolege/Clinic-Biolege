@@ -53,7 +53,7 @@ class OTPScreenViewModel extends BaseViewModel {
     var result = await _authenticationService
         .signInPhoneNumberWithOTP(otpTextController.text);
 
-    if (result == true) _navigatorService.navigateTo(Routes.emailScreenView);
+    if (result == true) navigateToNameScreen();
   }
 
   void resendOTP() async {

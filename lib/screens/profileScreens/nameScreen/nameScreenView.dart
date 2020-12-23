@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'nameScreenViewModel.dart';
+import '../../../main.dart';
 import '../../../widgets/reusables.dart';
 import '../../../app/size_configuration.dart';
 import '../../../theme/theme.dart';
@@ -42,7 +43,7 @@ class NameScreenView extends StatelessWidget {
                     FadeInLTR(
                       0.6,
                       Image.asset(
-                        model.logo,
+                        mainLogo,
                         height: getProportionateScreenHeight(30),
                       ),
                     ),
@@ -64,7 +65,8 @@ class NameScreenView extends StatelessWidget {
                       Form(
                           key: model.nameFormKey,
                           child: TextFormField(
-                            maxLength: 5,
+                            maxLength: 30,
+                            validator: (value) => model.validateName(value),
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             keyboardType: TextInputType.text,
                             decoration: buildInputDecoration(
@@ -79,8 +81,7 @@ class NameScreenView extends StatelessWidget {
                     Spacer(),
                     FadeInLTR(
                       1.5,
-                      buildOutlineButton(
-                          "Continue", model.navigateToEmailScreenView),
+                      buildOutlineButton("Continue", model.saveName),
                     ),
                     SizedBox(
                       height: getProportionateScreenHeight(60),

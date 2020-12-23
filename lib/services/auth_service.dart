@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../app/locator.dart';
 import '../app/router.gr.dart';
@@ -42,6 +43,7 @@ class AuthenticationService {
       return true;
     } catch (authException) {
       // Popups a snackbar with wrong OTP error
+      print(authException);
       String returnedErrorMessage = errorDescription(authException.code);
 
       _snackbarService.showSnackbar(
@@ -203,7 +205,9 @@ class AuthenticationService {
 
   // Logs Out the user
   Future<void> signOut() async {
-    _firebaseAuth.signOut();
+    SharedPreferences _localStorage = await SharedPreferences.getInstance();
+    await _firebaseAuth.signOut();
+    await _localStorage.clear();
     _navigatorService.pushNamedAndRemoveUntil(Routes.onBoardingScreen,
         predicate: (route) => false);
   }

@@ -5,6 +5,7 @@ import '../../../theme/theme.dart';
 import '../../../widgets/animations.dart';
 import '../../../widgets/reusables.dart';
 import '../../../app/size_configuration.dart';
+import '../../../main.dart';
 import 'emailScreenViewModel.dart';
 
 class EmailScreenView extends StatelessWidget {
@@ -41,7 +42,7 @@ class EmailScreenView extends StatelessWidget {
                       FadeInLTR(
                         0.6,
                         Image.asset(
-                          model.logo,
+                          mainLogo,
                           height: getProportionateScreenHeight(30),
                         ),
                       ),
@@ -63,6 +64,7 @@ class EmailScreenView extends StatelessWidget {
                         Form(
                             key: model.emailFormKey,
                             child: TextFormField(
+                              validator: (value) => model.validateEmail(value),
                               keyboardType: TextInputType.emailAddress,
                               decoration: buildInputDecoration(
                                   "Email",
@@ -75,10 +77,11 @@ class EmailScreenView extends StatelessWidget {
                       ),
                       Spacer(),
                       FadeInLTR(
-                        1.5,
-                        buildOutlineButton(
-                            "Continue", model.navigateToGenderDOBView),
-                      ),
+                          1.5,
+                          buildOutlineButton(
+                            "Continue",
+                            model.saveEmailAddress,
+                          )),
                       SizedBox(
                         height: getProportionateScreenHeight(60),
                       ),

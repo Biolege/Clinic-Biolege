@@ -17,11 +17,12 @@ void main() async {
   runApp(MyApp());
 }
 
+String mainLogo = "asset/images/logo.png";
+String subLogo = "asset/images/sublogo.png";
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String mainLogo = "asset/images/logo.png";
-    String subLogo = "asset/images/sublogo.png";
     return ThemeBuilder(
       themes: getThemeData(),
       builder: (context, regularTheme, darkTheme, themeMode) => MaterialApp(
