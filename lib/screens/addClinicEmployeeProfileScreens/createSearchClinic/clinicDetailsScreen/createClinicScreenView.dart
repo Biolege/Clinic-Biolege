@@ -3,17 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import '../../../../main.dart';
 import '../../../../widgets/reusables.dart';
 import '../../../../app/size_configuration.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/animations.dart';
 import 'createClinicScreenViewModel.dart';
 
-class CreateClinicScreenView extends StatelessWidget {
+class AddClinicScreenView extends StatelessWidget {
   static const routeName = "/createClinicScreenView";
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<CreateClinicViewModel>.reactive(
+    return ViewModelBuilder<AddClinicViewModel>.reactive(
       builder: (context, model, child) {
         return Scaffold(
           appBar: buildAppBar(context),
@@ -22,7 +23,7 @@ class CreateClinicScreenView extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Container(
-                // height: SizeConfig.screenHeight * 0.8,
+                height: SizeConfig.screenHeight * 0.8,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +37,7 @@ class CreateClinicScreenView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Image.asset(
-                                model.logo,
+                                mainLogo,
                                 height: getProportionateScreenHeight(25),
                               ),
                             ],
@@ -75,7 +76,9 @@ class CreateClinicScreenView extends StatelessWidget {
                           FadeInLTR(
                             0.9,
                             TextFormField(
-                              maxLength: 5,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              maxLength: 30,
                               maxLengthEnforcement:
                                   MaxLengthEnforcement.enforced,
                               keyboardType: TextInputType.name,
@@ -94,7 +97,7 @@ class CreateClinicScreenView extends StatelessWidget {
                           FadeInLTR(
                             1.2,
                             Text(
-                              "Clinic Address",
+                              "Clinic Phone Number",
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
@@ -104,17 +107,19 @@ class CreateClinicScreenView extends StatelessWidget {
                           FadeInLTR(
                             1.2,
                             TextFormField(
-                              maxLength: 5,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              maxLength: 10,
                               maxLengthEnforcement:
                                   MaxLengthEnforcement.enforced,
-                              keyboardType: TextInputType.streetAddress,
+                              keyboardType: TextInputType.phone,
                               decoration: buildInputDecoration(
-                                  "Clinic Address",
+                                  "Clinic Phone Number",
                                   Icon(
-                                    MaterialCommunityIcons.map,
+                                    MaterialCommunityIcons.phone,
                                     color: primaryColor,
                                   )),
-                              controller: model.clinicAddress,
+                              controller: model.clinicPhoneNumber,
                             ),
                           ),
                           SizedBox(
@@ -163,28 +168,6 @@ class CreateClinicScreenView extends StatelessWidget {
                             height: getProportionateScreenHeight(15),
                           ),
                           FadeInLTR(
-                            1.8,
-                            Text(
-                              "Clinic address proof  ( Trade License ) ",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(5),
-                          ),
-                          FadeInLTR(
-                            1.8,
-                            buildBasicOutlineButton(
-                                Text(
-                                  "Upload Photo",
-                                  style: TextStyle(fontWeight: FontWeight.w300),
-                                ),
-                                () {}),
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(15),
-                          ),
-                          FadeInLTR(
                             2.1,
                             Text(
                               "Clinic Logo",
@@ -206,13 +189,6 @@ class CreateClinicScreenView extends StatelessWidget {
                                           fontWeight: FontWeight.w300),
                                     ),
                                     () {}),
-                                buildBasicOutlineButton(
-                                    Text(
-                                      "Choose from Library",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                    () {}),
                               ],
                             ),
                           )
@@ -220,7 +196,7 @@ class CreateClinicScreenView extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: getProportionateScreenHeight(30),
+                      height: getProportionateScreenHeight(40),
                     ),
                     FadeInLTR(
                       2.1,
@@ -234,7 +210,7 @@ class CreateClinicScreenView extends StatelessWidget {
           )),
         );
       },
-      viewModelBuilder: () => CreateClinicViewModel(),
+      viewModelBuilder: () => AddClinicViewModel(),
     );
   }
 }

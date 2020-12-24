@@ -4,14 +4,14 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 
-class CreateClinicViewModel extends BaseViewModel {
+class AddClinicViewModel extends BaseViewModel {
   final NavigationService _navigatorService = locator<NavigationService>();
 
-  TextEditingController clinicName = TextEditingController();
-  TextEditingController clinicAddress = TextEditingController();
   String _clinicLocationType;
   GlobalKey createClinicForm = GlobalKey<FormState>();
-  String logo = "asset/images/logo.png";
+  TextEditingController clinicName = TextEditingController();
+  TextEditingController clinicPhoneNumber = TextEditingController();
+  TextEditingController clinicAddress = TextEditingController();
 
   void setClinicTypeValue(String value) {
     _clinicLocationType = value;

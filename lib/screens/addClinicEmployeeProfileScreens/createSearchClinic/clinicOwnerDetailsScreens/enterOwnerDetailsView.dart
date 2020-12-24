@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import '../../../../main.dart';
 import '../../../../widgets/reusables.dart';
 import '../../../../app/size_configuration.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/animations.dart';
-import 'enterClinicDescriptionScreenViewModel.dart';
+import 'enterOwnerDetailsViewModel.dart';
 
-class AddClinicDescriptionScreenView extends StatelessWidget {
-  static const routeName = "/addClinicDescriptionScreenView";
+class AddClinicOwnerDetailsScreenView extends StatelessWidget {
+  static const routeName = "/addClinicOwnerDetailsScreenView";
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AddClinicDescriptionViewModel>.reactive(
+    return ViewModelBuilder<AddClinicOwnerDetailsViewModel>.reactive(
       builder: (context, model, child) {
         return Scaffold(
           appBar: buildAppBar(context),
@@ -50,22 +51,53 @@ class AddClinicDescriptionScreenView extends StatelessWidget {
                     FadeInLTR(
                       0.6,
                       Text(
-                        "Clinic address",
+                        "Clinic Owner",
                         style: TextStyle(fontSize: 24),
                       ),
                     ),
                     SizedBox(
-                      height: getProportionateScreenHeight(20),
+                      height: getProportionateScreenHeight(30),
                     ),
                     Form(
-                        key: model.clinicDesciptionFormKey,
+                        key: model.clinicOwnerDetailsFormKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             FadeInLTR(
+                              0.6,
+                              Text(
+                                "Clinic Owner Name",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(5),
+                            ),
+                            FadeInLTR(
+                              0.6,
+                              TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                maxLength: 30,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                keyboardType: TextInputType.name,
+                                decoration: buildInputDecoration(
+                                    "Name",
+                                    Icon(
+                                      MaterialCommunityIcons.account,
+                                      color: primaryColor,
+                                    )),
+                                controller: model.clinicOwnerName,
+                              ),
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(15),
+                            ),
+                            FadeInLTR(
                               0.9,
                               Text(
-                                "State",
+                                "Clinic Phone Number",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
@@ -77,17 +109,17 @@ class AddClinicDescriptionScreenView extends StatelessWidget {
                               TextFormField(
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                maxLength: 30,
+                                maxLength: 10,
                                 maxLengthEnforcement:
                                     MaxLengthEnforcement.enforced,
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.phone,
                                 decoration: buildInputDecoration(
-                                    "Statename",
+                                    "Phone Number",
                                     Icon(
                                       MaterialCommunityIcons.account,
                                       color: primaryColor,
                                     )),
-                                controller: model.clinicStateName,
+                                controller: model.clinicPhoneNumber,
                               ),
                             ),
                             SizedBox(
@@ -96,29 +128,59 @@ class AddClinicDescriptionScreenView extends StatelessWidget {
                             FadeInLTR(
                               1.2,
                               Text(
-                                "City",
+                                "Clinic Owner ID proof",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
                             SizedBox(
-                              height: getProportionateScreenHeight(5),
+                              height: getProportionateScreenHeight(10),
                             ),
                             FadeInLTR(
                               1.2,
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                maxLength: 30,
-                                maxLengthEnforcement:
-                                    MaxLengthEnforcement.enforced,
-                                keyboardType: TextInputType.text,
-                                decoration: buildInputDecoration(
-                                    "Cityname",
-                                    Icon(
-                                      MaterialCommunityIcons.account,
-                                      color: primaryColor,
-                                    )),
-                                controller: model.clinicCityName,
+                              Center(
+                                child: ToggleSwitch(
+                                    minWidth: SizeConfig.screenWidth / 3.5,
+                                    minHeight: getProportionateScreenHeight(40),
+                                    fontSize: 12,
+                                    initialLabelIndex: 0,
+                                    activeBgColor: offWhite,
+                                    activeFgColor: offWhite1,
+                                    inactiveBgColor: offWhite1,
+                                    inactiveFgColor: offBlack2,
+                                    activeBgColors: [
+                                      Colors.blueGrey,
+                                      Colors.blueGrey,
+                                      Colors.blueGrey
+                                    ],
+                                    labels: [
+                                      'PAN Card',
+                                      'Aadhar Card',
+                                      'Voter Card'
+                                    ],
+                                    onToggle: (index) => {
+                                          index == 0
+                                              ? model.setIdProofType(0)
+                                              : index == 1
+                                                  ? model.setIdProofType(1)
+                                                  : model.setIdProofType(2)
+                                        }),
+                              ),
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            FadeInLTR(
+                              1.2,
+                              Row(
+                                children: [
+                                  buildBasicOutlineButton(
+                                      Text(
+                                        "Upload Photo",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                      () {}),
+                                ],
                               ),
                             ),
                             SizedBox(
@@ -127,49 +189,18 @@ class AddClinicDescriptionScreenView extends StatelessWidget {
                             FadeInLTR(
                               1.5,
                               Text(
-                                "Clinic Address",
+                                "Clinic on Map",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
                             SizedBox(
-                              height: getProportionateScreenHeight(5),
+                              height: getProportionateScreenHeight(10),
                             ),
                             FadeInLTR(
                               1.5,
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                maxLength: 50,
-                                maxLengthEnforcement:
-                                    MaxLengthEnforcement.enforced,
-                                keyboardType: TextInputType.streetAddress,
-                                decoration: buildInputDecoration(
-                                    "Clinic Address",
-                                    Icon(
-                                      MaterialCommunityIcons.map,
-                                      color: primaryColor,
-                                    )),
-                                controller: model.clinicAddress,
-                              ),
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(15),
-                            ),
-                            FadeInLTR(
-                              1.8,
-                              Text(
-                                "Clinic address proof  ( Trade License ) ",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(5),
-                            ),
-                            FadeInLTR(
-                              1.8,
                               buildBasicOutlineButton(
                                   Text(
-                                    "Upload Photo",
+                                    "Show in Map",
                                     style:
                                         TextStyle(fontWeight: FontWeight.w300),
                                   ),
@@ -182,7 +213,7 @@ class AddClinicDescriptionScreenView extends StatelessWidget {
                       1.8,
                       buildOutlineButton(
                         "Continue",
-                        model.navigateToClinicOwnerDetails,
+                        model.navigateToClinicOwnerDescriptionScreen,
                       ),
                     )
                   ],
@@ -192,7 +223,7 @@ class AddClinicDescriptionScreenView extends StatelessWidget {
           )),
         );
       },
-      viewModelBuilder: () => AddClinicDescriptionViewModel(),
+      viewModelBuilder: () => AddClinicOwnerDetailsViewModel(),
     );
   }
 }

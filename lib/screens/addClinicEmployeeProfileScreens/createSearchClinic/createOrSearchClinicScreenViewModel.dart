@@ -19,6 +19,6 @@ class CreateOrSearchClinicViewModel extends BaseViewModel {
   }
 
   void navigateToAddClinicView() {
-    _navigatorService.navigateTo(Routes.createClinicScreenView);
+    _navigatorService.navigateTo(Routes.addClinicScreenView);
   }
 }

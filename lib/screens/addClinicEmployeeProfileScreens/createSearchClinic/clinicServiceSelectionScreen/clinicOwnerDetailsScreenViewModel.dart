@@ -4,14 +4,18 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 
-class AddClinicDescriptionViewModel extends BaseViewModel {
+class ClinicServiceSelectionViewModel extends BaseViewModel {
   final NavigationService _navigatorService = locator<NavigationService>();
 
+  TextEditingController clinicOwnerName = TextEditingController();
+  TextEditingController clinicPhoneNumber = TextEditingController();
+  String _idProofType = "PAN";
   final clinicDesciptionFormKey = GlobalKey<FormState>();
-  TextEditingController clinicStateName = TextEditingController();
-  TextEditingController clinicCityName = TextEditingController();
-  TextEditingController clinicAddress = TextEditingController();
-  TextEditingController clinicPincode = TextEditingController();
+
+  void setIdProofType(String type) {
+    _idProofType = type;
+    print(_idProofType);
+  }
 
   // void navigateToWelcomeScreen() {
   //   _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
@@ -19,9 +23,8 @@ class AddClinicDescriptionViewModel extends BaseViewModel {
   //           ModalRoute.withName(CreateOrSearchClinicScreenView.routeName));
   // }
 
-  void navigateToClinicOwnerDetails() {
-    _navigatorService.navigateTo(
-      Routes.addClinicOwnerDetailsScreenView,
-    );
+  void navigateToWelcomeScreen() {
+    _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
+        predicate: (route) => false);
   }
 }

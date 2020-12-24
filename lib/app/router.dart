@@ -4,9 +4,11 @@
 // flutter pub run build_runner build --delete-conflicting-outputs
 // _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:clinicapp/screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicServiceSelectionScreen/clinicOwnerDetailsScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDetailsScreen/createClinicScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicOwnerDetailsScreens/enterOwnerDetailsView.dart';
 import '../screens/addClinicEmployeeProfileScreens/addressScreen/addressScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDescriptionScreen/enterClinicDescriptionScreenView.dart';
-import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/createClinicScreen/createClinicScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/createOrSearchClinicScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/searchClinicScreen/searchClinicScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/emailScreen/emailScreenView.dart';
@@ -79,12 +81,21 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
   ),
   // ___________________________________________________________________________
   MaterialRoute(
-    path: CreateClinicScreenView.routeName,
-    page: CreateClinicScreenView,
+    path: AddClinicScreenView.routeName,
+    page: AddClinicScreenView,
   ),
   MaterialRoute(
     path: AddClinicDescriptionScreenView.routeName,
     page: AddClinicDescriptionScreenView,
+  ),
+  // ___________________________________________________________________________
+  MaterialRoute(
+    path: AddClinicOwnerDetailsScreenView.routeName,
+    page: AddClinicOwnerDetailsScreenView,
+  ),
+  MaterialRoute(
+    path: ClinicServiceSelectionView.routeName,
+    page: ClinicServiceSelectionView,
   ),
   // ___________________________________________________________________________
   MaterialRoute(

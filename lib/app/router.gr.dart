@@ -11,7 +11,9 @@ import 'package:flutter/material.dart';
 
 import '../screens/addClinicEmployeeProfileScreens/addressScreen/addressScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDescriptionScreen/enterClinicDescriptionScreenView.dart';
-import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/createClinicScreen/createClinicScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDetailsScreen/createClinicScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicOwnerDetailsScreens/enterOwnerDetailsView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicServiceSelectionScreen/clinicOwnerDetailsScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/createOrSearchClinicScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/searchClinicScreen/searchClinicScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/emailScreen/emailScreenView.dart';
@@ -48,9 +50,13 @@ class Routes {
   static const String createOrSearchClinicScreenView =
       '/createOrSearchClinicScreen';
   static const String searchClinicScreenView = '/searchClinicScreenView';
-  static const String createClinicScreenView = '/createClinicScreenView';
+  static const String addClinicScreenView = '/createClinicScreenView';
   static const String addClinicDescriptionScreenView =
       '/addClinicDescriptionScreenView';
+  static const String addClinicOwnerDetailsScreenView =
+      '/addClinicOwnerDetailsScreenView';
+  static const String clinicServiceSelectionView =
+      '/clinicServiceSelectionView';
   static const String welcomeScreenView = '/welcomeScreenView';
   static const String homeScreenView = '/homeScreenView';
   static const String appointmentHomeScreenView = '/appointmentHomeScreenView';
@@ -81,8 +87,10 @@ class Routes {
     roleSelectScreenView,
     createOrSearchClinicScreenView,
     searchClinicScreenView,
-    createClinicScreenView,
+    addClinicScreenView,
     addClinicDescriptionScreenView,
+    addClinicOwnerDetailsScreenView,
+    clinicServiceSelectionView,
     welcomeScreenView,
     homeScreenView,
     appointmentHomeScreenView,
@@ -115,9 +123,13 @@ class Router extends RouterBase {
     RouteDef(Routes.createOrSearchClinicScreenView,
         page: CreateOrSearchClinicScreenView),
     RouteDef(Routes.searchClinicScreenView, page: SearchClinicScreenView),
-    RouteDef(Routes.createClinicScreenView, page: CreateClinicScreenView),
+    RouteDef(Routes.addClinicScreenView, page: AddClinicScreenView),
     RouteDef(Routes.addClinicDescriptionScreenView,
         page: AddClinicDescriptionScreenView),
+    RouteDef(Routes.addClinicOwnerDetailsScreenView,
+        page: AddClinicOwnerDetailsScreenView),
+    RouteDef(Routes.clinicServiceSelectionView,
+        page: ClinicServiceSelectionView),
     RouteDef(Routes.welcomeScreenView, page: WelcomeScreenView),
     RouteDef(Routes.homeScreenView, page: HomeScreenView),
     RouteDef(Routes.appointmentHomeScreenView, page: AppointmentHomeScreenView),
@@ -201,15 +213,27 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    CreateClinicScreenView: (data) {
+    AddClinicScreenView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => CreateClinicScreenView(),
+        builder: (context) => AddClinicScreenView(),
         settings: data,
       );
     },
     AddClinicDescriptionScreenView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => AddClinicDescriptionScreenView(),
+        settings: data,
+      );
+    },
+    AddClinicOwnerDetailsScreenView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AddClinicOwnerDetailsScreenView(),
+        settings: data,
+      );
+    },
+    ClinicServiceSelectionView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ClinicServiceSelectionView(),
         settings: data,
       );
     },
