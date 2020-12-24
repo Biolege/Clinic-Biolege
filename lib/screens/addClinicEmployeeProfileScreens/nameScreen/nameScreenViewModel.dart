@@ -34,7 +34,7 @@ class NameViewModel extends BaseViewModel {
     if (!nameFormKey.currentState.validate()) return;
 
     await _storageService
-        .setEmailAddress(name.text)
+        .setName(name.text)
         .whenComplete(() => navigateToEmailScreenView());
   }
 

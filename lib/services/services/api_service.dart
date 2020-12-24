@@ -1,4 +1,3 @@
-import 'package:stacked_services/stacked_services.dart';
 import 'package:http/http.dart' as http;
 import '../../app/locator.dart';
 import '../../model/clinicEmployee.dart';
@@ -15,7 +14,6 @@ class APIServices {
   Future<ClinicEmployee> createClinicEmployee(dynamic userData) async {
     // _________________________________________________________________________
     // Locating the Dependencies
-    final NavigationService _navigatorService = locator<NavigationService>();
     final StorageService _storageService = locator<StorageService>();
     // _________________________________________________________________________
     final response = await http.post('$url/$urlClinicEmployee/create',
