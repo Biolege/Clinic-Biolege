@@ -6,7 +6,7 @@ import 'local_storage.dart';
 class APIServices {
   // __________________________________________________________________________
   // API Variables for Clinic
-  String url = "http://localhost:8080/";
+  String url = "http://localhost:8000/";
   String urlClinicEmployee = "clinicemployee";
   String urlClinic = "clinic";
   // ---------------------------------------------------------------------------

@@ -1,12 +1,10 @@
 import 'package:clinicapp/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
-import 'package:toggle_switch/toggle_switch.dart';
+
 import '../../../../widgets/reusables.dart';
 import '../../../../app/size_configuration.dart';
-import '../../../../theme/theme.dart';
+
 import '../../../../widgets/animations.dart';
 import 'clinicOwnerDetailsScreenViewModel.dart';
 

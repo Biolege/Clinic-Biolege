@@ -1,3 +1,4 @@
+import 'package:clinicapp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../../widgets/reusables.dart';
@@ -39,7 +40,7 @@ class CreateOrSearchClinicScreenView extends StatelessWidget {
                                   height: getProportionateScreenHeight(10),
                                 ),
                                 Image.asset(
-                                  model.logo,
+                                  mainLogo,
                                   height: getProportionateScreenHeight(30),
                                 ),
                               ],
@@ -54,22 +55,25 @@ class CreateOrSearchClinicScreenView extends StatelessWidget {
                         0.6,
                         Column(
                           children: [
-                            buildBasicOutlineButton(
-                                Row(
-                                  children: [
-                                    Icon(Icons.add),
-                                    SizedBox(
-                                      width: getProportionateScreenWidth(30),
+                            model.getRoleType == 0
+                                ? buildBasicOutlineButton(
+                                    Row(
+                                      children: [
+                                        Icon(Icons.add),
+                                        SizedBox(
+                                          width:
+                                              getProportionateScreenWidth(30),
+                                        ),
+                                        Text(
+                                          "Create a new clinic",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      "Create a new Clinic",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ],
-                                ),
-                                model.navigateToAddClinicView),
+                                    model.navigateToAddClinicView)
+                                : Container(),
                             SizedBox(
                               height: getProportionateScreenHeight(30),
                             ),
@@ -100,6 +104,7 @@ class CreateOrSearchClinicScreenView extends StatelessWidget {
           )),
         );
       },
+      onModelReady: (model) => model.setRoleType(),
       viewModelBuilder: () => CreateOrSearchClinicViewModel(),
     );
   }

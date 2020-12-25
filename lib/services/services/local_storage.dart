@@ -5,41 +5,43 @@ class StorageService {
   // ___________________________________________________________________________
   // User Variables and their getters
   // ...........................................................................
-  String _employeeImage;
+  static String _employeeImage;
   String get getEmployeeImage => _employeeImage;
+  setEmployeeInClass(value) => value = _employeeImage;
   // ------------------------------------------------------------
   int _phoneNumber;
   int get getPhoneNumber => _phoneNumber;
   // ------------------------------------------------------------
-  String _uid;
+  static String _uid;
   String get getUID => _uid;
   // ...........................................................................
-  String _name;
+  static String _name;
   String get getName => _name;
+  setNameInClass(value) => value = _employeeImage;
   // ...........................................................................
-  String _emailAddress;
+  static String _emailAddress;
   String get getEmailAddress => _emailAddress;
   // ...........................................................................
-  String _gender;
+  static String _gender;
   String get getGender => _gender;
   // ------------------------------------------------------------
-  String _dateOfBirth;
+  static String _dateOfBirth;
   String get getDateOfBirth => _dateOfBirth;
   // ...........................................................................
 
-  String _state;
+  static String _state;
   String get getState => _state;
   // ------------------------------------------------------------
-  String _cityName;
+  static String _cityName;
   String get getCityName => _cityName;
   // ------------------------------------------------------------
   int _pinCode;
   int get getPinCode => _pinCode;
   // ------------------------------------------------------------
-  String _address;
+  static String _address;
   String get getAddress => _address;
   // ...........................................................................
-  int _roleType;
+  static int _roleType;
   int get getRoleType => _roleType;
   // ...........................................................................
 
@@ -47,57 +49,57 @@ class StorageService {
   // Clinic Related Variables and their getters
   // ------------------------------------------------------------
 
-  String _clinicName;
+  static String _clinicName;
   // ...........................................................................
   String get getClinicName => _clinicName;
 // ------------------------------------------------------------
-  int _clinicPhoneNumber;
+  static int _clinicPhoneNumber;
   int get getClinicPhoneNumber => _clinicPhoneNumber;
   // ------------------------------------------------------------
-  String _clinicLocationType;
+  static String _clinicLocationType;
   String get getClinicLocationType => _clinicLocationType;
   // ------------------------------------------------------------
-  String _clinicLogo;
+  static String _clinicLogo;
   String get getClinicLogo => _clinicLogo;
   // ...........................................................................
-  String _clinicStateName;
+  static String _clinicStateName;
   String get getClinicStateName => _clinicStateName;
   // ------------------------------------------------------------
-  String _clinicCityName;
+  static String _clinicCityName;
   String get getClinicCityName => _clinicCityName;
   // ------------------------------------------------------------
-  String _clinicAddress;
+  static String _clinicAddress;
   String get getClinicAddress => _clinicAddress;
   // ------------------------------------------------------------
-  String _clinicPinCode;
+  static String _clinicPinCode;
   String get getClinicPinCode => _clinicPinCode;
   // ------------------------------------------------------------
-  String _clinicAddressProof;
+  static String _clinicAddressProof;
   String get getClinicAddressProof => _clinicAddressProof;
   // ...........................................................................
-  String _clinicOwnerName;
+  static String _clinicOwnerName;
   String get getClinicOwnerName => _clinicOwnerName;
   // ------------------------------------------------------------
-  int _clinicOwnerPhoneNumber;
+  static int _clinicOwnerPhoneNumber;
   int get getClinicPhone => _clinicOwnerPhoneNumber;
   // ------------------------------------------------------------
-  String _clinicOwnerIdProofType;
+  static String _clinicOwnerIdProofType;
   String get getClinicOwnerIdProofType => _clinicOwnerIdProofType;
   // ------------------------------------------------------------
-  String _clinicOwnerIdProof;
+  static String _clinicOwnerIdProof;
   String get getClinicOwnerIdProof => _clinicOwnerIdProof;
   // ------------------------------------------------------------
-  int _clinicLocationLongitude;
+  static int _clinicLocationLongitude;
   int get getClinicLocationLongitude => _clinicLocationLongitude;
   // ------------------------------------------------------------
-  int _clinicLocationLatitude;
+  static int _clinicLocationLatitude;
   int get getClinicLocationLatitude => _clinicLocationLatitude;
   // ...........................................................................
 
   // ___________________________________________________________________________
   // Assign the variables if present
 
-  Future<void> initLocalStorages() async {
+  Future initLocalStorages() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     // .........................................................................
     _uid = _localStorage.getString(uidLocalStorageKey);

@@ -106,8 +106,7 @@ class RoleSelectScreenView extends StatelessWidget {
                     ),
                     FadeInLTR(
                       0.9,
-                      buildOutlineButton("Continue",
-                          model.navigateTocreateOrSearchClinicScreenView),
+                      buildOutlineButton("Continue", model.saveRoleType),
                     ),
                   ],
                 ),

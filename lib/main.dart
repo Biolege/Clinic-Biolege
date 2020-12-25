@@ -13,7 +13,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await ThemeManager.initialise();
-  StorageService().initLocalStorages();
+  await StorageService().initLocalStorages();
+
   setupLocator();
   setupDialogUi();
   runApp(MyApp());

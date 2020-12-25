@@ -9,13 +9,7 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
 
   TextEditingController clinicOwnerName = TextEditingController();
   TextEditingController clinicPhoneNumber = TextEditingController();
-  String _idProofType = "PAN";
   final clinicDesciptionFormKey = GlobalKey<FormState>();
-
-  void setIdProofType(String type) {
-    _idProofType = type;
-    print(_idProofType);
-  }
 
   // void navigateToWelcomeScreen() {
   //   _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,

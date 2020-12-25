@@ -16,18 +16,21 @@ class RootViewModel extends BaseViewModel {
 
   Future handleStartupLogic() async {
     var hasLoggedIn = await _authenticationService.isUserLoggedIn();
+
+    print(_storageService.getRoleType);
+
     if (hasLoggedIn) {
       if (_storageService.getName == null)
-        _navigatorService.clearStackAndShow(Routes.nameScreenView);
-      if (_storageService.getEmailAddress == null)
-        _navigatorService.clearStackAndShow(Routes.emailScreenView);
-      if (_storageService.getDateOfBirth == null)
-        _navigatorService.clearStackAndShow(Routes.genderScreenView);
-      if (_storageService.getAddress == null)
-        _navigatorService.clearStackAndShow(Routes.addressScreenView);
-      if (_storageService.getRoleType == null)
-        _navigatorService.clearStackAndShow(Routes.roleSelectScreenView);
-      if (_storageService.getClinicName == null)
+        _navigatorService.clearTillFirstAndShow(Routes.nameScreenView);
+      else if (_storageService.getEmailAddress == null)
+        _navigatorService.clearTillFirstAndShow(Routes.emailScreenView);
+      else if (_storageService.getDateOfBirth == null)
+        _navigatorService.clearTillFirstAndShow(Routes.genderScreenView);
+      else if (_storageService.getAddress == null)
+        _navigatorService.clearTillFirstAndShow(Routes.addressScreenView);
+      else if (_storageService.getRoleType == null)
+        _navigatorService.clearTillFirstAndShow(Routes.roleSelectScreenView);
+      else if (_storageService.getClinicName == null)
         _navigatorService
             .clearStackAndShow(Routes.createOrSearchClinicScreenView);
     } else

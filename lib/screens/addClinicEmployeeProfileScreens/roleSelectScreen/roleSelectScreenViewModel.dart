@@ -20,6 +20,7 @@ class RoleSelectViewModel extends BaseViewModel {
 
   void saveRoleType() async {
     await _storageService.setRoleType(_role);
+    navigateTocreateOrSearchClinicScreenView();
   }
 
   void navigateTocreateOrSearchClinicScreenView() {
