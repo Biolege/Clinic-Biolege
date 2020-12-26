@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'dart:async';
@@ -21,6 +22,7 @@ class OTPScreenViewModel extends BaseViewModel {
   String _currentText = "";
   int _otpCounter = 30;
   String _enteredPhoneNumber;
+
   // __________________________________________________________________________
   // Controllers
   StreamController<ErrorAnimationType> errorController =
@@ -50,10 +52,8 @@ class OTPScreenViewModel extends BaseViewModel {
   }
 
   void startVerifingOTP() async {
-    var result = await _authenticationService
+    await _authenticationService
         .signInPhoneNumberWithOTP(otpTextController.text);
-
-    if (result == true) navigateToNameScreen();
   }
 
   void resendOTP() async {
@@ -64,6 +64,7 @@ class OTPScreenViewModel extends BaseViewModel {
   // Init State Function
   void initialise(BuildContext context) async {
     _enteredPhoneNumber = _authenticationService.getEnteredPhoneNumber;
+    // __________________________________________________________
     onTapRecognizer = TapGestureRecognizer()
       ..onTap = () {
         Navigator.pop(context);
@@ -77,6 +78,8 @@ class OTPScreenViewModel extends BaseViewModel {
       } else
         timer.cancel();
     });
+
+    // __________________________________________________________
   }
 
   // __________________________________________________________________________

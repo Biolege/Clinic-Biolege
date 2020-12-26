@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   sms_autofill: ^1.2.6
   rename: ^1.2.0
+  image_picker: ^0.6.7+17
   # Authentication and Database
   firebase_auth: ^0.18.4+1
   firebase_core: ^0.5.3

@@ -20,8 +20,8 @@ class CreateOrSearchClinicViewModel extends BaseViewModel {
   String logo = "asset/images/logo.png";
 
   void navigateToSeachClinicView() async {
-    _authenticationService.signOut();
-    // _navigatorService.navigateTo(Routes.searchClinicScreenView);
+    // _authenticationService.signOut();
+    _navigatorService.navigateTo(Routes.searchClinicScreenView);
   }
 
   void navigateToAddClinicView() {

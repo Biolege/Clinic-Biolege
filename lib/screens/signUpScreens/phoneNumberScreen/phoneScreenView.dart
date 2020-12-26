@@ -53,7 +53,10 @@ class PhoneScreenView extends StatelessWidget {
                       0.9,
                       Form(
                           key: model.phoneNumberFormKey,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           child: TextFormField(
+                            validator: (value) =>
+                                model.validatePhoneNumber(value),
                             maxLength: 10,
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             keyboardType: TextInputType.phone,

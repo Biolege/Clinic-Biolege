@@ -12,10 +12,28 @@ class PhoneViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Controller
   TextEditingController phoneNumber = TextEditingController();
-  GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
+  final phoneNumberFormKey = GlobalKey<FormState>();
+  // __________________________________________________________________________
+  // Controller
+
+  String validatePhoneNumber(String phone) {
+    return phone.isEmpty
+        ? "Phone number cannot be empty"
+        : phone.length == 10
+            ? null
+            : "Phone number should be 10 digits";
+  }
+
+  void startVerifyPhoneAuthentication() {
+    phoneNumberFormKey.currentState.save();
+
+    if (!phoneNumberFormKey.currentState.validate()) return;
+
+    verifyPhoneAuthentication("+91" + phoneNumber.text);
+  }
 
   // __________________________________________________________________________
-  void startVerifyPhoneAuthentication() async {
-    await _authenticationService.verifyPhoneNumber("+91" + phoneNumber.text);
+  void verifyPhoneAuthentication(String phone) async {
+    await _authenticationService.verifyPhoneNumber(phone);
   }
 }

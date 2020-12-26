@@ -7,7 +7,6 @@ class StorageService {
   // ...........................................................................
   static String _employeeImage;
   String get getEmployeeImage => _employeeImage;
-  setEmployeeInClass(value) => value = _employeeImage;
   // ------------------------------------------------------------
   int _phoneNumber;
   int get getPhoneNumber => _phoneNumber;
@@ -17,7 +16,6 @@ class StorageService {
   // ...........................................................................
   static String _name;
   String get getName => _name;
-  setNameInClass(value) => value = _employeeImage;
   // ...........................................................................
   static String _emailAddress;
   String get getEmailAddress => _emailAddress;
@@ -28,7 +26,6 @@ class StorageService {
   static String _dateOfBirth;
   String get getDateOfBirth => _dateOfBirth;
   // ...........................................................................
-
   static String _state;
   String get getState => _state;
   // ------------------------------------------------------------
@@ -48,16 +45,15 @@ class StorageService {
   // ___________________________________________________________________________
   // Clinic Related Variables and their getters
   // ------------------------------------------------------------
-
-  static String _clinicName;
   // ...........................................................................
+  static String _clinicName;
   String get getClinicName => _clinicName;
 // ------------------------------------------------------------
   static int _clinicPhoneNumber;
   int get getClinicPhoneNumber => _clinicPhoneNumber;
   // ------------------------------------------------------------
-  static String _clinicLocationType;
-  String get getClinicLocationType => _clinicLocationType;
+  static int _clinicLocationType;
+  int get getClinicLocationType => _clinicLocationType;
   // ------------------------------------------------------------
   static String _clinicLogo;
   String get getClinicLogo => _clinicLogo;
@@ -131,7 +127,7 @@ class StorageService {
     _clinicPhoneNumber = _localStorage.getInt(clinicPhoneNumberLocalStorageKey);
     // ------------------------------------------------------------------
     _clinicLocationType =
-        _localStorage.getString(clinicLocationTypeLocalStorageKey);
+        _localStorage.getInt(clinicLocationTypeLocalStorageKey);
     // ------------------------------------------------------------------
     _clinicLogo = _localStorage.getString(clinicLogoLocalStorageKey);
     // .........................................................................
@@ -234,7 +230,7 @@ class StorageService {
   Future setClinicDetails({
     String clinicName,
     int clinicPhone,
-    String clinicLocationType,
+    int clinicLocationType,
     String clinicLogo,
   }) async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
@@ -247,7 +243,7 @@ class StorageService {
     await _localStorage.setString(clinicNameLocalStorageKey, _clinicName);
     await _localStorage.setInt(
         clinicPhoneNumberLocalStorageKey, _clinicPhoneNumber);
-    await _localStorage.setString(
+    await _localStorage.setInt(
         clinicLocationTypeLocalStorageKey, _clinicLocationType);
     await _localStorage.setString(clinicLogoLocalStorageKey, _clinicLogo);
   }
@@ -307,34 +303,6 @@ class StorageService {
         clinicOwnerIdProofTypeLocalStorageKey, _clinicOwnerIdProofType);
   }
 
-  // ...........................................................................
-  Future setClinicOwnerDescription({
-    String clinicOwnerName,
-    String clinicOwnerIdProofType,
-    String clinicOwnerIdProof,
-    int clinicPhoneNumber,
-    int clinicLocationLongitude,
-    int clinicLocationLatitude,
-  }) async {
-    SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    _clinicOwnerName = clinicOwnerName;
-    _clinicPhoneNumber = clinicPhoneNumber;
-    _clinicOwnerIdProofType = clinicOwnerIdProofType;
-    _clinicOwnerIdProof = clinicOwnerIdProof;
-
-    await _localStorage.setString(
-        clinicOwnerNameLocalStorageKey, _clinicOwnerName);
-    await _localStorage.setInt(
-        clinicPhoneNumberLocalStorageKey, _clinicPhoneNumber);
-    await _localStorage.setInt(
-        clinicLocationLongitudeLocalStorageKey, _clinicLocationLongitude);
-    await _localStorage.setInt(
-        clinicLocationLatitudeLocalStorageKey, _clinicLocationLatitude);
-    await _localStorage.setString(
-        clinicOwnerIdProofLocalStorageKey, _clinicOwnerIdProof);
-    await _localStorage.setString(
-        clinicOwnerIdProofTypeLocalStorageKey, _clinicOwnerIdProofType);
-  }
   // ...........................................................................
 
 // _____________________________________________________________________________
@@ -425,9 +393,9 @@ class StorageService {
   }
 
 // ---------------------------------------------------------------
-  Future<String> getClinicLocationTypeFromLocal() async {
+  Future<int> getClinicLocationTypeFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    return _localStorage.getString(clinicLocationTypeLocalStorageKey);
+    return _localStorage.getInt(clinicLocationTypeLocalStorageKey);
   }
 
 // ---------------------------------------------------------------
@@ -545,7 +513,7 @@ class StorageService {
 
 // _____________________________________________________________________________
 // Getter for all clinic details from local
-  Future<Map<String, String>> getAllClinicDetailsFromLocal() async {
+  Future<Map<String, dynamic>> getAllClinicDetailsFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     return {
       // .......................................................................
@@ -553,10 +521,10 @@ class StorageService {
           _localStorage.getString(clinicNameLocalStorageKey),
       // ------------------------------------------------------------------
       clinicPhoneNumberLocalStorageKey:
-          _localStorage.getInt(clinicPhoneNumberLocalStorageKey).toString(),
+          _localStorage.getInt(clinicPhoneNumberLocalStorageKey),
       // ------------------------------------------------------------------
       clinicLocationTypeLocalStorageKey:
-          _localStorage.getString(clinicLocationTypeLocalStorageKey),
+          _localStorage.getInt(clinicLocationTypeLocalStorageKey),
       // ------------------------------------------------------------------
       clinicLogoLocalStorageKey:
           _localStorage.getString(clinicLogoLocalStorageKey),

@@ -1,8 +1,8 @@
-import 'services/services/local_storage.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'services/services/local_storage.dart';
 import 'widgets/dialog.dart';
 import 'screens/splashScreen/splashScreenView.dart';
 import 'theme/theme.dart';

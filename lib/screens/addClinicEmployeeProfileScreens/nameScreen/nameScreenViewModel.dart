@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../../../services/services/auth_service.dart';
 import '../../../services/services/local_storage.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
@@ -11,6 +12,8 @@ class NameViewModel extends BaseViewModel {
 
   final NavigationService _navigatorService = locator<NavigationService>();
   final StorageService _storageService = locator<StorageService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   // _________________________________________________________________________
   // Controllers
 
@@ -23,11 +26,12 @@ class NameViewModel extends BaseViewModel {
   String validateName(String value) {
     return value.isEmpty
         ? "Name cannot be empty"
-        : value.length > 5
+        : value.length > 2
             ? null
-            : "Name should be atleast 5 characters long";
-  } // _________________________________________________________________________
+            : "Name should be atleast 3 characters long";
+  }
 
+  // _________________________________________________________________________
   // Saving Name
   void saveName() async {
     nameFormKey.currentState.save();

@@ -76,6 +76,8 @@ class AddClinicScreenView extends StatelessWidget {
                           FadeInLTR(
                             0.9,
                             TextFormField(
+                              validator: (value) =>
+                                  model.validateClinicName(value),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               maxLength: 30,
@@ -107,6 +109,8 @@ class AddClinicScreenView extends StatelessWidget {
                           FadeInLTR(
                             1.2,
                             TextFormField(
+                              validator: (value) =>
+                                  model.validateClinicPhoneNumber(value),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               maxLength: 10,
@@ -157,10 +161,8 @@ class AddClinicScreenView extends StatelessWidget {
                                   ],
                                   onToggle: (index) => {
                                         index == 0
-                                            ? model.setClinicTypeValue(
-                                                "ATTACH TO PHARMACY")
-                                            : model.setClinicTypeValue(
-                                                "SEPERATE CLINIC")
+                                            ? model.setClinicTypeValue(0)
+                                            : model.setClinicTypeValue(1)
                                       }),
                             ),
                           ),
@@ -188,7 +190,14 @@ class AddClinicScreenView extends StatelessWidget {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w300),
                                     ),
-                                    () {}),
+                                    () => model.pickClinicLogo()),
+                                model.getClinicLogo != null
+                                    ? Image.memory(
+                                        model.getClinicLogo,
+                                        width: 50,
+                                        height: 50,
+                                      )
+                                    : Text("No file selected")
                               ],
                             ),
                           )
@@ -200,8 +209,7 @@ class AddClinicScreenView extends StatelessWidget {
                     ),
                     FadeInLTR(
                       2.1,
-                      buildOutlineButton(
-                          "Continue", model.navigateToAddClinicDescriptionView),
+                      buildOutlineButton("Continue", model.saveClinicDetails),
                     ),
                   ],
                 ),

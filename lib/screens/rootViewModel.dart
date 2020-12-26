@@ -17,11 +17,9 @@ class RootViewModel extends BaseViewModel {
   Future handleStartupLogic() async {
     var hasLoggedIn = await _authenticationService.isUserLoggedIn();
 
-    print(_storageService.getRoleType);
-
     if (hasLoggedIn) {
       if (_storageService.getName == null)
-        _navigatorService.clearTillFirstAndShow(Routes.nameScreenView);
+        _navigatorService.clearStackAndShow(Routes.nameScreenView);
       else if (_storageService.getEmailAddress == null)
         _navigatorService.clearTillFirstAndShow(Routes.emailScreenView);
       else if (_storageService.getDateOfBirth == null)

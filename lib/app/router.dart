@@ -4,7 +4,8 @@
 // flutter pub run build_runner build --delete-conflicting-outputs
 // _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
-import 'package:clinicapp/screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicServiceSelectionScreen/clinicOwnerDetailsScreenView.dart';
+import '../screens/rootView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicServiceSelectionScreen/clinicOwnerDetailsScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDetailsScreen/createClinicScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicOwnerDetailsScreens/enterOwnerDetailsView.dart';
 import '../screens/addClinicEmployeeProfileScreens/addressScreen/addressScreenView.dart';
@@ -34,6 +35,11 @@ import '../screens/signUpScreens/otpScreen/otpScreenView.dart';
 import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
 
 @MaterialAutoRouter(routes: <AutoRoute>[
+  // ___________________________________________________________________________
+  MaterialRoute(
+    path: Root.routeName,
+    page: Root,
+  ),
   // ___________________________________________________________________________
   MaterialRoute(
     path: OnBoardingScreen.routeName,

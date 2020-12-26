@@ -1,3 +1,4 @@
+import 'services/filePicker_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_themes/stacked_themes.dart';
@@ -14,4 +15,5 @@ abstract class ThirdPartyServicesModule {
   APIServices get aPIServices;
   DialogService get dialogService;
   SnackbarService get snackbarService;
+  FilePickHelperService get filePickHelperService;
 }

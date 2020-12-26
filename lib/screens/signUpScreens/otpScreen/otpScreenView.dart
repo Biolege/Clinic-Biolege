@@ -1,3 +1,5 @@
+import 'package:sms_autofill/sms_autofill.dart';
+
 import '../../../theme/theme.dart';
 import '../../../widgets/animations.dart';
 import 'package:flutter/material.dart';
