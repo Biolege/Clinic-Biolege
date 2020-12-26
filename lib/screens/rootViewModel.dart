@@ -17,6 +17,13 @@ class RootViewModel extends BaseViewModel {
   Future handleStartupLogic() async {
     var hasLoggedIn = await _authenticationService.isUserLoggedIn();
 
+    print(_storageService.getName);
+    print(_storageService.getEmailAddress);
+    print(_storageService.getDateOfBirth);
+    print(_storageService.getAddress);
+    print(_storageService.getRoleType);
+    print(_storageService.getClinicName);
+
     if (hasLoggedIn) {
       if (_storageService.getName == null)
         _navigatorService.clearStackAndShow(Routes.nameScreenView);
@@ -28,7 +35,7 @@ class RootViewModel extends BaseViewModel {
         _navigatorService.clearTillFirstAndShow(Routes.addressScreenView);
       else if (_storageService.getRoleType == null)
         _navigatorService.clearTillFirstAndShow(Routes.roleSelectScreenView);
-      else if (_storageService.getClinicName == null)
+      else
         _navigatorService
             .clearStackAndShow(Routes.createOrSearchClinicScreenView);
     } else

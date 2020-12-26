@@ -79,17 +79,17 @@ class StorageService {
   static int _clinicOwnerPhoneNumber;
   int get getClinicPhone => _clinicOwnerPhoneNumber;
   // ------------------------------------------------------------
-  static String _clinicOwnerIdProofType;
-  String get getClinicOwnerIdProofType => _clinicOwnerIdProofType;
+  static int _clinicOwnerIdProofType;
+  int get getClinicOwnerIdProofType => _clinicOwnerIdProofType;
   // ------------------------------------------------------------
   static String _clinicOwnerIdProof;
   String get getClinicOwnerIdProof => _clinicOwnerIdProof;
   // ------------------------------------------------------------
-  static int _clinicLocationLongitude;
-  int get getClinicLocationLongitude => _clinicLocationLongitude;
+  static double _clinicLocationLongitude;
+  double get getClinicLocationLongitude => _clinicLocationLongitude;
   // ------------------------------------------------------------
-  static int _clinicLocationLatitude;
-  int get getClinicLocationLatitude => _clinicLocationLatitude;
+  static double _clinicLocationLatitude;
+  double get getClinicLocationLatitude => _clinicLocationLatitude;
   // ...........................................................................
 
   // ___________________________________________________________________________
@@ -148,16 +148,16 @@ class StorageService {
         _localStorage.getInt(clinicOwnerPhoneLocalStorageKey);
     // ------------------------------------------------------------------
     _clinicOwnerIdProofType =
-        _localStorage.getString(clinicOwnerIdProofTypeLocalStorageKey);
+        _localStorage.getInt(clinicOwnerIdProofTypeLocalStorageKey);
     // ------------------------------------------------------------------
     _clinicOwnerIdProof =
         _localStorage.getString(clinicOwnerIdProofLocalStorageKey);
     // ------------------------------------------------------------------
     _clinicLocationLongitude =
-        _localStorage.getInt(clinicLocationLongitudeLocalStorageKey);
+        _localStorage.getDouble(clinicLocationLongitudeLocalStorageKey);
     // ------------------------------------------------------------------
     _clinicLocationLatitude =
-        _localStorage.getInt(clinicLocationLatitudeLocalStorageKey);
+        _localStorage.getDouble(clinicLocationLatitudeLocalStorageKey);
     //.........................................................................
   }
 
@@ -278,10 +278,10 @@ class StorageService {
   Future setClinicOwnerDetails({
     String clinicOwnerName,
     int clinicOwnerPhoneNumber,
-    String clinicOwnerIdProofType,
+    int clinicOwnerIdProofType,
     String clinicOwnerIdProof,
-    int clinicLocationLongitude,
-    int clinicLocationLatitude,
+    double clinicLocationLongitude,
+    double clinicLocationLatitude,
   }) async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     _clinicOwnerName = clinicOwnerName;
@@ -293,13 +293,13 @@ class StorageService {
         clinicOwnerNameLocalStorageKey, _clinicOwnerName);
     await _localStorage.setInt(
         clinicOwnerPhoneLocalStorageKey, _clinicOwnerPhoneNumber);
-    await _localStorage.setInt(
+    await _localStorage.setDouble(
         clinicLocationLongitudeLocalStorageKey, _clinicLocationLongitude);
-    await _localStorage.setInt(
+    await _localStorage.setDouble(
         clinicLocationLatitudeLocalStorageKey, _clinicLocationLatitude);
     await _localStorage.setString(
         clinicOwnerIdProofLocalStorageKey, _clinicOwnerIdProof);
-    await _localStorage.setString(
+    await _localStorage.setInt(
         clinicOwnerIdProofTypeLocalStorageKey, _clinicOwnerIdProofType);
   }
 
@@ -447,9 +447,9 @@ class StorageService {
   }
 // ---------------------------------------------------------------
 
-  Future<String> getClinicOwnerIdProofTypeFromLocal() async {
+  Future<int> getClinicOwnerIdProofTypeFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    return _localStorage.getString(clinicOwnerIdProofTypeLocalStorageKey);
+    return _localStorage.getInt(clinicOwnerIdProofTypeLocalStorageKey);
   }
 // ---------------------------------------------------------------
 
@@ -459,15 +459,15 @@ class StorageService {
   }
 // ---------------------------------------------------------------
 
-  Future<int> getClinicLocationLongitudeFromLocal() async {
+  Future<double> getClinicLocationLongitudeFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    return _localStorage.getInt(clinicLocationLongitudeLocalStorageKey);
+    return _localStorage.getDouble(clinicLocationLongitudeLocalStorageKey);
   }
 
 // ---------------------------------------------------------------
-  Future<int> getClinicLocationLatitudeFromLocal() async {
+  Future<double> getClinicLocationLatitudeFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    return _localStorage.getInt(clinicLocationLatitudeLocalStorageKey);
+    return _localStorage.getDouble(clinicLocationLatitudeLocalStorageKey);
   }
 
 // .............................................................................
@@ -553,17 +553,17 @@ class StorageService {
 
       // ------------------------------------------------------------------
       clinicOwnerIdProofTypeLocalStorageKey:
-          _localStorage.getString(clinicOwnerIdProofTypeLocalStorageKey),
+          _localStorage.getInt(clinicOwnerIdProofTypeLocalStorageKey),
       // ------------------------------------------------------------------
       clinicOwnerIdProofLocalStorageKey:
           _localStorage.getString(clinicOwnerIdProofLocalStorageKey),
       // ------------------------------------------------------------------
       clinicLocationLongitudeLocalStorageKey: _localStorage
-          .getInt(clinicLocationLongitudeLocalStorageKey)
+          .getDouble(clinicLocationLongitudeLocalStorageKey)
           .toString(),
       // ------------------------------------------------------------------
       clinicLocationLatitudeLocalStorageKey: _localStorage
-          .getInt(clinicLocationLatitudeLocalStorageKey)
+          .getDouble(clinicLocationLatitudeLocalStorageKey)
           .toString(),
       // .......................................................................
     };

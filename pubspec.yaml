@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
   # Basic Flutter Dependencies
   cupertino_icons: ^1.0.0
   flutter_icons: ^1.1.0
@@ -38,7 +39,7 @@ dependencies:
   google_fonts: ^1.1.1
   simple_animations: ^2.2.3
   # Basic Components
-  intl: ^0.16.1   
+  intl: ^0.16.0
   validators: ^2.0.1
   pin_code_fields: ^6.0.1
   toggle_switch: ^0.1.8
@@ -47,9 +48,12 @@ dependencies:
   sms_autofill: ^1.2.6
   rename: ^1.2.0
   image_picker: ^0.6.7+17
+  location: ^3.0.0
+  geolocator: ^6.1.13
   # Authentication and Database
   firebase_auth: ^0.18.4+1
   firebase_core: ^0.5.3
+  google_maps_flutter: ^1.0.6
   # http request
   http: ^0.12.2
   # Async package to add additional cancellable operations

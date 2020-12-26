@@ -14,7 +14,7 @@ class PhoneViewModel extends BaseViewModel {
   TextEditingController phoneNumber = TextEditingController();
   final phoneNumberFormKey = GlobalKey<FormState>();
   // __________________________________________________________________________
-  // Controller
+  // Validators
 
   String validatePhoneNumber(String phone) {
     return phone.isEmpty
@@ -24,6 +24,7 @@ class PhoneViewModel extends BaseViewModel {
             : "Phone number should be 10 digits";
   }
 
+  // __________________________________________________________________________
   void startVerifyPhoneAuthentication() {
     phoneNumberFormKey.currentState.save();
 

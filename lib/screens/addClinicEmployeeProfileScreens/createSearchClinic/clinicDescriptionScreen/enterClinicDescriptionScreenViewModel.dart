@@ -89,6 +89,10 @@ class AddClinicDescriptionViewModel extends BaseViewModel {
   void saveClinicDescription() async {
     clinicDesciptionFormKey.currentState.save();
     if (!clinicDesciptionFormKey.currentState.validate()) return;
+    if (_selectedClinicAddressProof == null) {
+      _snackBarService.showSnackbar(message: "Please upload an address proof");
+      return;
+    }
     // Sets the value in Local Storage
     await _storageService.setClinicDescription(
       clinicStateName: clinicStateName.text,
