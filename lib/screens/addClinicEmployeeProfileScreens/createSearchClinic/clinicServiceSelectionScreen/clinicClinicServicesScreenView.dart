@@ -1,4 +1,5 @@
 import 'package:clinicapp/main.dart';
+import 'package:clinicapp/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -6,7 +7,7 @@ import '../../../../widgets/reusables.dart';
 import '../../../../app/size_configuration.dart';
 
 import '../../../../widgets/animations.dart';
-import 'clinicOwnerDetailsScreenViewModel.dart';
+import 'clinicClinicServicesScreenViewModel.dart';
 
 class ClinicServiceSelectionView extends StatelessWidget {
   static const routeName = "/clinicServiceSelectionView";
@@ -56,31 +57,49 @@ class ClinicServiceSelectionView extends StatelessWidget {
                     SizedBox(
                       height: getProportionateScreenHeight(30),
                     ),
-                    Form(
-                        key: model.clinicDesciptionFormKey,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                buildBasicOutlineButton(
-                                    Text("Blood Test"), () {}),
-                                buildBasicOutlineButton(Text("X - Ray"), () {}),
-                                buildBasicOutlineButton(Text("MRI"), () {})
-                              ],
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                buildBasicOutlineButton(Text("ECG"), () {}),
-                                buildBasicOutlineButton(
-                                    Text("Sonography"), () {}),
-                              ],
-                            ),
-                          ],
-                        )),
+                    // Form(
+                    //     key: model.clinicDesciptionFormKey,
+                    //     child: Column(
+                    //       children: [
+                    //         Row(
+                    //           mainAxisSize: MainAxisSize.max,
+                    //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //           children: [
+                    //             buildBasicOutlineButton(
+                    //                 Text("Blood Test"), () {}),
+                    //             buildBasicOutlineButton(Text("X - Ray"), () {}),
+                    //             buildBasicOutlineButton(Text("MRI"), () {})
+                    //           ],
+                    //         ),
+                    //         Row(
+                    //           mainAxisSize: MainAxisSize.max,
+                    //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //           children: [
+                    //             buildBasicOutlineButton(Text("ECG"), () {}),
+                    //             buildBasicOutlineButton(
+                    //                 Text("Sonography"), () {}),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     )),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: model.serviceList.length,
+                        itemBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CheckboxListTile(
+                                value: model.selected
+                                    .contains(model.serviceList[index]),
+                                title: Text(
+                                  model.serviceList[index],
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                tileColor: offWhite1,
+                                selectedTileColor: offWhite2,
+                                onChanged: (_) =>
+                                    model.addService(model.serviceList[index]),
+                              ),
+                            )),
                     Spacer(),
                     FadeInLTR(
                         1.8,
@@ -88,7 +107,7 @@ class ClinicServiceSelectionView extends StatelessWidget {
                           children: [
                             buildOutlineButton(
                               "Continue",
-                              model.navigateToWelcomeScreen,
+                              model.saveClinicServiceToLocal,
                             ),
                           ],
                         ))

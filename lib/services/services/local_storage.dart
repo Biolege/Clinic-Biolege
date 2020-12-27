@@ -91,7 +91,9 @@ class StorageService {
   static double _clinicLocationLatitude;
   double get getClinicLocationLatitude => _clinicLocationLatitude;
   // ...........................................................................
-
+  static List<String> _clinicServices;
+  List<String> get getClinicServices => _clinicServices;
+  // ...........................................................................
   // ___________________________________________________________________________
   // Assign the variables if present
 
@@ -158,6 +160,9 @@ class StorageService {
     // ------------------------------------------------------------------
     _clinicLocationLatitude =
         _localStorage.getDouble(clinicLocationLatitudeLocalStorageKey);
+    //.........................................................................
+    _clinicServices =
+        _localStorage.getStringList(clinicServicesLocalStorageKey);
     //.........................................................................
   }
 
@@ -303,6 +308,13 @@ class StorageService {
         clinicOwnerIdProofTypeLocalStorageKey, _clinicOwnerIdProofType);
   }
 
+  // ...........................................................................
+  Future setClinicService(List<String> service) async {
+    SharedPreferences _localStorage = await SharedPreferences.getInstance();
+
+    _clinicServices = service;
+    _localStorage.setStringList(clinicServicesLocalStorageKey, _clinicServices);
+  }
   // ...........................................................................
 
 // _____________________________________________________________________________
@@ -471,6 +483,13 @@ class StorageService {
   }
 
 // .............................................................................
+
+  Future<List<String>> getClinicService() async {
+    SharedPreferences _localStorage = await SharedPreferences.getInstance();
+    return _localStorage.getStringList(clinicServicesLocalStorageKey);
+  }
+
+  // ...........................................................................
 // _____________________________________________________________________________
 // Getter for all user details from local
   Future<Map<String, String>> getAllUserDetailsFromLocal() async {
@@ -506,8 +525,7 @@ class StorageService {
           _localStorage.getInt(roleTypeLocalStorageKey).toString(),
       // .......................................................................
       employeeImageLocalStorageKey:
-          _localStorage.getString(employeeImageLocalStorageKey)
-      // .......................................................................
+          _localStorage.getString(employeeImageLocalStorageKey),
     };
   }
 
@@ -566,6 +584,8 @@ class StorageService {
           .getDouble(clinicLocationLatitudeLocalStorageKey)
           .toString(),
       // .......................................................................
+      clinicServicesLocalStorageKey:
+          _localStorage.getStringList(clinicServicesLocalStorageKey)
     };
   }
   // ___________________________________________________________________________

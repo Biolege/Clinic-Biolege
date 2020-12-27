@@ -146,7 +146,8 @@ class AddClinicScreenView extends StatelessWidget {
                                   minWidth: SizeConfig.screenWidth / 2.4,
                                   minHeight: getProportionateScreenHeight(40),
                                   fontSize: 12,
-                                  initialLabelIndex: 0,
+                                  initialLabelIndex:
+                                      model.getClinicLocationType,
                                   activeBgColor: offWhite,
                                   activeFgColor: offBlack2,
                                   inactiveBgColor: offWhite1,

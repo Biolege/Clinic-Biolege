@@ -147,7 +147,7 @@ class AddClinicOwnerDetailsScreenView extends StatelessWidget {
                                   minWidth: SizeConfig.screenWidth / 3.5,
                                   minHeight: getProportionateScreenHeight(40),
                                   fontSize: 12,
-                                  initialLabelIndex: 0,
+                                  initialLabelIndex: model.getOwnerProofType,
                                   activeBgColor: offWhite,
                                   activeFgColor: offWhite1,
                                   inactiveBgColor: offWhite1,

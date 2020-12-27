@@ -11,6 +11,7 @@ import 'app/locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
   await ThemeManager.initialise();
   await StorageService().initLocalStorages();

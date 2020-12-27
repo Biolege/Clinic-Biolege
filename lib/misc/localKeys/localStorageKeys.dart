@@ -60,3 +60,6 @@ String clinicLocationLongitudeLocalStorageKey = "CLINICLOCATIONLONGITUDE";
 
 String clinicLocationLatitudeLocalStorageKey = "CLINICLOCATIONLATITUDE";
 // ...........................................................................
+
+String clinicServicesLocalStorageKey = "CLINICSERVICES";
+// ...........................................................................

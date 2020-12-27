@@ -20,7 +20,7 @@ class AddClinicViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Controller and Variables
   int _clinicLocationType = 0;
-
+  int get getClinicLocationType => _clinicLocationType;
   File clinicLogo;
 
   Uint8List _selectedClinicLogo;

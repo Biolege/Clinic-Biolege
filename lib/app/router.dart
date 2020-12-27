@@ -5,7 +5,7 @@
 // _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
 import '../screens/rootView.dart';
-import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicServiceSelectionScreen/clinicOwnerDetailsScreenView.dart';
+import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicServiceSelectionScreen/clinicClinicServicesScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDetailsScreen/createClinicScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicOwnerDetailsScreens/enterOwnerDetailsView.dart';
 import '../screens/addClinicEmployeeProfileScreens/addressScreen/addressScreenView.dart';

@@ -24,7 +24,7 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Controller and Variables
   int _idProofType = 0;
-
+  int get getOwnerProofType => _idProofType;
   Uint8List _selectedClinicOwnerIdProof;
   Uint8List get getClinicOwnerIdProof => _selectedClinicOwnerIdProof;
 

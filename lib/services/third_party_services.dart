@@ -8,8 +8,11 @@ import 'services/local_storage.dart';
 
 abstract class ThirdPartyServicesModule {
   @lazySingleton
+  // Servies for navigation
   NavigationService get navigationService;
+  // Servies for navigation
   ThemeService get themeService;
+  
   AuthenticationService get authenticationService;
   StorageService get localStorageService;
   APIServices get aPIServices;
