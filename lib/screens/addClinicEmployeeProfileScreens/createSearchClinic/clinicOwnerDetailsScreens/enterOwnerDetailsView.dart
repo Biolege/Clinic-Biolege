@@ -177,6 +177,7 @@ class AddClinicOwnerDetailsScreenView extends StatelessWidget {
                           FadeInLTR(
                             1.2,
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 buildBasicOutlineButton(
                                     Text(
@@ -184,7 +185,14 @@ class AddClinicOwnerDetailsScreenView extends StatelessWidget {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w300),
                                     ),
-                                    () {}),
+                                    () => model.pickClinicOwnerIdProof()),
+                                model.getClinicOwnerIdProof != null
+                                    ? Image.memory(
+                                        model.getClinicOwnerIdProof,
+                                        width: 50,
+                                        height: 50,
+                                      )
+                                    : Text("No file selected")
                               ],
                             ),
                           ),

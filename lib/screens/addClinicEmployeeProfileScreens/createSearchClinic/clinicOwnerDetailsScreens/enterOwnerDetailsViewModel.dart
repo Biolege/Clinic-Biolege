@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,6 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 import '../../../../services/services/local_storage.dart';
+import '../../../../services/services/filePicker_service.dart';
 
 class AddClinicOwnerDetailsViewModel extends BaseViewModel {
   // __________________________________________________________________________
@@ -14,21 +18,33 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
   final NavigationService _navigatorService = locator<NavigationService>();
   final StorageService _storageService = locator<StorageService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
+  final FilePickHelperService _filePickHelperService =
+      locator<FilePickHelperService>();
 
   // __________________________________________________________________________
   // Controller and Variables
   int _idProofType = 0;
+
+  Uint8List _selectedClinicOwnerIdProof;
+  Uint8List get getClinicOwnerIdProof => _selectedClinicOwnerIdProof;
+
   final clinicOwnerDetailsFormKey = GlobalKey<FormState>();
   TextEditingController clinicOwnerName = TextEditingController();
   TextEditingController clinicPhoneNumber = TextEditingController();
+
   // Map related controllers
   bool isLocationMarked = false;
+
   double clinicLongitude, clinicLatitude;
+
   Completer<GoogleMapController> locationOnMapcontroller = Completer();
+
   LocationData locationData;
+
   GoogleMapController mapController;
   // ________________________________________________________
   final Set<Marker> markers = {};
+
   var _lastMapPosition = LatLng(28.7041, 77.1025);
   // __________________________________________________________
 
@@ -36,13 +52,25 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
     target: LatLng(28.7041, 77.1025),
     zoom: 2,
   );
+
   final LatLng center = const LatLng(28.7041, 77.1025);
 
   // __________________________________________________________________________
   // Helper function
+  void pickClinicOwnerIdProof() async {
+    // Starts the picking process
+    var image = await _filePickHelperService.pickImage(ImageSource.gallery);
+
+    // Validate the incoming filesize
+    if (validateClinicOwnerIdProof(File(image.path)) == null) return;
+    _selectedClinicOwnerIdProof = File(image.path).readAsBytesSync();
+    notifyListeners();
+  }
+
   Future<LocationData> getCurrentLocation() async {
     // Check for services and permission
     bool _serviceEnabled;
+
     PermissionStatus _permissionGranted;
 
     Location location = new Location();
@@ -50,17 +78,15 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
 
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return null;
-      }
+      if (!_serviceEnabled) return null;
     }
     _permissionGranted = await location.hasPermission();
+
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return null;
-      }
+      if (_permissionGranted != PermissionStatus.granted) return null;
     }
+
     // If all services and permission are granted returns current location
     var data = await location.getLocation();
     locationData = data;
@@ -122,6 +148,8 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
   void removeMarker() {
     markers.clear();
     isLocationMarked = false;
+    clinicLatitude = null;
+    clinicLongitude = null;
     notifyListeners();
   }
 
@@ -140,6 +168,16 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
 
   // _________________________________________________________________________
   // Validators
+
+  String validateClinicOwnerIdProof(File file) {
+    // Checks if the size the more than 3 Mb
+    if (file.lengthSync() > 3000000) {
+      _snackBarService.showSnackbar(message: "Image must be of less than 3 Mb");
+      return null;
+    } else
+      return "Success";
+  }
+
   String validateClinicOwnerName(String value) {
     return value.isEmpty
         ? "Owner name cannot be empty"
@@ -160,8 +198,14 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
   // Saving to local storages
   void saveClinicOwnerDetails() async {
     clinicOwnerDetailsFormKey.currentState.save();
+
     if (!clinicOwnerDetailsFormKey.currentState.validate()) return;
-    print(clinicLatitude);
+
+    if (_selectedClinicOwnerIdProof == null) {
+      _snackBarService.showSnackbar(message: "Please upload a ID Proof");
+      return;
+    }
+
     if (clinicLatitude == null) {
       _snackBarService.showSnackbar(
           message: "Please select the clinic location");

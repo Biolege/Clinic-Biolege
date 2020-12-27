@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../services/services/auth_service.dart';
 import '../../../services/services/local_storage.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
+// import '../../../services/services/auth_service.dart';
 
 class NameViewModel extends BaseViewModel {
   // _________________________________________________________________________
@@ -12,8 +12,8 @@ class NameViewModel extends BaseViewModel {
 
   final NavigationService _navigatorService = locator<NavigationService>();
   final StorageService _storageService = locator<StorageService>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+  // final AuthenticationService _authenticationService =
+  //     locator<AuthenticationService>();
   // _________________________________________________________________________
   // Controllers
 

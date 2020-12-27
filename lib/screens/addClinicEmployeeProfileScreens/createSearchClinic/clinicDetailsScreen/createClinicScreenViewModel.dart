@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -21,11 +20,14 @@ class AddClinicViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Controller and Variables
   int _clinicLocationType = 0;
+
   File clinicLogo;
+
   Uint8List _selectedClinicLogo;
   Uint8List get getClinicLogo => _selectedClinicLogo;
 
   final createClinicForm = GlobalKey<FormState>();
+
   TextEditingController clinicName = TextEditingController();
   TextEditingController clinicPhoneNumber = TextEditingController();
   TextEditingController clinicAddress = TextEditingController();
@@ -78,7 +80,9 @@ class AddClinicViewModel extends BaseViewModel {
   // Saving Clinic details
   void saveClinicDetails() async {
     createClinicForm.currentState.save();
+
     if (!createClinicForm.currentState.validate()) return;
+
     if (_selectedClinicLogo == null) {
       _snackBarService.showSnackbar(message: "Please upload a clinic logo");
       return;
