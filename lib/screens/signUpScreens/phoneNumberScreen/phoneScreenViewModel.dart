@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 import '../../../services/services/auth_service.dart';
 import '../../../app/locator.dart';
+import '../../../services/services/local_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 
 class PhoneViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-
+  final StorageService _storageService = locator<StorageService>();
   // __________________________________________________________________________
   // Controller
   TextEditingController phoneNumber = TextEditingController();
@@ -25,11 +26,11 @@ class PhoneViewModel extends BaseViewModel {
   }
 
   // __________________________________________________________________________
-  void startVerifyPhoneAuthentication() {
+  void startVerifyPhoneAuthentication() async {
     phoneNumberFormKey.currentState.save();
 
     if (!phoneNumberFormKey.currentState.validate()) return;
-
+    await _storageService.setPhoneNumber(int.parse(phoneNumber.text));
     verifyPhoneAuthentication("+91" + phoneNumber.text);
   }
 

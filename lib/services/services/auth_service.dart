@@ -6,6 +6,7 @@ import '../../app/locator.dart';
 import '../../app/router.gr.dart';
 import '../../widgets/dialog.dart';
 import '../../misc/errors/errors.dart';
+import 'local_storage.dart';
 
 class AuthenticationService {
   // __________________________________________________________________________
@@ -222,9 +223,11 @@ class AuthenticationService {
 
   // Logs Out the user
   Future<void> signOut() async {
+    final StorageService _storageService = locator<StorageService>();
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     await _firebaseAuth.signOut();
     await _localStorage.clear();
+    _storageService.setAllToNull();
     _navigatorService.pushNamedAndRemoveUntil(Routes.onBoardingScreen,
         predicate: (route) => false);
   }

@@ -28,6 +28,8 @@ String addressLocalStorageKey = "ADDRESS";
 String roleTypeLocalStorageKey = "ROLE";
 // ...........................................................................
 
+String clinicIdLocalStorageKey = "CLINICID";
+
 String clinicNameLocalStorageKey = "CLINICNAME";
 
 String clinicPhoneNumberLocalStorageKey = "CLINICPHONENUMBER";

@@ -4,6 +4,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 import '../../../../services/services/local_storage.dart';
+import '../../../../services/services/api_service.dart';
 
 class ClinicServiceSelectionViewModel extends BaseViewModel {
   // __________________________________________________________________________
@@ -12,6 +13,7 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
   final StorageService _storageService = locator<StorageService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
   final DialogService _dialogService = locator<DialogService>();
+  final APIServices _aPIServices = locator<APIServices>();
   // __________________________________________________________________________
   // Controller and Variables
   List<String> selected = [];
@@ -51,17 +53,20 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
   }
 
   void showConfirmationDialogForCreatingClinic() async {
-    await _dialogService.showConfirmationDialog(
+    var res = await _dialogService.showConfirmationDialog(
         title: "Do you want to continue ?",
         description:
             "This will create a new clinic and by clicking on continue, you are agreeing to our terms of use & privacy policy",
         cancelTitle: "Cancel",
         confirmationTitle: "Continue",
         dialogPlatform: DialogPlatform.Custom);
-    return;
+    if (res.confirmed) createClinic();
   }
 
-  void initiateCreateProcessForClinicAndUser() {}
+  void createClinic() async {
+    await _aPIServices.createClinic();
+  }
+
 // __________________________________________________________________________
   void navigateToWelcomeScreen() {
     _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,

@@ -7,7 +7,7 @@ import '../../../../widgets/reusables.dart';
 import '../../../../app/size_configuration.dart';
 
 import '../../../../widgets/animations.dart';
-import 'clinicClinicServicesScreenViewModel.dart';
+import 'clinicServicesScreenViewModel.dart';
 
 class ClinicServiceSelectionView extends StatelessWidget {
   static const routeName = "/clinicServiceSelectionView";

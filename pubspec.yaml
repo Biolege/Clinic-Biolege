@@ -56,6 +56,7 @@ dependencies:
   google_maps_flutter: ^1.0.6
   # http request
   http: ^0.12.2
+  dio: ^3.0.10
   # Async package to add additional cancellable operations
   async: ^2.4.1
   # MVVM Architecture

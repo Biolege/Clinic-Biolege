@@ -45,10 +45,12 @@ class StorageService {
   // ___________________________________________________________________________
   // Clinic Related Variables and their getters
   // ------------------------------------------------------------
+  static String _clinicId;
+  String get getClinicId => _clinicId;
   // ...........................................................................
   static String _clinicName;
   String get getClinicName => _clinicName;
-// ------------------------------------------------------------
+  // ------------------------------------------------------------
   static int _clinicPhoneNumber;
   int get getClinicPhoneNumber => _clinicPhoneNumber;
   // ------------------------------------------------------------
@@ -77,7 +79,7 @@ class StorageService {
   String get getClinicOwnerName => _clinicOwnerName;
   // ------------------------------------------------------------
   static int _clinicOwnerPhoneNumber;
-  int get getClinicPhone => _clinicOwnerPhoneNumber;
+  int get getClinicOwnerPhone => _clinicOwnerPhoneNumber;
   // ------------------------------------------------------------
   static int _clinicOwnerIdProofType;
   int get getClinicOwnerIdProofType => _clinicOwnerIdProofType;
@@ -123,6 +125,8 @@ class StorageService {
     _roleType = _localStorage.getInt(roleTypeLocalStorageKey);
     // .........................................................................
     _employeeImage = _localStorage.getString(employeeImageLocalStorageKey);
+    // .........................................................................
+    _clinicId = _localStorage.getString(clinicIdLocalStorageKey);
     // .........................................................................
     _clinicName = _localStorage.getString(clinicNameLocalStorageKey);
     // ------------------------------------------------------------------
@@ -317,6 +321,13 @@ class StorageService {
   }
   // ...........................................................................
 
+  Future setClinicId(String clinicId) async {
+    SharedPreferences _localStorage = await SharedPreferences.getInstance();
+
+    _clinicId = clinicId;
+    _localStorage.setString(clinicIdLocalStorageKey, _clinicId);
+  }
+
 // _____________________________________________________________________________
 // Individual Getters from Local
 //..............................................................................
@@ -391,8 +402,15 @@ class StorageService {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     return _localStorage.getInt(roleTypeLocalStorageKey);
   }
+  // .............................................................................
+
+  Future<String> getClinicIdFromLocal() async {
+    SharedPreferences _localStorage = await SharedPreferences.getInstance();
+    return _localStorage.getString(clinicIdLocalStorageKey);
+  }
 
 // .............................................................................
+
   Future<String> getClinicNameFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     return _localStorage.getString(cityNameLocalStorageKey);
@@ -535,6 +553,8 @@ class StorageService {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     return {
       // .......................................................................
+      clinicIdLocalStorageKey: _localStorage.getString(clinicIdLocalStorageKey),
+      // .......................................................................
       clinicNameLocalStorageKey:
           _localStorage.getString(clinicNameLocalStorageKey),
       // ------------------------------------------------------------------
@@ -589,4 +609,63 @@ class StorageService {
     };
   }
   // ___________________________________________________________________________
+
+  void setAllToNull() {
+    // .........................................................................
+    _uid = null;
+    // ------------------------------------------------------------------
+    _phoneNumber = null;
+    // .........................................................................
+    _name = null;
+    // .........................................................................
+    _emailAddress = null;
+    // .........................................................................
+    _gender = null;
+    // ------------------------------------------------------------------
+    _dateOfBirth = null;
+    // .........................................................................
+    _state = null;
+    // ------------------------------------------------------------------
+    _cityName = null;
+    // ------------------------------------------------------------------
+    _pinCode = null;
+    // ------------------------------------------------------------------
+    _address = null;
+    // .........................................................................
+    _roleType = null;
+    // .........................................................................
+    _employeeImage = null;
+    // .........................................................................
+    _clinicName = null;
+    // ------------------------------------------------------------------
+    _clinicPhoneNumber = null;
+    // ------------------------------------------------------------------
+    _clinicLocationType = null;
+    // ------------------------------------------------------------------
+    _clinicLogo = null;
+    // .........................................................................
+    _clinicStateName = null;
+    // ------------------------------------------------------------------
+    _clinicCityName = null;
+    // ------------------------------------------------------------------
+    _clinicAddress = null;
+    // ------------------------------------------------------------------
+    _clinicPinCode = null;
+    // ------------------------------------------------------------------
+    _clinicAddressProof = null;
+    // .........................................................................
+    _clinicOwnerName = null;
+    // ------------------------------------------------------------------
+    _clinicOwnerPhoneNumber = null;
+    // ------------------------------------------------------------------
+    _clinicOwnerIdProofType = null;
+    // ------------------------------------------------------------------
+    _clinicOwnerIdProof = null;
+    // ------------------------------------------------------------------
+    _clinicLocationLongitude = null;
+    // ------------------------------------------------------------------
+    _clinicLocationLatitude = null;
+    //.........................................................................
+    _clinicServices = null;
+  }
 }

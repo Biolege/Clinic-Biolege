@@ -26,6 +26,7 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
   int _idProofType = 0;
   int get getOwnerProofType => _idProofType;
   Uint8List _selectedClinicOwnerIdProof;
+
   Uint8List get getClinicOwnerIdProof => _selectedClinicOwnerIdProof;
 
   final clinicOwnerDetailsFormKey = GlobalKey<FormState>();
@@ -217,7 +218,7 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
         clinicOwnerPhoneNumber: int.parse(clinicPhoneNumber.text),
         clinicLocationLatitude: clinicLatitude,
         clinicLocationLongitude: clinicLongitude,
-        // clinicOwnerIdProof: selectedClinicOwnerIdProof,
+        clinicOwnerIdProof: String.fromCharCodes(_selectedClinicOwnerIdProof),
         clinicOwnerIdProofType: _idProofType);
     // Next Page
     navigateToClinicOwnerDescriptionScreen();

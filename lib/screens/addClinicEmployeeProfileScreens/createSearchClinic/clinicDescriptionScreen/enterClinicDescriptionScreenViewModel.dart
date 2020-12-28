@@ -95,10 +95,11 @@ class AddClinicDescriptionViewModel extends BaseViewModel {
     }
     // Sets the value in Local Storage
     await _storageService.setClinicDescription(
-      clinicStateName: clinicStateName.text,
-      clinicCityName: clinicCityName.text,
-      clinicAddress: clinicAddress.text,
-    );
+        clinicStateName: clinicStateName.text,
+        clinicCityName: clinicCityName.text,
+        clinicAddress: clinicAddress.text,
+        clinicPinCode: clinicPincode.text,
+        clinicAddressProof: String.fromCharCodes(_selectedClinicAddressProof));
     // Next Page
     navigateToClinicOwnerDetails();
   }
