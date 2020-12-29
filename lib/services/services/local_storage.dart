@@ -1,3 +1,7 @@
+import 'dart:typed_data';
+
+import 'package:clinicapp/app/locator.dart';
+import 'package:clinicapp/services/services/filePicker_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../misc/localKeys/localStorageKeys.dart';
 
@@ -100,74 +104,84 @@ class StorageService {
   // Assign the variables if present
 
   Future initLocalStorages() async {
-    SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    // .........................................................................
-    _uid = _localStorage.getString(uidLocalStorageKey);
-    // ------------------------------------------------------------------
-    _phoneNumber = _localStorage.getInt(phoneNumberLocalStorageKey);
-    // .........................................................................
-    _name = _localStorage.getString(nameLocalStorageKey);
-    // .........................................................................
-    _emailAddress = _localStorage.getString(emailAddressLocalStorageKey);
-    // .........................................................................
-    _gender = _localStorage.getString(genderLocalStorageKey);
-    // ------------------------------------------------------------------
-    _dateOfBirth = _localStorage.getString(dateOfBirthLocalStorageKey);
-    // .........................................................................
-    _state = _localStorage.getString(stateLocalStorageKey);
-    // ------------------------------------------------------------------
-    _cityName = _localStorage.getString(cityNameLocalStorageKey);
-    // ------------------------------------------------------------------
-    _pinCode = _localStorage.getInt(pinCodeLocalStorageKey);
-    // ------------------------------------------------------------------
-    _address = _localStorage.getString(addressLocalStorageKey);
-    // .........................................................................
-    _roleType = _localStorage.getInt(roleTypeLocalStorageKey);
-    // .........................................................................
-    _employeeImage = _localStorage.getString(employeeImageLocalStorageKey);
-    // .........................................................................
-    _clinicId = _localStorage.getString(clinicIdLocalStorageKey);
-    // .........................................................................
-    _clinicName = _localStorage.getString(clinicNameLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicPhoneNumber = _localStorage.getInt(clinicPhoneNumberLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicLocationType =
-        _localStorage.getInt(clinicLocationTypeLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicLogo = _localStorage.getString(clinicLogoLocalStorageKey);
-    // .........................................................................
-    _clinicStateName = _localStorage.getString(clinicStateNameLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicCityName = _localStorage.getString(clinicCityNameLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicAddress = _localStorage.getString(clinicAddressLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicPinCode = _localStorage.getString(clinicPinCodeLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicAddressProof =
-        _localStorage.getString(clinicAddressProofLocalStorageKey);
-    // .........................................................................
-    _clinicOwnerName = _localStorage.getString(clinicOwnerNameLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicOwnerPhoneNumber =
-        _localStorage.getInt(clinicOwnerPhoneLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicOwnerIdProofType =
-        _localStorage.getInt(clinicOwnerIdProofTypeLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicOwnerIdProof =
-        _localStorage.getString(clinicOwnerIdProofLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicLocationLongitude =
-        _localStorage.getDouble(clinicLocationLongitudeLocalStorageKey);
-    // ------------------------------------------------------------------
-    _clinicLocationLatitude =
-        _localStorage.getDouble(clinicLocationLatitudeLocalStorageKey);
-    //.........................................................................
-    _clinicServices =
-        _localStorage.getStringList(clinicServicesLocalStorageKey);
-    //.........................................................................
+    try {
+      SharedPreferences _localStorage = await SharedPreferences.getInstance();
+      // .......................................................................
+      _uid = _localStorage.getString(uidLocalStorageKey);
+      // ------------------------------------------------------------------
+      _phoneNumber = _localStorage.getInt(phoneNumberLocalStorageKey);
+      // .......................................................................
+      _name = _localStorage.getString(nameLocalStorageKey);
+      // .......................................................................
+      _emailAddress = _localStorage.getString(emailAddressLocalStorageKey);
+      // .......................................................................
+      _gender = _localStorage.getString(genderLocalStorageKey);
+      // ------------------------------------------------------------------
+      _dateOfBirth = _localStorage.getString(dateOfBirthLocalStorageKey);
+      // .......................................................................
+      _state = _localStorage.getString(stateLocalStorageKey);
+      // ------------------------------------------------------------------
+      _cityName = _localStorage.getString(cityNameLocalStorageKey);
+      // ------------------------------------------------------------------
+      _pinCode = _localStorage.getInt(pinCodeLocalStorageKey);
+      // ------------------------------------------------------------------
+      _address = _localStorage.getString(addressLocalStorageKey);
+      // .......................................................................
+
+      _roleType = _localStorage.getInt(roleTypeLocalStorageKey);
+
+      // .......................................................................
+      _employeeImage = _localStorage.getString(employeeImageLocalStorageKey);
+      // .......................................................................
+      _clinicId = _localStorage.getString(clinicIdLocalStorageKey);
+      // .......................................................................
+      _clinicName = _localStorage.getString(clinicNameLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicPhoneNumber =
+          _localStorage.getInt(clinicPhoneNumberLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicLocationType =
+          _localStorage.getInt(clinicLocationTypeLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicLogo = _localStorage.getString(clinicLogoLocalStorageKey);
+      // .......................................................................
+      _clinicStateName =
+          _localStorage.getString(clinicStateNameLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicCityName = _localStorage.getString(clinicCityNameLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicAddress = _localStorage.getString(clinicAddressLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicPinCode = _localStorage.getString(clinicPinCodeLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicAddressProof =
+          _localStorage.getString(clinicAddressProofLocalStorageKey);
+      // .......................................................................
+      _clinicOwnerName =
+          _localStorage.getString(clinicOwnerNameLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicOwnerPhoneNumber =
+          _localStorage.getInt(clinicOwnerPhoneLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicOwnerIdProofType =
+          _localStorage.getInt(clinicOwnerIdProofTypeLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicOwnerIdProof =
+          _localStorage.getString(clinicOwnerIdProofLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicLocationLongitude =
+          _localStorage.getDouble(clinicLocationLongitudeLocalStorageKey);
+      // ------------------------------------------------------------------
+      _clinicLocationLatitude =
+          _localStorage.getDouble(clinicLocationLatitudeLocalStorageKey);
+      //........................................................................
+      _clinicServices =
+          _localStorage.getStringList(clinicServicesLocalStorageKey);
+      //........................................................................
+    } catch (e) {
+      // To check the line number for the respective error remove the try catch
+      print("Inititialising Local Storage Failed :  " + e);
+    }
   }
 
   // ___________________________________________________________________________
@@ -175,13 +189,14 @@ class StorageService {
   Future setPhoneNumber(int phone) async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     _phoneNumber = phone;
+    print(_phoneNumber);
     await _localStorage.setInt(phoneNumberLocalStorageKey, _phoneNumber);
   }
 
   Future setUID(String uid) async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     _uid = uid;
-    await _localStorage.setString(roleTypeLocalStorageKey, _uid);
+    await _localStorage.setString(uidLocalStorageKey, _uid);
   }
 
   // ...........................................................................
@@ -240,14 +255,18 @@ class StorageService {
     String clinicName,
     int clinicPhone,
     int clinicLocationType,
-    String clinicLogo,
+    Uint8List clinicLogo,
   }) async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
+    final FilePickHelperService _filePickHelperService =
+        locator<FilePickHelperService>();
 
     _clinicName = clinicName;
     _clinicPhoneNumber = clinicPhone;
     _clinicLocationType = clinicLocationType;
-    _clinicLogo = clinicLogo;
+
+    _clinicLogo = _filePickHelperService.base64String(clinicLogo);
+    print(_clinicLogo);
 
     await _localStorage.setString(clinicNameLocalStorageKey, _clinicName);
     await _localStorage.setInt(
@@ -263,15 +282,18 @@ class StorageService {
     String clinicCityName,
     String clinicAddress,
     String clinicPinCode,
-    String clinicAddressProof,
+    Uint8List clinicAddressProof,
   }) async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
+    final FilePickHelperService _filePickHelperService =
+        locator<FilePickHelperService>();
 
     _clinicStateName = clinicStateName;
     _clinicCityName = clinicCityName;
     _clinicAddress = clinicAddress;
     _clinicPinCode = clinicPinCode;
-    _clinicAddressProof = clinicAddressProof;
+    _clinicAddressProof =
+        _filePickHelperService.base64String(clinicAddressProof);
 
     await _localStorage.setString(
         clinicStateNameLocalStorageKey, _clinicStateName);
@@ -288,15 +310,21 @@ class StorageService {
     String clinicOwnerName,
     int clinicOwnerPhoneNumber,
     int clinicOwnerIdProofType,
-    String clinicOwnerIdProof,
+    Uint8List clinicOwnerIdProof,
     double clinicLocationLongitude,
     double clinicLocationLatitude,
   }) async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
+    final FilePickHelperService _filePickHelperService =
+        locator<FilePickHelperService>();
+
     _clinicOwnerName = clinicOwnerName;
     _clinicOwnerPhoneNumber = clinicOwnerPhoneNumber;
     _clinicOwnerIdProofType = clinicOwnerIdProofType;
-    _clinicOwnerIdProof = clinicOwnerIdProof;
+    _clinicOwnerIdProof =
+        _filePickHelperService.base64String(clinicOwnerIdProof);
+    _clinicLocationLatitude = clinicLocationLatitude;
+    _clinicLocationLongitude = clinicLocationLongitude;
 
     await _localStorage.setString(
         clinicOwnerNameLocalStorageKey, _clinicOwnerName);
@@ -429,9 +457,13 @@ class StorageService {
   }
 
 // ---------------------------------------------------------------
-  Future<String> getClinicLogoFromLocal() async {
+  Future<Uint8List> getClinicLogoFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    return _localStorage.getString(clinicLogoLocalStorageKey);
+    final FilePickHelperService _filePickHelperService =
+        locator<FilePickHelperService>();
+
+    return _filePickHelperService.dataFromBase64String(
+        _localStorage.getString(clinicLogoLocalStorageKey));
   }
 
 // .............................................................................
@@ -459,9 +491,12 @@ class StorageService {
   }
 
 // ---------------------------------------------------------------
-  Future<String> getClinicAddressProofFromLocal() async {
+  Future<Uint8List> getClinicAddressProofFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    return _localStorage.getString(clinicAddressProofLocalStorageKey);
+    final FilePickHelperService _filePickHelperService =
+        locator<FilePickHelperService>();
+    return _filePickHelperService.dataFromBase64String(
+        _localStorage.getString(clinicAddressProofLocalStorageKey));
   }
 
 // .............................................................................
@@ -483,9 +518,12 @@ class StorageService {
   }
 // ---------------------------------------------------------------
 
-  Future<String> getClinicOwnerIdProofFromLocal() async {
+  Future<Uint8List> getClinicOwnerIdProofFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
-    return _localStorage.getString(clinicOwnerIdProofLocalStorageKey);
+    final FilePickHelperService _filePickHelperService =
+        locator<FilePickHelperService>();
+    return _filePickHelperService.dataFromBase64String(
+        _localStorage.getString(clinicOwnerIdProofLocalStorageKey));
   }
 // ---------------------------------------------------------------
 
@@ -551,6 +589,8 @@ class StorageService {
 // Getter for all clinic details from local
   Future<Map<String, dynamic>> getAllClinicDetailsFromLocal() async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
+    final FilePickHelperService _filePickHelperService =
+        locator<FilePickHelperService>();
     return {
       // .......................................................................
       clinicIdLocalStorageKey: _localStorage.getString(clinicIdLocalStorageKey),
@@ -564,8 +604,8 @@ class StorageService {
       clinicLocationTypeLocalStorageKey:
           _localStorage.getInt(clinicLocationTypeLocalStorageKey),
       // ------------------------------------------------------------------
-      clinicLogoLocalStorageKey:
-          _localStorage.getString(clinicLogoLocalStorageKey),
+      clinicLogoLocalStorageKey: _filePickHelperService.dataFromBase64String(
+          _localStorage.getString(clinicLogoLocalStorageKey)),
       // .......................................................................
       clinicStateNameLocalStorageKey:
           _localStorage.getString(clinicStateNameLocalStorageKey),
@@ -580,7 +620,8 @@ class StorageService {
           _localStorage.getString(clinicPinCodeLocalStorageKey),
       // ------------------------------------------------------------------
       clinicAddressProofLocalStorageKey:
-          _localStorage.getString(clinicAddressProofLocalStorageKey),
+          _filePickHelperService.dataFromBase64String(
+              _localStorage.getString(clinicAddressProofLocalStorageKey)),
       // .......................................................................
       clinicOwnerNameLocalStorageKey:
           _localStorage.getString(clinicOwnerNameLocalStorageKey),
@@ -594,7 +635,8 @@ class StorageService {
           _localStorage.getInt(clinicOwnerIdProofTypeLocalStorageKey),
       // ------------------------------------------------------------------
       clinicOwnerIdProofLocalStorageKey:
-          _localStorage.getString(clinicOwnerIdProofLocalStorageKey),
+          _filePickHelperService.dataFromBase64String(
+              _localStorage.getString(clinicOwnerIdProofLocalStorageKey)),
       // ------------------------------------------------------------------
       clinicLocationLongitudeLocalStorageKey: _localStorage
           .getDouble(clinicLocationLongitudeLocalStorageKey)

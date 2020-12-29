@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
@@ -64,11 +65,13 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
 
     // Validate the incoming filesize
     if (validateClinicOwnerIdProof(File(image.path)) == null) return;
-    _selectedClinicOwnerIdProof = File(image.path).readAsBytesSync();
+
+    _selectedClinicOwnerIdProof = await image.readAsBytes();
+
     notifyListeners();
   }
 
-  Future<LocationData> getCurrentLocation() async {
+  Future getCurrentLocation() async {
     // Check for services and permission
     bool _serviceEnabled;
 
@@ -87,11 +90,12 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) return null;
     }
+    notifyListeners();
 
     // If all services and permission are granted returns current location
-    var data = await location.getLocation();
-    locationData = data;
-    return data;
+    // var data = await location.getLocation();
+    // locationData = data;
+    // return data;
   }
 
   // _________________________________________________________________________
@@ -218,14 +222,17 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
         clinicOwnerPhoneNumber: int.parse(clinicPhoneNumber.text),
         clinicLocationLatitude: clinicLatitude,
         clinicLocationLongitude: clinicLongitude,
-        clinicOwnerIdProof: String.fromCharCodes(_selectedClinicOwnerIdProof),
+        clinicOwnerIdProof: _selectedClinicOwnerIdProof,
         clinicOwnerIdProofType: _idProofType);
+    print(clinicLatitude);
+    print(clinicLongitude);
     // Next Page
-    navigateToClinicOwnerDescriptionScreen();
+    navigateToClinicServicesScreen();
   }
 
+  void init() {}
   // _________________________________________________________________________
-  void navigateToClinicOwnerDescriptionScreen() {
+  void navigateToClinicServicesScreen() {
     _navigatorService.navigateTo(
       Routes.clinicServiceSelectionView,
     );

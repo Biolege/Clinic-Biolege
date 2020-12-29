@@ -78,7 +78,7 @@ class RoleSelectScreenView extends StatelessWidget {
                                   MaterialIcons.people,
                                   AntDesign.customerservice,
                                 ],
-                                initialLabelIndex: 0,
+                                initialLabelIndex: model.getRole,
                                 activeBgColor: offWhite,
                                 activeFgColor: offWhite,
                                 inactiveBgColor: offWhite1,

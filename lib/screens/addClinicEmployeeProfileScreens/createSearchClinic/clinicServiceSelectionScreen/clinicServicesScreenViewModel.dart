@@ -64,12 +64,14 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
   }
 
   void createClinic() async {
-    await _aPIServices.createClinic();
+    var clinic = await _aPIServices.createClinic();
+    if (clinic != null) navigateToWelcomeScreen();
   }
 
-// __________________________________________________________________________
+  // ___________________________________________________________________________
   void navigateToWelcomeScreen() {
     _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
         predicate: (route) => false);
   }
+  // ___________________________________________________________________________
 }

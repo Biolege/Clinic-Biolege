@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import '../misc/localKeys/localStorageKeys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 // To parse this JSON data, use this line
 // final clinicEmployee = clinicEmployeeFromJson(jsonString);
 
@@ -30,6 +33,35 @@ class ClinicEmployee {
   Address address;
   int role;
   String employeeImage;
+
+  Future initClinicEmployeeData() async {
+    try {
+      SharedPreferences _localStorage = await SharedPreferences.getInstance();
+      id = _localStorage.getString(uidLocalStorageKey);
+      // ------------------------------------------------------------------
+      phoneNumber = _localStorage.getInt(phoneNumberLocalStorageKey);
+      // .......................................................................
+      name = _localStorage.getString(nameLocalStorageKey);
+      // .......................................................................
+      email = _localStorage.getString(emailAddressLocalStorageKey);
+      // .......................................................................
+      gender = _localStorage.getString(genderLocalStorageKey);
+      // ------------------------------------------------------------------
+      dob = _localStorage.getString(dateOfBirthLocalStorageKey);
+      // .......................................................................
+
+      address = Address(
+          state: _localStorage.getString(stateLocalStorageKey),
+          city: _localStorage.getString(cityNameLocalStorageKey),
+          homeAddress: _localStorage.getString(addressLocalStorageKey),
+          pinCode: _localStorage.getInt(pinCodeLocalStorageKey));
+      // .......................................................................
+      role = _localStorage.getInt(roleTypeLocalStorageKey);
+      // .......................................................................
+    } catch (e) {
+      print("Error thrown in Init Clinic Employee : " + e);
+    }
+  }
 
   factory ClinicEmployee.fromJson(Map<String, dynamic> json) => ClinicEmployee(
         id: json["_id"],

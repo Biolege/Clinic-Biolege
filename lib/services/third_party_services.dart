@@ -5,14 +5,20 @@ import 'package:stacked_themes/stacked_themes.dart';
 import 'services/api_service.dart';
 import 'services/auth_service.dart';
 import 'services/local_storage.dart';
+import '../model/clinicEmployee.dart';
+import '../model/clinic.dart';
 
 abstract class ThirdPartyServicesModule {
   @lazySingleton
+
+  // Data Services
+  Clinic get clinic;
+  ClinicEmployee get clinicEmployee;
   // Servies for navigation
   NavigationService get navigationService;
   // Servies for navigation
   ThemeService get themeService;
-  
+
   AuthenticationService get authenticationService;
   StorageService get localStorageService;
   APIServices get aPIServices;

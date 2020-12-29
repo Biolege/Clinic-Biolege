@@ -2,16 +2,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
+// import 'package:stacked_services/stacked_services.dart';
 import 'dart:async';
-import '../../../app/router.gr.dart';
 import '../../../services/services/auth_service.dart';
 import '../../../app/locator.dart';
 
 class OTPScreenViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
-  final NavigationService _navigatorService = locator<NavigationService>();
+  // final NavigationService _navigatorService = locator<NavigationService>();
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   // __________________________________________________________________________
@@ -44,10 +43,6 @@ class OTPScreenViewModel extends BaseViewModel {
     _hasError = _currentText.length < 6 ? false : true;
     _currentText = value;
     notifyListeners();
-  }
-
-  void navigateToNameScreen() {
-    _navigatorService.navigateTo(Routes.nameScreenView);
   }
 
   void startVerifingOTP() async {

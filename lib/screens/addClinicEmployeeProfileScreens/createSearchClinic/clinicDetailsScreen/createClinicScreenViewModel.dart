@@ -72,7 +72,8 @@ class AddClinicViewModel extends BaseViewModel {
 
     // Validate the incoming filesize
     if (validateClinicLogo(File(image.path)) == null) return;
-    _selectedClinicLogo = File(image.path).readAsBytesSync();
+
+    _selectedClinicLogo = await image.readAsBytes();
     notifyListeners();
   }
 
@@ -91,7 +92,7 @@ class AddClinicViewModel extends BaseViewModel {
     await _storageService.setClinicDetails(
         clinicName: clinicName.text,
         clinicPhone: int.parse(clinicPhoneNumber.text),
-        clinicLogo: String.fromCharCodes(_selectedClinicLogo),
+        clinicLogo: _selectedClinicLogo,
         clinicLocationType: _clinicLocationType);
     // Next Page
     navigateToAddClinicDescriptionView();

@@ -6,11 +6,14 @@ import '../services/services/filePicker_service.dart';
 import '../services/services/auth_service.dart';
 import '../services/services/local_storage.dart';
 import '../services/services/api_service.dart';
+import '../model/clinic.dart';
+import '../model/clinicEmployee.dart';
 
 final locator = GetIt.instance;
 
 @injectable
 void setupLocator() {
+  // Services
   locator.registerLazySingleton(() => ThemeService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => AuthenticationService());
@@ -19,4 +22,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => StorageService());
   locator.registerLazySingleton(() => APIServices());
   locator.registerLazySingleton(() => FilePickHelperService());
+  // Data
+  locator.registerLazySingleton(() => Clinic());
+  locator.registerLazySingleton(() => ClinicEmployee());
 }

@@ -224,7 +224,6 @@ class AddClinicOwnerDetailsScreenView extends StatelessWidget {
                                     zoomGesturesEnabled: true,
                                     myLocationButtonEnabled: true,
                                     myLocationEnabled: true,
-                                    liteModeEnabled: false,
                                     mapType: MapType.normal,
                                     gestureRecognizers: Set()
                                       ..add(Factory<PanGestureRecognizer>(
@@ -295,6 +294,7 @@ class AddClinicOwnerDetailsScreenView extends StatelessWidget {
           )),
         );
       },
+      onModelReady: (model) => model.getCurrentLocation(),
       viewModelBuilder: () => AddClinicOwnerDetailsViewModel(),
     );
   }

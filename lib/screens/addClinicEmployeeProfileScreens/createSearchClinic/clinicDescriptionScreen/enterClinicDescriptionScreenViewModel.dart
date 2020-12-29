@@ -80,7 +80,7 @@ class AddClinicDescriptionViewModel extends BaseViewModel {
 
     // Validate the incoming filesize
     if (validateAddressProofFile(File(image.path)) == null) return;
-    _selectedClinicAddressProof = File(image.path).readAsBytesSync();
+    _selectedClinicAddressProof = await image.readAsBytes();
     notifyListeners();
   }
 
@@ -99,7 +99,7 @@ class AddClinicDescriptionViewModel extends BaseViewModel {
         clinicCityName: clinicCityName.text,
         clinicAddress: clinicAddress.text,
         clinicPinCode: clinicPincode.text,
-        clinicAddressProof: String.fromCharCodes(_selectedClinicAddressProof));
+        clinicAddressProof: _selectedClinicAddressProof);
     // Next Page
     navigateToClinicOwnerDetails();
   }

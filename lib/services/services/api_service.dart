@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
+import 'package:clinicapp/model/clinic.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
@@ -41,6 +41,7 @@ class APIServices {
       request
         ..fields['address.pinCode'] = _storageService.getPinCode.toString();
       request..fields['address.homeAddress'] = _storageService.getAddress;
+
       // _______________________________________________________________________
       // Sending the post request
       var response = await request.send();
@@ -51,7 +52,7 @@ class APIServices {
       print("Clinic employee created with used id : " + resonseJson["_id"]);
       _storageService.setUID(resonseJson["_id"]);
       // _______________________________________________________________________
-      return ClinicEmployee.fromJson(resonseJson);
+      return null;
     } catch (e) {
       print(e);
       _snackBarService.showSnackbar(message: e.toString());
@@ -59,11 +60,12 @@ class APIServices {
     }
   }
 
-  Future<ClinicEmployee> createClinic() async {
+  Future<Clinic> createClinic() async {
     // _______________________________________________________________________
     // Locating Dependencies
     final StorageService _storageService = locator<StorageService>();
     final SnackbarService _snackBarService = locator<SnackbarService>();
+
     // _______________________________________________________________________
     try {
       // URL to be called
@@ -72,17 +74,19 @@ class APIServices {
       var request = new http.MultipartRequest("POST", uri);
       // _______________________________________________________________________
       // Decoding the files to Uint8
-      File clinicLogo = File.fromRawPath(
-          Uint8List.fromList(_storageService.getClinicLogo.codeUnits));
+      Uint8List clinicLogo = await _storageService.getClinicLogoFromLocal();
+      String clinicLogoB64 = base64Encode(clinicLogo);
+      Uint8List clinicOwnerIdProof =
+          await _storageService.getClinicOwnerIdProofFromLocal();
+      String clinicOwnerIdProofB64 = base64Encode(clinicOwnerIdProof);
+      Uint8List clinicAddressProof =
+          await _storageService.getClinicAddressProofFromLocal();
+      String clinicAddressProofB64 = base64Encode(clinicAddressProof);
 
-      File clinicOwnerIdProof = File.fromRawPath(
-          Uint8List.fromList(_storageService.getClinicOwnerIdProof.codeUnits));
-
-      File clinicAddressProof = File.fromRawPath(
-          Uint8List.fromList(_storageService.getClinicAddressProof.codeUnits));
       // _______________________________________________________________________
       // Preparing the data to be sent
       request..fields['name'] = _storageService.getClinicName;
+      request..fields['pincode'] = _storageService.getClinicPinCode;
       request
         ..fields['phoneNumber'] =
             _storageService.getClinicPhoneNumber.toString();
@@ -113,32 +117,36 @@ class APIServices {
 
       request
         ..fields['services'] = _storageService.getClinicServices.toString();
+
       //----------------------------------------------------------
+
       request
         ..files.add(new http.MultipartFile.fromBytes(
-            'logo', await File.fromUri(clinicLogo.uri).readAsBytes(),
+            'logo', clinicLogoB64.codeUnits,
             contentType: new MediaType('image', 'jpeg')));
 
       request
-        ..files.add(new http.MultipartFile.fromBytes('ownerIdProof',
-            await File.fromUri(clinicOwnerIdProof.uri).readAsBytes(),
+        ..files.add(new http.MultipartFile.fromBytes(
+            'ownerIdProof', clinicOwnerIdProofB64.codeUnits,
             contentType: new MediaType('image', 'jpeg')));
 
       request
-        ..files.add(new http.MultipartFile.fromBytes('addressProof',
-            await File.fromUri(clinicAddressProof.uri).readAsBytes(),
+        ..files.add(new http.MultipartFile.fromBytes(
+            'addressProof', clinicAddressProofB64.codeUnits,
             contentType: new MediaType('image', 'jpeg')));
+
       // _______________________________________________________________________
       // Sending the post request
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
       var resonseJson = json.decode(responseString);
+
       // _______________________________________________________________________
       // Saving id for the created clinic
-      print("Clinic created with clinic id : " + resonseJson["_id"]);
+      print("Clinic created with clinic id : " + resonseJson.toString());
       _storageService.setUID(resonseJson["_id"]);
       // _______________________________________________________________________
-      return null;
+      return Clinic.fromJson(resonseJson);
     } catch (e) {
       print(e);
       _snackBarService.showSnackbar(message: e.toString());

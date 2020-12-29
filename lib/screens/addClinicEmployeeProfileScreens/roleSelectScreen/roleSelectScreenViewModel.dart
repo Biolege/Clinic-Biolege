@@ -16,6 +16,7 @@ class RoleSelectViewModel extends BaseViewModel {
   // _________________________________________________________________________
   // Controllers and Variables
   int _role = 0;
+  int get getRole => _role;
   // _________________________________________________________________________
   // Helper Functions
   void setRoleValue(int value) {
