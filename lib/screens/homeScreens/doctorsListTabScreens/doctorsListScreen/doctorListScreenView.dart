@@ -48,7 +48,7 @@ class DoctorsListScreenView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
-                          onTap: () => model.profileDescriptionView(),
+                          onLongPress: () => model.profileDescriptionView(),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
                           leading: CircleAvatar(
@@ -71,6 +71,9 @@ class DoctorsListScreenView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
+                          selected: true,
+                          enabled: true,
+                          hoverColor: offWhite2,
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
                           leading: CircleAvatar(

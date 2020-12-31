@@ -8,6 +8,7 @@ import '../services/services/local_storage.dart';
 import '../services/services/api_service.dart';
 import '../model/clinic.dart';
 import '../model/clinicEmployee.dart';
+import '../services/services/dataFromApi_service.dart';
 
 final locator = GetIt.instance;
 
@@ -25,4 +26,5 @@ void setupLocator() {
   // Data
   locator.registerLazySingleton(() => Clinic());
   locator.registerLazySingleton(() => ClinicEmployee());
+  locator.registerLazySingleton(() => DataFromApi());
 }

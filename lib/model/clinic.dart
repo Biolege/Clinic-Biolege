@@ -88,7 +88,7 @@ class Clinic {
       services = _localStorage.getStringList(clinicServicesLocalStorageKey);
       //........................................................................
     } catch (e) {
-      print("Error thrown in Init Clinic : " + e);
+      print("Error thrown in Init Clinic : " + e.toString());
     }
   }
 

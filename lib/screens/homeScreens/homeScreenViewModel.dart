@@ -13,7 +13,8 @@ class HomeScreenViewModel extends BaseViewModel {
     Text('Profile'),
   ];
 
-  int _index = 0;
+  final PageController pageController = PageController();
+  int _index = 1;
 
   int get getIndex => _index;
 
@@ -28,6 +29,13 @@ class HomeScreenViewModel extends BaseViewModel {
   ];
 
   void setCurrentIndex(int selIndex) {
+    _index = selIndex;
+    pageController.animateToPage(selIndex,
+        duration: Duration(milliseconds: 800), curve: Curves.easeInOut);
+    notifyListeners();
+  }
+
+  void selectCurrentPage(int selIndex) {
     _index = selIndex;
     notifyListeners();
   }

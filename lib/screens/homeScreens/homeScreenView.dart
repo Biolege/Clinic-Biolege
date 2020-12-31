@@ -46,7 +46,11 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                   ),
                 )
               ]),
-          body: model.widgetOptions.elementAt(model.getIndex),
+          body: PageView(
+            onPageChanged: (index) => model.selectCurrentPage(index),
+            controller: model.pageController,
+            children: [...model.widgetOptions],
+          ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: model.getIndex,
             onTap: (selIndex) => model.setCurrentIndex(selIndex),

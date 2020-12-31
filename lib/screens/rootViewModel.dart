@@ -1,5 +1,6 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../services/services/dataFromApi_service.dart';
 import '../services/services/local_storage.dart';
 import '../app/locator.dart';
 import '../app/router.gr.dart';
@@ -16,12 +17,15 @@ class RootViewModel extends BaseViewModel {
   final StorageService _storageService = locator<StorageService>();
   final Clinic _clinicDataService = locator<Clinic>();
   final ClinicEmployee _clinicEmployeeDataService = locator<ClinicEmployee>();
-
+  final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // __________________________________________________________________________
   // Reroutes the user to either Emailscreenview or Onboarding Screen
 
   Future handleStartupLogic() async {
+    // ---------------------------------------------------------------------
+    // Check whether user has logged in or not
     var hasLoggedIn = await _authenticationService.isUserLoggedIn();
+    // ---------------------------------------------------------------------
     // To be used when the user is filling up the detail and not yet created
     //  clinic and user
     await _storageService.initLocalStorages();
@@ -37,7 +41,7 @@ class RootViewModel extends BaseViewModel {
     print("Address     : " + _storageService.getAddress.toString());
     print("Role Type   : " + _storageService.getRoleType.toString());
     print("Clinic Type : " + _storageService.getClinicName.toString());
-
+    // ---------------------------------------------------------------------
     if (hasLoggedIn) {
       if (_storageService.getName == null)
         _navigatorService.clearStackAndShow(Routes.nameScreenView);
@@ -54,8 +58,10 @@ class RootViewModel extends BaseViewModel {
           _storageService.getClinicOwnerName == null)
         _navigatorService
             .clearStackAndShow(Routes.createOrSearchClinicScreenView);
-      else
+      else {
+        _dataFromApiService.setDoctorsList();
         _navigatorService.clearStackAndShow(Routes.welcomeScreenView);
+      }
     } else
       _navigatorService.clearStackAndShow(Routes.onBoardingScreen);
   }

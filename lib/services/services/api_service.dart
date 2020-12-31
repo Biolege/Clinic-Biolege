@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:clinicapp/model/clinic.dart';
+import 'package:clinicapp/model/doctor.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
@@ -13,8 +14,10 @@ class APIServices {
   // __________________________________________________________________________
   // Variables for Clinic API
   String url = "https://biolegenew.herokuapp.com/api/";
-  String urlClinicEmployee = "clinicemployee";
-  String urlClinic = "clinic";
+  String urlClinicEmployeeCreate = "clinicemployee/create";
+  String urlClinicCreate = "clinic/create";
+  String getDoctors = "doctors";
+  String getDoctorByID = "doctor";
   // ---------------------------------------------------------------------------
   // Create a new Clinic Employee and stores the response in the local storage
   Future<ClinicEmployee> createClinicEmployee() async {
@@ -25,7 +28,7 @@ class APIServices {
     // _______________________________________________________________________
     try {
       // URL to be called
-      var uri = Uri.parse('$url$urlClinicEmployee/create');
+      var uri = Uri.parse('$url$urlClinicEmployeeCreate');
       // Creating a Multipart request for sending formdata
       var request = new http.MultipartRequest("POST", uri);
       // _______________________________________________________________________
@@ -52,9 +55,9 @@ class APIServices {
       print("Clinic employee created with used id : " + resonseJson["_id"]);
       _storageService.setUID(resonseJson["_id"]);
       // _______________________________________________________________________
-      return null;
+      return ClinicEmployee.fromJson(resonseJson);
     } catch (e) {
-      print(e);
+      print("At create clinic employee :" + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
     }
@@ -69,7 +72,7 @@ class APIServices {
     // _______________________________________________________________________
     try {
       // URL to be called
-      var uri = Uri.parse('$url$urlClinic/create');
+      var uri = Uri.parse('$url$urlClinicCreate');
       // Creating a Multipart request for sending formdata
       var request = new http.MultipartRequest("POST", uri);
       // _______________________________________________________________________
@@ -144,11 +147,71 @@ class APIServices {
       // _______________________________________________________________________
       // Saving id for the created clinic
       print("Clinic created with clinic id : " + resonseJson.toString());
-      _storageService.setUID(resonseJson["_id"]);
+      _storageService.setClinicId(resonseJson["_id"]);
       // _______________________________________________________________________
       return Clinic.fromJson(resonseJson);
     } catch (e) {
-      print(e);
+      print("At create clinic : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
+  Future<List<Doctor>> getAllDoctors() async {
+    // _______________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final StorageService _storageService = locator<StorageService>();
+    // _______________________________________________________________________
+    try {
+      // URL to be calleds
+      var uri = Uri.parse('$url$getDoctors');
+      // Creating a get request
+      var request = new http.Request("GET", uri);
+      // _______________________________________________________________________
+
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var responseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      // Serializing Json to Doctor Class
+      List<Doctor> dlist = [];
+
+      responseJson
+          .forEach((doctor) => dlist.add(doctorFromJson(json.encode(doctor))));
+
+      // _______________________________________________________________________
+      return dlist;
+    } catch (e) {
+      print("At get all doctors : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return [];
+    }
+  }
+
+  Future<Doctor> getDoctorById(String id) async {
+    // _______________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    // _______________________________________________________________________
+    try {
+      // URL to be called
+      var uri = Uri.parse('$url$getDoctorByID/$id');
+      // Creating a get request
+      var request = new http.Request("GET", uri);
+      // _______________________________________________________________________
+
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var resonseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      return Doctor.fromJson(resonseJson);
+    } catch (e) {
+      print("At get doctors by Id " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
     }
