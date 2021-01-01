@@ -11,7 +11,7 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
   final StorageService _storageService = locator<StorageService>();
-  final SnackbarService _snackBarService = locator<SnackbarService>();
+  // final SnackbarService _snackBarService = locator<SnackbarService>();
   final DialogService _dialogService = locator<DialogService>();
   final APIServices _aPIServices = locator<APIServices>();
   // __________________________________________________________________________
@@ -41,26 +41,20 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // void navigateToWelcomeScreen() {
-  //   _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
-  //       predicate:
-  //           ModalRoute.withName(CreateOrSearchClinicScreenView.routeName));
-  // }
-
   void saveClinicServiceToLocal() async {
     await _storageService.setClinicService(selected);
     showConfirmationDialogForCreatingClinic();
   }
 
   void showConfirmationDialogForCreatingClinic() async {
-    var res = await _dialogService.showConfirmationDialog(
+    var response = await _dialogService.showConfirmationDialog(
         title: "Do you want to continue ?",
         description:
             "This will create a new clinic and by clicking on continue, you are agreeing to our terms of use & privacy policy",
         cancelTitle: "Cancel",
         confirmationTitle: "Continue",
         dialogPlatform: DialogPlatform.Custom);
-    if (res.confirmed) createClinic();
+    if (response.confirmed) createClinic();
   }
 
   void createClinic() async {

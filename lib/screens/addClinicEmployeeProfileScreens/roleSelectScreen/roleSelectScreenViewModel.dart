@@ -1,6 +1,5 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../model/clinicEmployee.dart';
 import '../../../services/services/local_storage.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
@@ -26,14 +25,15 @@ class RoleSelectViewModel extends BaseViewModel {
   void saveRoleType() async {
     // Set the role in the local storage and clear stacks
     await _storageService.setRoleType(_role);
-    // Call the api and
-    ClinicEmployee result = await _apiServices.createClinicEmployee();
+    // Call the API to create clinic employee and save data
+    await _apiServices.createClinicEmployee();
     navigateTocreateOrSearchClinicScreenView();
   }
 
 // _________________________________________________________________________
 
-  void navigateTocreateOrSearchClinicScreenView() {
-    _navigatorService.clearStackAndShow(Routes.createOrSearchClinicScreenView);
-  }
+  void navigateTocreateOrSearchClinicScreenView() => _navigatorService
+      .clearStackAndShow(Routes.createOrSearchClinicScreenView);
+
+  // _________________________________________________________________________
 }

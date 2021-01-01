@@ -8,7 +8,9 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       builder: (context, child, model) {
-        return Scaffold();
+        return Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        );
       },
       onModelReady: (model) => model.handleStartupLogic(),
       viewModelBuilder: () => RootViewModel(),

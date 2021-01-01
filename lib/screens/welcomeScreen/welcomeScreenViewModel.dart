@@ -1,9 +1,9 @@
-import 'package:clinicapp/services/services/dataFromApi_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../services/services/api_service.dart';
-import '../../services/services/local_storage.dart';
-import '../../services/services/auth_service.dart';
+// import '../../services/services/dataFromApi_service.dart';
+// import '../../services/services/api_service.dart';
+// import '../../services/services/local_storage.dart';
+// import '../../services/services/auth_service.dart';
 import '../../app/locator.dart';
 import '../../app/router.gr.dart';
 import '../../model/clinic.dart';
@@ -16,10 +16,10 @@ class WelcomeScreenViewModel extends FutureViewModel<Map<String, String>> {
   final SnackbarService _snackBarService = locator<SnackbarService>();
   final ClinicEmployee _clinicEmployeeDataService = locator<ClinicEmployee>();
   final Clinic _clinicDataService = locator<Clinic>();
-  final APIServices _apiServices = locator<APIServices>();
-  final DataFromApi _dataFromApiService = locator<DataFromApi>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+  // final APIServices _apiServices = locator<APIServices>();
+  // final DataFromApi _dataFromApiService = locator<DataFromApi>();
+  // final AuthenticationService _authenticationService =
+  //     locator<AuthenticationService>();
   // __________________________________________________________________________
   // Getters for the UI
   String _clinicEmployeeName;
@@ -51,11 +51,7 @@ class WelcomeScreenViewModel extends FutureViewModel<Map<String, String>> {
   }
   // __________________________________________________________________________
 
-  void navigateToHomePageView() async {
-    // _dataFromApiService.setDoctorsList();
-    // await _apiServices.getAllDoctors();
-    // // _authenticationService.signOut();
-    // // _apiServices.getAllDoctors();
-    _navigatorService.navigateTo(Routes.homeScreenView);
-  }
+  void navigateToHomePageView() =>
+      _navigatorService.navigateTo(Routes.homeScreenView);
+  // __________________________________________________________________________
 }

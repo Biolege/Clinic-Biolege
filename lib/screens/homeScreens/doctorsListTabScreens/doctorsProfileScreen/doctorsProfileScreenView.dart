@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../model/doctor.dart';
 import '../../../../app/size_configuration.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/reusables.dart';
 import 'doctorsProfileScreenViewModel.dart';
 
 class DoctorsProfileScreenView extends StatelessWidget {
+  DoctorsProfileScreenView({this.doctor});
+  final DoctorFromList doctor;
+
   static const routeName = "/doctorsProfileScreenView";
   @override
   Widget build(BuildContext context) {
@@ -42,13 +46,13 @@ class DoctorsProfileScreenView extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    "Dr. Himmat Singh Rathore",
+                                    doctor.name,
                                     style: TextStyle(fontSize: 20),
                                   ),
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
-                                  Text("Chest specialist"),
+                                  Text(doctor.specialization[0]),
                                   Text("12 years experience")
                                 ],
                               ),

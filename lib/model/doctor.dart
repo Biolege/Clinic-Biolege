@@ -4,12 +4,13 @@
 
 import 'dart:convert';
 
-Doctor doctorFromJson(String str) => Doctor.fromJson(json.decode(str));
+DoctorFromList doctorFromJson(String str) =>
+    DoctorFromList.fromJson(json.decode(str));
 
-String doctorToJson(Doctor data) => json.encode(data.toJson());
+String doctorToJson(DoctorFromList data) => json.encode(data.toJson());
 
-class Doctor {
-  Doctor({
+class DoctorFromList {
+  DoctorFromList({
     this.address,
     this.name,
     this.doctorImage,
@@ -42,37 +43,43 @@ class Doctor {
   String about;
   List<String> services;
   String id;
-  List<Article> experience;
-  List<Article> education;
-  List<Article> feedbacks;
-  List<Article> articles;
+  List<MongoosePopulate> experience;
+  List<MongoosePopulate> education;
+  List<MongoosePopulate> feedbacks;
+  List<MongoosePopulate> articles;
   List<ClinicB> clinics;
   int v;
 
-  factory Doctor.fromJson(Map<String, dynamic> json) => Doctor(
-        address: Address.fromJson(json["address"]),
-        name: json["name"],
-        doctorImage: json["doctorImage"],
-        dob: DateTime.parse(json["dob"]),
-        phoneNumber: json["phoneNumber"],
-        gender: json["gender"],
-        email: json["email"],
-        specialization: List<String>.from(json["specialization"].map((x) => x)),
-        organization: json["organization"],
-        about: json["about"],
-        services: List<String>.from(json["services"].map((x) => x)),
-        id: json["_id"],
-        experience: List<Article>.from(
-            json["experience"].map((x) => Article.fromJson(x))),
-        education: List<Article>.from(
-            json["education"].map((x) => Article.fromJson(x))),
-        feedbacks: List<Article>.from(
-            json["feedbacks"].map((x) => Article.fromJson(x))),
-        articles: List<Article>.from(
-            json["articles"].map((x) => Article.fromJson(x))),
-        clinics:
-            List<ClinicB>.from(json["clinics"].map((x) => ClinicB.fromJson(x))),
-        v: json["__v"],
+  factory DoctorFromList.fromJson(Map<String, dynamic> json) => DoctorFromList(
+        address: Address.fromJson(json["address"]) ?? '',
+        name: json["name"] ?? '',
+        doctorImage: json["doctorImage"] ?? '',
+        dob: DateTime.parse(json["dob"]) ?? '',
+        phoneNumber: json["phoneNumber"] ?? '',
+        gender: json["gender"] ?? '',
+        email: json["email"] ?? '',
+        specialization:
+            List<String>.from(json["specialization"].map((x) => x)) ?? '',
+        organization: json["organization"] ?? '',
+        about: json["about"] ?? '',
+        services: List<String>.from(json["services"].map((x) => x)) ?? '',
+        id: json["_id"] ?? '',
+        experience: List<MongoosePopulate>.from(
+                json["experience"].map((x) => MongoosePopulate.fromJson(x))) ??
+            '',
+        education: List<MongoosePopulate>.from(
+                json["education"].map((x) => MongoosePopulate.fromJson(x))) ??
+            '',
+        feedbacks: List<MongoosePopulate>.from(
+                json["feedbacks"].map((x) => MongoosePopulate.fromJson(x))) ??
+            '',
+        articles: List<MongoosePopulate>.from(
+                json["articles"].map((x) => MongoosePopulate.fromJson(x))) ??
+            '',
+        clinics: List<ClinicB>.from(
+                json["clinics"].map((x) => ClinicB.fromJson(x))) ??
+            '',
+        v: json["__v"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -125,14 +132,15 @@ class Address {
       };
 }
 
-class Article {
-  Article({
+class MongoosePopulate {
+  MongoosePopulate({
     this.id,
   });
 
   String id;
 
-  factory Article.fromJson(Map<String, dynamic> json) => Article(
+  factory MongoosePopulate.fromJson(Map<String, dynamic> json) =>
+      MongoosePopulate(
         id: json["_id"],
       );
 

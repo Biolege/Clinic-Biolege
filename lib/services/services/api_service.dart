@@ -16,9 +16,10 @@ class APIServices {
   String url = "https://biolegenew.herokuapp.com/api/";
   String urlClinicEmployeeCreate = "clinicemployee/create";
   String urlClinicCreate = "clinic/create";
-  String getDoctors = "doctors";
-  String getDoctorByID = "doctor";
-  // ---------------------------------------------------------------------------
+  String urlGetDoctors = "doctors";
+  String urlGetDoctorByID = "doctor";
+  String urlGetAllDoctorCustomers = "doctorcustomer/customers";
+  // -------------------------------------------------------------------------
   // Create a new Clinic Employee and stores the response in the local storage
   Future<ClinicEmployee> createClinicEmployee() async {
     // _______________________________________________________________________
@@ -157,15 +158,15 @@ class APIServices {
     }
   }
 
-  Future<List<Doctor>> getAllDoctors() async {
+  Future<List<DoctorFromList>> getAllDoctors() async {
     // _______________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    final StorageService _storageService = locator<StorageService>();
+    // final StorageService _storageService = locator<StorageService>();
     // _______________________________________________________________________
     try {
       // URL to be calleds
-      var uri = Uri.parse('$url$getDoctors');
+      var uri = Uri.parse('$url$urlGetDoctors');
       // Creating a get request
       var request = new http.Request("GET", uri);
       // _______________________________________________________________________
@@ -177,7 +178,7 @@ class APIServices {
       var responseJson = json.decode(responseString);
       // _______________________________________________________________________
       // Serializing Json to Doctor Class
-      List<Doctor> dlist = [];
+      List<DoctorFromList> dlist = [];
 
       responseJson
           .forEach((doctor) => dlist.add(doctorFromJson(json.encode(doctor))));
@@ -191,14 +192,14 @@ class APIServices {
     }
   }
 
-  Future<Doctor> getDoctorById(String id) async {
+  Future<dynamic> getDoctorById(String id) async {
     // _______________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
     // _______________________________________________________________________
     try {
       // URL to be called
-      var uri = Uri.parse('$url$getDoctorByID/$id');
+      var uri = Uri.parse('$url$urlGetDoctorByID/$id');
       // Creating a get request
       var request = new http.Request("GET", uri);
       // _______________________________________________________________________
@@ -209,7 +210,41 @@ class APIServices {
       var responseString = await response.stream.bytesToString();
       var resonseJson = json.decode(responseString);
       // _______________________________________________________________________
-      return Doctor.fromJson(resonseJson);
+      // Serializing Json to Doctor Class
+
+      // _______________________________________________________________________
+      return dynamic;
+    } catch (e) {
+      print("At get doctors by Id " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+  // ---------------------------------------------------------------------------
+
+  Future<dynamic> getAllDoctorCustomers() async {
+    // _______________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    // _______________________________________________________________________
+    try {
+      // URL to be called
+      var uri = Uri.parse('$url$getAllDoctorCustomers');
+      // Creating a get request
+      var request = new http.Request("GET", uri);
+      // _______________________________________________________________________
+
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var resonseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      // Serializing Json to Customers Class
+
+      // _______________________________________________________________________
+
+      return dynamic;
     } catch (e) {
       print("At get doctors by Id " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());

@@ -1,3 +1,4 @@
+import 'package:clinicapp/widgets/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -12,134 +13,89 @@ class DoctorsListScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<DoctorsListScreenViewModel>.reactive(
       builder: (context, model, child) {
-        return Scaffold(
-          // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          // floatingActionButton: buildOutlineButton(
-          //   "Continue",
-          //   () {},
-          // ),
-          body: SafeArea(
-              child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Doctors",
-                    style: TextStyle(fontSize: 24),
+        return !model.isBusy
+            ? Scaffold(
+                // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+                // floatingActionButton: buildOutlineButton(
+                //   "Continue",
+                //   () {},
+                // ),
+                body: SafeArea(
+                    child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Doctors",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(10),
+                        ),
+                        Text(
+                          model.data.length != 0 ? "Available Today" : "",
+                          style: TextStyle(fontSize: 16, color: offBlack3),
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(20),
+                        ),
+                        model.data.length != 0
+                            ? ListView.builder(
+                                itemCount: model.data.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return FadeInLTR(
+                                    0.2,
+                                    Card(
+                                      color: offWhite,
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color: white, width: 0.1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: ListTile(
+                                        onLongPress: () =>
+                                            model.profileDescriptionView(
+                                                model.data[index]),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 20),
+                                        leading: CircleAvatar(
+                                          radius: 25.0,
+                                          backgroundImage: NetworkImage(
+                                              'https://via.placeholder.com/150'),
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                        title: Text(
+                                          model.data[index].name,
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                        subtitle: Text(model.data[index]
+                                                .specialization[0] ??
+                                            ''),
+                                        trailing: Text(
+                                          "Show info",
+                                          style: TextStyle(fontSize: 10),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                })
+                            : Center(
+                                child: Text("No doctors to show"),
+                              ),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(10),
-                  ),
-                  Text(
-                    "Available Today",
-                    style: TextStyle(fontSize: 16, color: offBlack3),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(20),
-                  ),
-                  Column(
-                    children: [
-                      Card(
-                        color: offWhite,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(color: white, width: 0.1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ListTile(
-                          onLongPress: () => model.profileDescriptionView(),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          leading: CircleAvatar(
-                            radius: 25.0,
-                            backgroundImage:
-                                NetworkImage('https://via.placeholder.com/150'),
-                            backgroundColor: Colors.transparent,
-                          ),
-                          title: Text(
-                            "Dr. Himmat Singh Rathore",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          subtitle: Text("Chest specialist"),
-                        ),
-                      ),
-                      Card(
-                        color: offWhite,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(color: white, width: 0.1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ListTile(
-                          selected: true,
-                          enabled: true,
-                          hoverColor: offWhite2,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          leading: CircleAvatar(
-                            radius: 25.0,
-                            backgroundImage:
-                                NetworkImage('https://via.placeholder.com/150'),
-                            backgroundColor: Colors.transparent,
-                          ),
-                          title: Text(
-                            "Dr. Himmat Singh Rathore",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          subtitle: Text("Chest specialist"),
-                        ),
-                      ),
-                      Card(
-                        color: offWhite,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(color: white, width: 0.1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          leading: CircleAvatar(
-                            radius: 25.0,
-                            backgroundImage:
-                                NetworkImage('https://via.placeholder.com/150'),
-                            backgroundColor: Colors.transparent,
-                          ),
-                          title: Text(
-                            "Dr. Himmat Singh Rathore",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          subtitle: Text("Chest specialist"),
-                        ),
-                      ),
-                      Card(
-                        color: offWhite,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(color: white, width: 0.1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          leading: CircleAvatar(
-                            radius: 25.0,
-                            backgroundImage:
-                                NetworkImage('https://via.placeholder.com/150'),
-                            backgroundColor: Colors.transparent,
-                          ),
-                          title: Text(
-                            "Dr. Himmat Singh Rathore",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          subtitle: Text("Chest specialist"),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          )),
-        );
+                )),
+              )
+            : Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
       },
       viewModelBuilder: () => DoctorsListScreenViewModel(),
     );

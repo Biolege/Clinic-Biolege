@@ -11,26 +11,25 @@ class DataFromApi {
   // ___________________________________________________________________________
   // ___________________________________________________________________________
   // Data to be used in the Doctors bottom navigationbar
-  static List<Doctor> _doctorsListForClinic;
-  List<Doctor> get getDoctorsListForClinic => _doctorsListForClinic;
+  static List<DoctorFromList> _doctorsListForClinic;
+  List<DoctorFromList> get getDoctorsListForClinic => _doctorsListForClinic;
   // Data to be used during searching of doctors/ adding a doctors
   // to clinic profile
-  static List<Doctor> _doctorsList;
-  List<Doctor> get getDoctorsList => _doctorsList;
+  static List<DoctorFromList> _doctorsList;
+  List<DoctorFromList> get getDoctorsList => _doctorsList;
   // Data to display in the Doctors Details when tapped a tile in Doctors list
   // or in the Appointments
-  static Doctor _doctor;
-  Doctor get getSelectedDoctor => _doctor;
+  static DoctorFromList _doctor;
+  DoctorFromList get getSelectedDoctor => _doctor;
   // ___________________________________________________________________________
   // Helper Function
-  void setDoctorsList() async {
+  Future setDoctorsList() async {
     _doctorsList = [];
     _doctorsList = await _apiServices.getAllDoctors();
     print("All doctors saved : " + _doctorsList.toString());
-    setDoctorsListForClinic();
   }
 
-  void setDoctorsListForClinic() async {
+  Future setDoctorsListForClinic() async {
     String clinicId = _storageService.getClinicId;
     // Filtering the doctors which work for ClinicId
     _doctorsListForClinic = [];

@@ -16,53 +16,60 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeScreenViewModel>.reactive(
       builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-              automaticallyImplyLeading: false,
-              leadingWidth: SizeConfig.screenWidth / 3,
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    Icon(Icons.location_pin),
-                    Text(
-                      "Dona clinic",
-                      style: TextStyle(color: offBlack2),
+        return !model.isBusy
+            ? model.dataReady
+                ? Scaffold(
+                    appBar: AppBar(
+                        automaticallyImplyLeading: false,
+                        leadingWidth: SizeConfig.screenWidth / 3,
+                        leading: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Icon(Icons.location_pin),
+                              Text(
+                                model.data.toString(),
+                                style: TextStyle(color: offBlack2),
+                              ),
+                            ],
+                          ),
+                        ),
+                        centerTitle: true,
+                        title: Text(
+                          "Today",
+                          style: TextStyle(color: offBlack1, fontSize: 18),
+                        ),
+                        actions: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Image.asset(
+                              logoPath,
+                              width: SizeConfig.screenWidth / 4.5,
+                            ),
+                          )
+                        ]),
+                    body: PageView(
+                      reverse: false,
+                      onPageChanged: (index) =>
+                          model.selectCurrentPageForNavBar(index),
+                      controller: model.pageController,
+                      children: [...model.widgetOptions],
                     ),
-                  ],
-                ),
-              ),
-              centerTitle: true,
-              title: Text(
-                "Today",
-                style: TextStyle(color: offBlack1, fontSize: 18),
-              ),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Image.asset(
-                    logoPath,
-                    width: SizeConfig.screenWidth / 4.5,
-                  ),
-                )
-              ]),
-          body: PageView(
-            onPageChanged: (index) => model.selectCurrentPage(index),
-            controller: model.pageController,
-            children: [...model.widgetOptions],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: model.getIndex,
-            onTap: (selIndex) => model.setCurrentIndex(selIndex),
-            iconSize: 18,
-            showUnselectedLabels: true,
-            selectedFontSize: 12,
-            selectedItemColor: primaryColor,
-            unselectedItemColor: offBlack2,
-            unselectedLabelStyle: TextStyle(color: offBlack2),
-            items: model.items,
-          ),
-        );
+                    bottomNavigationBar: BottomNavigationBar(
+                      currentIndex: model.getIndex,
+                      // onTap: (selIndex) =>
+                      //     model.setCurrentIndexForPageView(selIndex),
+                      iconSize: 18,
+                      showUnselectedLabels: true,
+                      selectedFontSize: 12,
+                      selectedItemColor: primaryColor,
+                      unselectedItemColor: offBlack2,
+                      unselectedLabelStyle: TextStyle(color: offBlack2),
+                      items: model.items,
+                    ),
+                  )
+                : Scaffold(body: Center(child: CircularProgressIndicator()))
+            : Scaffold(body: Center(child: CircularProgressIndicator()));
       },
       viewModelBuilder: () => HomeScreenViewModel(),
     );
