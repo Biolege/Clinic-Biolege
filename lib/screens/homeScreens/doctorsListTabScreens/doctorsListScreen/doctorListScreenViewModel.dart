@@ -1,3 +1,4 @@
+import '../../../../app/router.gr.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../model/doctor.dart';
@@ -29,6 +30,10 @@ class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
         _dataFromApiService.getClinicDetailsOfDoctor[doctor.id];
     _navigatorService.navigateToView(DoctorsProfileScreenView(
         doctor: doctor, clinicDetails: detailsForTheClinicOfDoctor));
+  }
+
+  void navigateToAddDoctorToClinicScreen() {
+    _navigatorService.navigateTo(Routes.selectDoctorClinicScreen);
   }
 
   @override

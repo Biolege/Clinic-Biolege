@@ -1,27 +1,21 @@
 import 'package:clinicapp/widgets/animations.dart';
 import 'package:clinicapp/widgets/reusables.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../../app/size_configuration.dart';
-import '../../../../theme/theme.dart';
+import '../../../app/size_configuration.dart';
+import '../../../theme/theme.dart';
 // import '../../../../widgets/reusables.dart';
-import 'doctorListScreenViewModel.dart';
+import 'selectDoctorClinicScreenModel.dart';
 
-class DoctorsListScreenView extends StatelessWidget {
-  static const routeName = "/doctorsListScreenView";
+class SelectDoctorClinicScreen extends StatelessWidget {
+  static const routeName = "/selectDoctorClinicScreen";
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<DoctorsListScreenViewModel>.reactive(
+    return ViewModelBuilder<SelectDoctorClinicScreenViewModel>.reactive(
       builder: (context, model, child) {
         return !model.isBusy
             ? Scaffold(
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: buildOutlineButton(
-                  "Add Doctor to Clinic",
-                  () => model.navigateToAddDoctorToClinicScreen(),
-                ),
                 body: SafeArea(
                     child: SingleChildScrollView(
                   child: Padding(
@@ -30,27 +24,44 @@ class DoctorsListScreenView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Doctors",
+                          "Search Doctors",
                           style: TextStyle(fontSize: 24),
                         ),
                         SizedBox(
                           height: getProportionateScreenHeight(10),
                         ),
                         Text(
-                          model.data.length != 0 ? "Available Today" : "",
+                          "Select doctor to add to your clinic",
                           style: TextStyle(fontSize: 16, color: offBlack3),
                         ),
                         SizedBox(
                           height: getProportionateScreenHeight(20),
                         ),
-                        model.data.length != 0
+                        Form(
+                            key: model.searchFormKey,
+                            onChanged: () => model.search(),
+                            child: TextFormField(
+                              onChanged: (value) => model.search(),
+                              keyboardType: TextInputType.name,
+                              decoration: buildInputDecoration(
+                                  "Search",
+                                  Icon(
+                                    EvilIcons.search,
+                                    color: primaryColor,
+                                  )),
+                              controller: model.searchedText,
+                            )),
+                        SizedBox(
+                          height: getProportionateScreenHeight(10),
+                        ),
+                        model.results.length != 0
                             ? ListView.builder(
                                 primary: false,
-                                itemCount: model.data.length,
+                                itemCount: model.results.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return FadeInLTR(
-                                    0.2,
+                                    0.1,
                                     Card(
                                       color: offWhite,
                                       shape: RoundedRectangleBorder(
@@ -61,7 +72,7 @@ class DoctorsListScreenView extends StatelessWidget {
                                       child: ListTile(
                                         onTap: () =>
                                             model.profileDescriptionView(
-                                                model.data[index]),
+                                                model.results[index]),
                                         contentPadding:
                                             const EdgeInsets.symmetric(
                                                 vertical: 10, horizontal: 20),
@@ -72,10 +83,10 @@ class DoctorsListScreenView extends StatelessWidget {
                                           backgroundColor: Colors.black12,
                                         ),
                                         title: Text(
-                                          model.data[index].name,
+                                          model.results[index].name,
                                           style: TextStyle(fontSize: 14),
                                         ),
-                                        subtitle: Text(model.data[index]
+                                        subtitle: Text(model.results[index]
                                                 .specialization[0] ??
                                             ''),
                                         trailing: Text(
@@ -86,8 +97,12 @@ class DoctorsListScreenView extends StatelessWidget {
                                     ),
                                   );
                                 })
-                            : Center(
-                                child: Text("No doctors to show"),
+                            : Column(
+                                children: [
+                                  Center(
+                                    child: Text("No doctors to show"),
+                                  ),
+                                ],
                               ),
                       ],
                     ),
@@ -100,7 +115,8 @@ class DoctorsListScreenView extends StatelessWidget {
                 ),
               );
       },
-      viewModelBuilder: () => DoctorsListScreenViewModel(),
+      onModelReady: (model) => model.getDoctorsList(),
+      viewModelBuilder: () => SelectDoctorClinicScreenViewModel(),
     );
   }
 }

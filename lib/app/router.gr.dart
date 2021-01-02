@@ -9,6 +9,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../model/doctor.dart';
 import '../screens/addClinicEmployeeProfileScreens/addressScreen/addressScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDescriptionScreen/enterClinicDescriptionScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicDetailsScreen/createClinicScreenView.dart';
@@ -33,6 +34,7 @@ import '../screens/homeScreens/doctorsListTabScreens/doctorsListScreen/doctorLis
 import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../screens/homeScreens/homeScreenView.dart';
 import '../screens/homeScreens/patientDetailsScreen/patientDetailsScreenView.dart';
+import '../screens/homeScreens/selectDoctorForClinicScreen/selectDoctorClinicScreen.dart';
 import '../screens/onBoardingScreen/onBoardingScreenView.dart';
 import '../screens/rootView.dart';
 import '../screens/signUpScreens/otpScreen/otpScreenView.dart';
@@ -78,6 +80,7 @@ class Routes {
   static const String confirmScreenView = '/confirmScreenView';
   static const String doctorsListScreenView = '/doctorsListScreenView';
   static const String doctorsProfileScreenView = '/doctorsProfileScreenView';
+  static const String selectDoctorClinicScreen = '/selectDoctorClinicScreen';
   static const all = <String>{
     root,
     onBoardingScreen,
@@ -108,6 +111,7 @@ class Routes {
     confirmScreenView,
     doctorsListScreenView,
     doctorsProfileScreenView,
+    selectDoctorClinicScreen,
   };
 }
 
@@ -153,6 +157,7 @@ class Router extends RouterBase {
     RouteDef(Routes.confirmScreenView, page: ConfirmScreenView),
     RouteDef(Routes.doctorsListScreenView, page: DoctorsListScreenView),
     RouteDef(Routes.doctorsProfileScreenView, page: DoctorsProfileScreenView),
+    RouteDef(Routes.selectDoctorClinicScreen, page: SelectDoctorClinicScreen),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -326,10 +331,33 @@ class Router extends RouterBase {
       );
     },
     DoctorsProfileScreenView: (data) {
+      final args = data.getArgs<DoctorsProfileScreenViewArguments>(
+        orElse: () => DoctorsProfileScreenViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => DoctorsProfileScreenView(),
+        builder: (context) => DoctorsProfileScreenView(
+          doctor: args.doctor,
+          clinicDetails: args.clinicDetails,
+        ),
+        settings: data,
+      );
+    },
+    SelectDoctorClinicScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SelectDoctorClinicScreen(),
         settings: data,
       );
     },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// DoctorsProfileScreenView arguments holder class
+class DoctorsProfileScreenViewArguments {
+  final Doctor doctor;
+  final ClinicElement clinicDetails;
+  DoctorsProfileScreenViewArguments({this.doctor, this.clinicDetails});
 }
