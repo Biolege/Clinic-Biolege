@@ -65,7 +65,7 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   @override
   Future<String> futureToRun() async {
     try {
-      return _storageService.getClinicCityName;
+      return _storageService.getClinicName;
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());
       throw UnimplementedError(e.toString());

@@ -8,16 +8,16 @@ import '../../../../widgets/reusables.dart';
 import 'doctorsProfileScreenViewModel.dart';
 
 class DoctorsProfileScreenView extends StatelessWidget {
-  DoctorsProfileScreenView({this.doctor});
-  final DoctorFromList doctor;
-
+  DoctorsProfileScreenView({this.doctor, this.clinicDetails});
+  final Doctor doctor;
+  final ClinicElement clinicDetails;
   static const routeName = "/doctorsProfileScreenView";
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<DoctorsProfileScreenViewModel>.reactive(
       builder: (context, model, child) {
         return Scaffold(
-          appBar: buildAppBarWithLogoAndText(context, "", Text("Today")),
+          appBar: buildAppBarWithLogoAndText(context, "", Text("")),
           body: SafeArea(
               child: SingleChildScrollView(
             child: Padding(
@@ -53,7 +53,12 @@ class DoctorsProfileScreenView extends StatelessWidget {
                                     height: getProportionateScreenHeight(10),
                                   ),
                                   Text(doctor.specialization[0]),
-                                  Text("12 years experience")
+                                  Text(((doctor.experience[0]
+                                                  .experienceEndYear) -
+                                              doctor.experience[0]
+                                                  .experienceStartYear)
+                                          .toString() +
+                                      " years experience")
                                 ],
                               ),
                             ),
@@ -107,6 +112,9 @@ class DoctorsProfileScreenView extends StatelessWidget {
                             color: blue,
                             fontWeight: FontWeight.w600),
                       ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(20),
+                      ),
                       Column(
                         children: [
                           Column(
@@ -129,8 +137,12 @@ class DoctorsProfileScreenView extends StatelessWidget {
                               ListTile(
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 40),
-                                title: Text("Star city hospital"),
-                                subtitle: Text("Thakur bari road, Hojai"),
+                                title: Text(doctor.address.homeAddress),
+                                subtitle: Text(doctor.address.city +
+                                    " , " +
+                                    doctor.address.state +
+                                    " , " +
+                                    doctor.address.pinCode.toString()),
                               )
                             ],
                           ),
@@ -155,75 +167,48 @@ class DoctorsProfileScreenView extends StatelessWidget {
                           SizedBox(
                             height: getProportionateScreenHeight(20),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Monday",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w300),
+                          GridView.builder(
+                              itemCount: clinicDetails.days.length,
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      mainAxisSpacing: 10,
+                                      crossAxisSpacing: 10,
+                                      childAspectRatio: 3,
+                                      crossAxisCount: 2),
+                              itemBuilder: (context, index) =>
+                                  buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              clinicDetails.days
+                                                  .elementAt(index)
+                                                  .day,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w300),
+                                            ),
+                                            Text(
+                                              clinicDetails.days
+                                                      .elementAt(index)
+                                                      .startTime
+                                                      .toString() +
+                                                  " to " +
+                                                  clinicDetails.days
+                                                      .elementAt(index)
+                                                      .endTime
+                                                      .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w300),
+                                            )
+                                          ],
                                         ),
-                                        Text(
-                                          "July 25",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Monday",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        Text(
-                                          "July 25",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Monday",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        Text(
-                                          "July 25",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  () {}),
-                            ],
-                          )
+                                      ),
+                                      () {})),
                         ],
                       ),
                       SizedBox(

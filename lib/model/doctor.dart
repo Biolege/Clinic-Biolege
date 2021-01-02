@@ -4,15 +4,13 @@
 
 import 'dart:convert';
 
-DoctorFromList doctorFromJson(String str) =>
-    DoctorFromList.fromJson(json.decode(str));
+Doctor doctorFromJson(String str) => Doctor.fromJson(json.decode(str));
 
-String doctorToJson(DoctorFromList data) => json.encode(data.toJson());
+String doctorToJson(Doctor data) => json.encode(data.toJson());
 
-class DoctorFromList {
-  DoctorFromList({
+class Doctor {
+  Doctor({
     this.address,
-    this.name,
     this.doctorImage,
     this.dob,
     this.phoneNumber,
@@ -23,6 +21,7 @@ class DoctorFromList {
     this.about,
     this.services,
     this.id,
+    this.name,
     this.experience,
     this.education,
     this.feedbacks,
@@ -32,7 +31,6 @@ class DoctorFromList {
   });
 
   Address address;
-  String name;
   String doctorImage;
   DateTime dob;
   String phoneNumber;
@@ -43,48 +41,42 @@ class DoctorFromList {
   String about;
   List<String> services;
   String id;
-  List<MongoosePopulate> experience;
-  List<MongoosePopulate> education;
-  List<MongoosePopulate> feedbacks;
-  List<MongoosePopulate> articles;
-  List<ClinicB> clinics;
+  String name;
+  List<Experience> experience;
+  List<Education> education;
+  List<Article> feedbacks;
+  List<Article> articles;
+  List<ClinicElement> clinics;
   int v;
 
-  factory DoctorFromList.fromJson(Map<String, dynamic> json) => DoctorFromList(
-        address: Address.fromJson(json["address"]) ?? '',
-        name: json["name"] ?? '',
-        doctorImage: json["doctorImage"] ?? '',
-        dob: DateTime.parse(json["dob"]) ?? '',
-        phoneNumber: json["phoneNumber"] ?? '',
-        gender: json["gender"] ?? '',
-        email: json["email"] ?? '',
-        specialization:
-            List<String>.from(json["specialization"].map((x) => x)) ?? '',
-        organization: json["organization"] ?? '',
-        about: json["about"] ?? '',
-        services: List<String>.from(json["services"].map((x) => x)) ?? '',
-        id: json["_id"] ?? '',
-        experience: List<MongoosePopulate>.from(
-                json["experience"].map((x) => MongoosePopulate.fromJson(x))) ??
-            '',
-        education: List<MongoosePopulate>.from(
-                json["education"].map((x) => MongoosePopulate.fromJson(x))) ??
-            '',
-        feedbacks: List<MongoosePopulate>.from(
-                json["feedbacks"].map((x) => MongoosePopulate.fromJson(x))) ??
-            '',
-        articles: List<MongoosePopulate>.from(
-                json["articles"].map((x) => MongoosePopulate.fromJson(x))) ??
-            '',
-        clinics: List<ClinicB>.from(
-                json["clinics"].map((x) => ClinicB.fromJson(x))) ??
-            '',
-        v: json["__v"] ?? '',
+  factory Doctor.fromJson(Map<String, dynamic> json) => Doctor(
+        address: Address.fromJson(json["address"]),
+        doctorImage: json["doctorImage"],
+        dob: DateTime.parse(json["dob"]),
+        phoneNumber: json["phoneNumber"],
+        gender: json["gender"],
+        email: json["email"],
+        specialization: List<String>.from(json["specialization"].map((x) => x)),
+        organization: json["organization"],
+        about: json["about"],
+        services: List<String>.from(json["services"].map((x) => x)),
+        id: json["_id"],
+        name: json["name"],
+        experience: List<Experience>.from(
+            json["experience"].map((x) => Experience.fromJson(x))),
+        education: List<Education>.from(
+            json["education"].map((x) => Education.fromJson(x))),
+        feedbacks: List<Article>.from(
+            json["feedbacks"].map((x) => Article.fromJson(x))),
+        articles: List<Article>.from(
+            json["articles"].map((x) => Article.fromJson(x))),
+        clinics: List<ClinicElement>.from(
+            json["clinics"].map((x) => ClinicElement.fromJson(x))),
+        v: json["__v"],
       );
 
   Map<String, dynamic> toJson() => {
         "address": address.toJson(),
-        "name": name,
         "doctorImage": doctorImage,
         "dob": dob.toIso8601String(),
         "phoneNumber": phoneNumber,
@@ -95,6 +87,7 @@ class DoctorFromList {
         "about": about,
         "services": List<dynamic>.from(services.map((x) => x)),
         "_id": id,
+        "name": name,
         "experience": List<dynamic>.from(experience.map((x) => x.toJson())),
         "education": List<dynamic>.from(education.map((x) => x.toJson())),
         "feedbacks": List<dynamic>.from(feedbacks.map((x) => x.toJson())),
@@ -132,39 +125,218 @@ class Address {
       };
 }
 
-class MongoosePopulate {
-  MongoosePopulate({
+class Article {
+  Article({
     this.id,
+    this.heading,
+    this.body,
+    this.createdAt,
+    this.updatedAt,
   });
 
   String id;
+  String heading;
+  String body;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  factory MongoosePopulate.fromJson(Map<String, dynamic> json) =>
-      MongoosePopulate(
+  factory Article.fromJson(Map<String, dynamic> json) => Article(
         id: json["_id"],
+        heading: json["heading"],
+        body: json["body"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
+        "heading": heading,
+        "body": body,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
       };
 }
 
-class ClinicB {
-  ClinicB({
+class ClinicElement {
+  ClinicElement({
     this.id,
+    this.clinic,
     this.days,
+    this.fees,
+    this.avgTime,
+    this.avgPatientPerDay,
+    this.createdAt,
+    this.updatedAt,
   });
 
   String id;
-  List<dynamic> days;
+  ClinicClinic clinic;
+  List<Day> days;
+  int fees;
+  int avgTime;
+  int avgPatientPerDay;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  factory ClinicB.fromJson(Map<String, dynamic> json) => ClinicB(
+  factory ClinicElement.fromJson(Map<String, dynamic> json) => ClinicElement(
         id: json["_id"],
-        days: List<dynamic>.from(json["days"].map((x) => x)),
+        clinic: ClinicClinic.fromJson(json["clinic"]),
+        days: List<Day>.from(json["days"].map((x) => Day.fromJson(x))),
+        fees: json["fees"],
+        avgTime: json["avgTime"],
+        avgPatientPerDay: json["avgPatientPerDay"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "days": List<dynamic>.from(days.map((x) => x)),
+        "clinic": clinic.toJson(),
+        "days": List<dynamic>.from(days.map((x) => x.toJson())),
+        "fees": fees,
+        "avgTime": avgTime,
+        "avgPatientPerDay": avgPatientPerDay,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
+      };
+}
+
+class ClinicClinic {
+  ClinicClinic({
+    this.id,
+    this.name,
+    this.phoneNumber,
+  });
+
+  String id;
+  String name;
+  String phoneNumber;
+
+  factory ClinicClinic.fromJson(Map<String, dynamic> json) => ClinicClinic(
+        id: json["_id"],
+        name: json["name"],
+        phoneNumber: json["phoneNumber"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
+        "phoneNumber": phoneNumber,
+      };
+}
+
+class Day {
+  Day({
+    this.id,
+    this.day,
+    this.startTime,
+    this.endTime,
+  });
+
+  String id;
+  String day;
+  int startTime;
+  int endTime;
+
+  factory Day.fromJson(Map<String, dynamic> json) => Day(
+        id: json["_id"],
+        day: json["day"],
+        startTime: json["startTime"],
+        endTime: json["endTime"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "day": day,
+        "startTime": startTime,
+        "endTime": endTime,
+      };
+}
+
+class Education {
+  Education({
+    this.id,
+    this.educationRegistrationNumber,
+    this.educationStartYear,
+    this.educationEndYear,
+    this.educationDegree,
+    this.educationCollege,
+    this.educationField,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  String id;
+  String educationRegistrationNumber;
+  int educationStartYear;
+  int educationEndYear;
+  String educationDegree;
+  String educationCollege;
+  String educationField;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Education.fromJson(Map<String, dynamic> json) => Education(
+        id: json["_id"],
+        educationRegistrationNumber: json["educationRegistrationNumber"],
+        educationStartYear: json["educationStartYear"],
+        educationEndYear: json["educationEndYear"],
+        educationDegree: json["educationDegree"],
+        educationCollege: json["educationCollege"],
+        educationField: json["educationField"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "educationRegistrationNumber": educationRegistrationNumber,
+        "educationStartYear": educationStartYear,
+        "educationEndYear": educationEndYear,
+        "educationDegree": educationDegree,
+        "educationCollege": educationCollege,
+        "educationField": educationField,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
+      };
+}
+
+class Experience {
+  Experience({
+    this.id,
+    this.experienceTitle,
+    this.experienceStartYear,
+    this.experienceEndYear,
+    this.experienceOrganization,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  String id;
+  String experienceTitle;
+  int experienceStartYear;
+  int experienceEndYear;
+  String experienceOrganization;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Experience.fromJson(Map<String, dynamic> json) => Experience(
+        id: json["_id"],
+        experienceTitle: json["experienceTitle"],
+        experienceStartYear: json["experienceStartYear"],
+        experienceEndYear: json["experienceEndYear"],
+        experienceOrganization: json["experienceOrganization"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "experienceTitle": experienceTitle,
+        "experienceStartYear": experienceStartYear,
+        "experienceEndYear": experienceEndYear,
+        "experienceOrganization": experienceOrganization,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
       };
 }

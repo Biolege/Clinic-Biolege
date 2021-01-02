@@ -1,6 +1,6 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:clinicapp/model/doctor.dart';
+import '../../../../model/doctor.dart';
 import '../../../../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../../../../app/locator.dart';
 import '../../../../model/clinic.dart';
@@ -9,7 +9,7 @@ import '../../../../services/services/auth_service.dart';
 import '../../../../services/services/dataFromApi_service.dart';
 import '../../../../services/services/local_storage.dart';
 
-class DoctorsListScreenViewModel extends FutureViewModel<List<DoctorFromList>> {
+class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
   // __________________________________________________________________________
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
@@ -24,14 +24,15 @@ class DoctorsListScreenViewModel extends FutureViewModel<List<DoctorFromList>> {
   // Helper functions
 
   // __________________________________________________________________________
-  void profileDescriptionView(DoctorFromList doctor) {
+  void profileDescriptionView(Doctor doctor) async {
+    ClinicElement detailsForTheClinicOfDoctor =
+        _dataFromApiService.getClinicDetailsOfDoctor[doctor.id];
     _navigatorService.navigateToView(DoctorsProfileScreenView(
-      doctor: doctor,
-    ));
+        doctor: doctor, clinicDetails: detailsForTheClinicOfDoctor));
   }
 
   @override
-  Future<List<DoctorFromList>> futureToRun() async {
+  Future<List<Doctor>> futureToRun() async {
     try {
       var x = _dataFromApiService.getDoctorsListForClinic;
       return x;

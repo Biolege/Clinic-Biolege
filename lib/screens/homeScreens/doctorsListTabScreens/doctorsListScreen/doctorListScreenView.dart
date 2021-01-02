@@ -56,7 +56,7 @@ class DoctorsListScreenView extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ListTile(
-                                        onLongPress: () =>
+                                        onTap: () =>
                                             model.profileDescriptionView(
                                                 model.data[index]),
                                         contentPadding:

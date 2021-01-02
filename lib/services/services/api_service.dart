@@ -158,7 +158,7 @@ class APIServices {
     }
   }
 
-  Future<List<DoctorFromList>> getAllDoctors() async {
+  Future<List<Doctor>> getAllDoctors() async {
     // _______________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
@@ -176,9 +176,10 @@ class APIServices {
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
       var responseJson = json.decode(responseString);
+      print(responseJson);
       // _______________________________________________________________________
       // Serializing Json to Doctor Class
-      List<DoctorFromList> dlist = [];
+      List<Doctor> dlist = [];
 
       responseJson
           .forEach((doctor) => dlist.add(doctorFromJson(json.encode(doctor))));
