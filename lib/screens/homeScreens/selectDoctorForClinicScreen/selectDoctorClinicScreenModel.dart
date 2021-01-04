@@ -27,14 +27,15 @@ class SelectDoctorClinicScreenViewModel extends BaseViewModel {
   final searchFormKey = GlobalKey<FormState>();
   List<Doctor> results = [];
   List<Doctor> doctorsList = [];
+  Map<String, ClinicElement> clinicDetailsOfDoctor;
   // __________________________________________________________________________
   // Helper functions
 
   void getDoctorsList() async {
     setBusy(true);
     doctorsList = _dataFromApiService.getDoctorsList;
+    clinicDetailsOfDoctor = _dataFromApiService.getClinicDetailsOfDoctor;
     print(results);
-
     setBusy(false);
   }
 
@@ -44,13 +45,17 @@ class SelectDoctorClinicScreenViewModel extends BaseViewModel {
         (doc.name.toLowerCase().contains(searchedText.text.toLowerCase()))
             ? results.add(doc)
             : null);
+
     if (searchedText.text.length == 0) results.clear();
     print(results);
     notifyListeners();
   }
 
   void profileDescriptionView(Doctor doctor) async {
-    _navigatorService.navigateToView(
-        DoctorsProfileScreenView(doctor: doctor, clinicDetails: null));
+    _navigatorService.navigateToView(DoctorsProfileScreenView(
+      doctor: doctor,
+      clinicDetails: null,
+      isFromClinic: false,
+    ));
   }
 }

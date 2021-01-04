@@ -16,6 +16,7 @@ class DataFromApi {
   static List<Doctor> _doctorsListForClinic;
   List<Doctor> get getDoctorsListForClinic => _doctorsListForClinic;
   // ------------------------------------------------------------------
+  // Mapping of Doctors(ID) with their clinic details
   static Map<String, ClinicElement> _clinicDetailsOfDoctor;
   Map<String, ClinicElement> get getClinicDetailsOfDoctor =>
       _clinicDetailsOfDoctor;

@@ -50,24 +50,25 @@ class AddCustomerScreenView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                          Row(
-                            children: [
-                              Icon(
-                                FontAwesome.vcard,
-                                size: 18,
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                "Biolege Card",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w300),
-                              )
-                            ],
-                          ),
-                          model.addBiolegeCard),
+                      Container(),
+                      // buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
+                      //     Row(
+                      //       children: [
+                      //         Icon(
+                      //           FontAwesome.vcard,
+                      //           size: 18,
+                      //         ),
+                      //         SizedBox(
+                      //           width: 15,
+                      //         ),
+                      //         Text(
+                      //           "Biolege Card",
+                      //           style: TextStyle(
+                      //               fontSize: 16, fontWeight: FontWeight.w300),
+                      //         )
+                      //       ],
+                      //     ),
+                      //     model.addBiolegeCard),
                       buildOutlineButton(
                           "Continue", () => model.addCustomerDetails())
                     ],

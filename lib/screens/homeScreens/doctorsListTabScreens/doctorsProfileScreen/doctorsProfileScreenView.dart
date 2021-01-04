@@ -8,9 +8,12 @@ import '../../../../widgets/reusables.dart';
 import 'doctorsProfileScreenViewModel.dart';
 
 class DoctorsProfileScreenView extends StatelessWidget {
-  DoctorsProfileScreenView({this.doctor, this.clinicDetails});
+  DoctorsProfileScreenView(
+      {this.doctor, this.clinicDetails, this.isFromClinic});
   final Doctor doctor;
   final ClinicElement clinicDetails;
+  final bool isFromClinic;
+
   static const routeName = "/doctorsProfileScreenView";
   @override
   Widget build(BuildContext context) {
@@ -86,19 +89,36 @@ class DoctorsProfileScreenView extends StatelessWidget {
                   SizedBox(
                     height: getProportionateScreenHeight(130),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        AntDesign.checkcircleo,
-                        color: Colors.green,
-                      ),
-                      SizedBox(
-                        width: getProportionateScreenWidth(10),
-                      ),
-                      Text("Available today"),
-                    ],
-                  ),
+                  !isFromClinic
+                      ? Center(
+                          child:
+                              buildBasicOutlineButtonWithLessPaddingAndRounderCornersWithCustomBackground(
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Text(
+                                      "Add doctor to your clinic",
+                                      style: TextStyle(
+                                          color: white,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                  () => model.addThisDoctorToClinc(
+                                      doctor.name, doctor.id),
+                                  primaryColor),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              AntDesign.checkcircleo,
+                              color: Colors.green,
+                            ),
+                            SizedBox(
+                              width: getProportionateScreenWidth(10),
+                            ),
+                            Text("Available today"),
+                          ],
+                        ),
                   SizedBox(
                     height: getProportionateScreenHeight(20),
                   ),

@@ -29,7 +29,10 @@ class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
     ClinicElement detailsForTheClinicOfDoctor =
         _dataFromApiService.getClinicDetailsOfDoctor[doctor.id];
     _navigatorService.navigateToView(DoctorsProfileScreenView(
-        doctor: doctor, clinicDetails: detailsForTheClinicOfDoctor));
+      doctor: doctor,
+      clinicDetails: detailsForTheClinicOfDoctor,
+      isFromClinic: true,
+    ));
   }
 
   void navigateToAddDoctorToClinicScreen() {

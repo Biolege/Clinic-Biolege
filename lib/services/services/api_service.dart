@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
 import '../../model/clinicEmployee.dart';
+import 'dataFromApi_service.dart';
 import 'local_storage.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -18,6 +19,7 @@ class APIServices {
   String urlClinicCreate = "clinic/create";
   String urlGetDoctors = "doctors";
   String urlGetDoctorByID = "doctor";
+  String updateDoctor = "doctor";
   String urlGetAllDoctorCustomers = "doctorcustomer/customers";
   // -------------------------------------------------------------------------
   // Create a new Clinic Employee and stores the response in the local storage
@@ -193,6 +195,7 @@ class APIServices {
     }
   }
 
+  // ---------------------------------------------------------------------------
   Future<dynamic> getDoctorById(String id) async {
     // _______________________________________________________________________
     // Locating Dependencies
@@ -252,5 +255,56 @@ class APIServices {
       return null;
     }
   }
+
   // ---------------------------------------------------------------------------
+  Future addDoctorToClinicById(String id) async {
+    // _______________________________________________________________________
+    // Locating Dependencies
+    final StorageService _storageService = locator<StorageService>();
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final DataFromApi _dataFromApiService = locator<DataFromApi>();
+    // _______________________________________________________________________
+    try {
+      // URL to be called
+      var uri = Uri.parse('$url$updateDoctor/$id');
+      // Creating a get request
+      // var request = new http.MultipartRequest("PUT", uri);
+      var request = new http.Request("PUT", uri);
+      request.body = jsonEncode({
+        "clinics": {
+          "clinic": {
+            "_id": _storageService.getClinicId,
+            "name": _storageService.getClinicCityName,
+            "phoneNumber": _storageService.getPhoneNumber.toString()
+          },
+        }
+      });
+      // _______________________________________________________________________
+      // request..fields['clinics.clinic._id'] = _storageService.getClinicId;
+      // request
+      //   ..fields['clinics.clinic.name'] = _storageService.getClinicCityName;
+      // request
+      //   ..fields['clinics.clinic.phoneNumber'] =
+      //       _storageService.getPhoneNumber.toString();
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var resonseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      // Serializing Json to Customers Class
+
+      // _______________________________________________________________________
+      // Refetch the updated doctors list
+      await _dataFromApiService.setDoctorsList();
+      await _dataFromApiService.setDoctorsListForClinic();
+      // _______________________________________________________________________
+      print(resonseJson["clinics"]);
+      return doctorFromJson(json.encode(resonseJson));
+    } catch (e) {
+      print("At add doctors to clinic by Id " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
 }

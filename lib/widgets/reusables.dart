@@ -93,6 +93,23 @@ OutlineButton buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
       child: child);
 }
 
+FlatButton
+    buildBasicOutlineButtonWithLessPaddingAndRounderCornersWithCustomBackground(
+        Widget child, void Function() function, Color bgColor) {
+  return FlatButton(
+      hoverColor: offWhite2,
+      splashColor: bgColor,
+      color: bgColor,
+      shape: new RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(8.0),
+      ),
+      padding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(10),
+          horizontal: getProportionateScreenWidth(5)),
+      onPressed: () => function(),
+      child: child);
+}
+
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
       automaticallyImplyLeading: false,

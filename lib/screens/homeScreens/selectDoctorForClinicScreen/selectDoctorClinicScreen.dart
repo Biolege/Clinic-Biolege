@@ -63,13 +63,16 @@ class SelectDoctorClinicScreen extends StatelessWidget {
                                   return FadeInLTR(
                                     0.1,
                                     Card(
-                                      color: offWhite,
+                                      // color: offWhite,
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
                                             color: white, width: 0.1),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ListTile(
+                                        enabled: !model.clinicDetailsOfDoctor
+                                            .containsKey(
+                                                model.results[index].id),
                                         onTap: () =>
                                             model.profileDescriptionView(
                                                 model.results[index]),
@@ -89,10 +92,15 @@ class SelectDoctorClinicScreen extends StatelessWidget {
                                         subtitle: Text(model.results[index]
                                                 .specialization[0] ??
                                             ''),
-                                        trailing: Text(
-                                          "Show info",
-                                          style: TextStyle(fontSize: 10),
-                                        ),
+                                        trailing: model.clinicDetailsOfDoctor
+                                                .containsKey(
+                                                    model.results[index].id)
+                                            ? Text("Already added",
+                                                style: TextStyle(fontSize: 10))
+                                            : Text(
+                                                "Show info",
+                                                style: TextStyle(fontSize: 10),
+                                              ),
                                       ),
                                     ),
                                   );

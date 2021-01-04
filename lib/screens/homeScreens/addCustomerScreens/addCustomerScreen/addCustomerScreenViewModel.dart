@@ -10,10 +10,10 @@ class AddCustomerScreenViewModel extends BaseViewModel {
   TextEditingController newCustomerMobileNumber = TextEditingController();
 
   void addCustomerDetails() {
-    _navigatorService.navigateTo(Routes.addCustomerDetailsScreenView);
+    _navigatorService.navigateTo(Routes.addBiolegeCardAddNameScreenView);
   }
 
-  void addBiolegeCard() {
-    _navigatorService.navigateTo(Routes.addBiolegeScreenView);
-  }
+  // void addBiolegeCard() {
+  //   _navigatorService.navigateTo(Routes.addBiolegeScreenView);
+  // }
 }
