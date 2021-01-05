@@ -338,6 +338,7 @@ class Router extends RouterBase {
         builder: (context) => DoctorsProfileScreenView(
           doctor: args.doctor,
           clinicDetails: args.clinicDetails,
+          isFromClinic: args.isFromClinic,
         ),
         settings: data,
       );
@@ -359,5 +360,7 @@ class Router extends RouterBase {
 class DoctorsProfileScreenViewArguments {
   final Doctor doctor;
   final ClinicElement clinicDetails;
-  DoctorsProfileScreenViewArguments({this.doctor, this.clinicDetails});
+  final bool isFromClinic;
+  DoctorsProfileScreenViewArguments(
+      {this.doctor, this.clinicDetails, this.isFromClinic});
 }

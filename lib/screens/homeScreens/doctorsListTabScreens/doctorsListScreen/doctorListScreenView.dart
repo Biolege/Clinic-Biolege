@@ -16,11 +16,10 @@ class DoctorsListScreenView extends StatelessWidget {
       builder: (context, model, child) {
         return !model.isBusy
             ? Scaffold(
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: buildOutlineButton(
-                  "Add Doctor to Clinic",
-                  () => model.navigateToAddDoctorToClinicScreen(),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () => model.navigateToAddDoctorToClinicScreen(),
+                  backgroundColor: white,
+                  child: Icon(Icons.add),
                 ),
                 body: SafeArea(
                     child: SingleChildScrollView(
@@ -100,6 +99,7 @@ class DoctorsListScreenView extends StatelessWidget {
                 ),
               );
       },
+      createNewModelOnInsert: true,
       viewModelBuilder: () => DoctorsListScreenViewModel(),
     );
   }

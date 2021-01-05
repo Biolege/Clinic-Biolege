@@ -159,9 +159,9 @@ class Article {
 
 class ClinicElement {
   ClinicElement({
-    this.id,
     this.clinic,
     this.days,
+    this.id,
     this.fees,
     this.avgTime,
     this.avgPatientPerDay,
@@ -169,9 +169,9 @@ class ClinicElement {
     this.updatedAt,
   });
 
-  String id;
   ClinicClinic clinic;
   List<Day> days;
+  String id;
   int fees;
   int avgTime;
   int avgPatientPerDay;
@@ -179,9 +179,9 @@ class ClinicElement {
   DateTime updatedAt;
 
   factory ClinicElement.fromJson(Map<String, dynamic> json) => ClinicElement(
-        id: json["_id"],
         clinic: ClinicClinic.fromJson(json["clinic"]),
         days: List<Day>.from(json["days"].map((x) => Day.fromJson(x))),
+        id: json["_id"],
         fees: json["fees"],
         avgTime: json["avgTime"],
         avgPatientPerDay: json["avgPatientPerDay"],
@@ -190,9 +190,9 @@ class ClinicElement {
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "clinic": clinic.toJson(),
         "days": List<dynamic>.from(days.map((x) => x.toJson())),
+        "_id": id,
         "fees": fees,
         "avgTime": avgTime,
         "avgPatientPerDay": avgPatientPerDay,
@@ -267,7 +267,7 @@ class Education {
   });
 
   String id;
-  String educationRegistrationNumber;
+  int educationRegistrationNumber;
   int educationStartYear;
   int educationEndYear;
   String educationDegree;

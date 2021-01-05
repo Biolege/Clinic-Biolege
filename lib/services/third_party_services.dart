@@ -6,25 +6,30 @@ import 'services/filePicker_service.dart';
 import 'services/api_service.dart';
 import 'services/auth_service.dart';
 import 'services/local_storage.dart';
-import '../model/clinicEmployee.dart';
-import '../model/clinic.dart';
+// import '../model/clinicEmployee.dart';
+// import '../model/clinic.dart';
 
 abstract class ThirdPartyServicesModule {
   @lazySingleton
-
+  // __________________________________________________________________________
   // Data Services
-  Clinic get clinic;
-  ClinicEmployee get clinicEmployee;
+  // ---------------------------------------------------
+  // Clinic get clinic;
+  // ClinicEmployee get clinicEmployee;
   DataFromApi get dataFromApi;
+  // ---------------------------------------------------
   // Servies for navigation
   NavigationService get navigationService;
+  // ---------------------------------------------------
   // Servies for navigation
+  // ---------------------------------------------------
   ThemeService get themeService;
-
+  // ---------------------------------------------------
   AuthenticationService get authenticationService;
   StorageService get localStorageService;
   APIServices get aPIServices;
   DialogService get dialogService;
   SnackbarService get snackbarService;
   FilePickHelperService get filePickHelperService;
+  // __________________________________________________________________________
 }

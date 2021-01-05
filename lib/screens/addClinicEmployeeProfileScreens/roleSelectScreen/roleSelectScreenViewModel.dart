@@ -23,10 +23,12 @@ class RoleSelectViewModel extends BaseViewModel {
   }
 
   void saveRoleType() async {
+    setBusy(true);
     // Set the role in the local storage and clear stacks
     await _storageService.setRoleType(_role);
     // Call the API to create clinic employee and save data
     await _apiServices.createClinicEmployee();
+    setBusy(false);
     navigateTocreateOrSearchClinicScreenView();
   }
 

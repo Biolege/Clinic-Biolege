@@ -54,10 +54,15 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
         cancelTitle: "Cancel",
         confirmationTitle: "Continue",
         dialogPlatform: DialogPlatform.Custom);
-    if (response.confirmed) createClinic();
+
+    if (response.confirmed) {
+      setBusy(true);
+      await createClinic();
+      setBusy(false);
+    }
   }
 
-  void createClinic() async {
+  Future createClinic() async {
     var clinic = await _aPIServices.createClinic();
     if (clinic != null) navigateToWelcomeScreen();
   }

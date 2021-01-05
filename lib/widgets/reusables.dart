@@ -62,6 +62,18 @@ RaisedButton buildOutlineButton(text, function) {
   );
 }
 
+RaisedButton buildOutlineButtonCustomWidget(widget, function) {
+  return RaisedButton(
+    shape: new RoundedRectangleBorder(
+      borderRadius: new BorderRadius.circular(40.0),
+    ),
+    onPressed: function,
+    child: Padding(
+        padding: EdgeInsets.all(getProportionateScreenHeight(15)),
+        child: widget),
+  );
+}
+
 OutlineButton buildBasicOutlineButton(Widget child, void Function() function) {
   return OutlineButton(
       highlightedBorderColor: offWhite1,
@@ -97,6 +109,8 @@ FlatButton
     buildBasicOutlineButtonWithLessPaddingAndRounderCornersWithCustomBackground(
         Widget child, void Function() function, Color bgColor) {
   return FlatButton(
+      height: 50,
+      minWidth: 200,
       hoverColor: offWhite2,
       splashColor: bgColor,
       color: bgColor,

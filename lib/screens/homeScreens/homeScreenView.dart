@@ -27,9 +27,15 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           child: Row(
                             children: [
                               Icon(Icons.location_pin),
-                              Text(
-                                model.data.toString(),
-                                style: TextStyle(color: offBlack2),
+                              Container(
+                                width: 100,
+                                child: Text(
+                                  model.data.toString().length < 16
+                                      ? model.data.toString()
+                                      : model.data.toString().substring(0, 15),
+                                  style:
+                                      TextStyle(color: offBlack2, fontSize: 12),
+                                ),
                               ),
                             ],
                           ),

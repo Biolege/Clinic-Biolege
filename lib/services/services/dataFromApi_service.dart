@@ -1,5 +1,3 @@
-import 'package:clinicapp/model/clinic.dart';
-
 import '../../services/services/local_storage.dart';
 import '../../app/locator.dart';
 import '../../services/services/api_service.dart';
@@ -43,13 +41,15 @@ class DataFromApi {
     // Filtering the doctors which work for ClinicId
     _doctorsListForClinic = [];
     _clinicDetailsOfDoctor = {};
-    _doctorsList.forEach(
-        (doctor) => doctor.clinics.forEach((clinic) => clinic.id == clinicId
+    _doctorsList.forEach((doctor) =>
+        doctor.clinics.forEach((clinic) => clinic.clinic.id == clinicId
             ? {
+                print(clinic.id + " " + doctor.name),
                 _doctorsListForClinic.add(doctor),
                 _clinicDetailsOfDoctor.putIfAbsent(doctor.id, () => clinic)
               }
             : null));
+
     print("ClinicDetails for $clinicId is saved : " +
         _clinicDetailsOfDoctor.toString());
     print(

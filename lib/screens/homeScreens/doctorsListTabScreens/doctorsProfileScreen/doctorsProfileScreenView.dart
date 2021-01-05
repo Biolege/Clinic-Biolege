@@ -90,22 +90,36 @@ class DoctorsProfileScreenView extends StatelessWidget {
                     height: getProportionateScreenHeight(130),
                   ),
                   !isFromClinic
-                      ? Center(
-                          child:
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCornersWithCustomBackground(
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text(
-                                      "Add doctor to your clinic",
-                                      style: TextStyle(
-                                          color: white,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  ),
-                                  () => model.addThisDoctorToClinc(
-                                      doctor.name, doctor.id),
-                                  primaryColor),
-                        )
+                      ? !model.isBusy
+                          ? Center(
+                              child:
+                                  buildBasicOutlineButtonWithLessPaddingAndRounderCornersWithCustomBackground(
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          "Add doctor to your clinic",
+                                          style: TextStyle(
+                                              color: white,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ),
+                                      () => model.addThisDoctorToClinc(
+                                          doctor.name, doctor.id),
+                                      primaryColor),
+                            )
+                          : Center(
+                              child:
+                                  buildBasicOutlineButtonWithLessPaddingAndRounderCornersWithCustomBackground(
+                                      Container(
+                                        height: 25,
+                                        width: 25,
+                                        child: CircularProgressIndicator(
+                                          backgroundColor: white,
+                                        ),
+                                      ),
+                                      null,
+                                      primaryColor),
+                            )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

@@ -6,23 +6,24 @@ import 'package:stacked_services/stacked_services.dart';
 import 'doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import 'appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../../app/locator.dart';
-import '../../model/clinic.dart';
-import '../../model/clinicEmployee.dart';
-import '../../services/services/auth_service.dart';
-import '../../services/services/dataFromApi_service.dart';
 import '../../services/services/local_storage.dart';
+// import '../../model/clinic.dart';
+// import '../../model/clinicEmployee.dart';
+// import '../../services/services/auth_service.dart';
+// import '../../services/services/dataFromApi_service.dart';
 
 class HomeScreenViewModel extends FutureViewModel<String> {
   // __________________________________________________________________________
   // Locating the Dependencies
-  final NavigationService _navigatorService = locator<NavigationService>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
   final StorageService _storageService = locator<StorageService>();
-  final Clinic _clinicDataService = locator<Clinic>();
-  final ClinicEmployee _clinicEmployeeDataService = locator<ClinicEmployee>();
-  final DataFromApi _dataFromApiService = locator<DataFromApi>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
+  // final NavigationService _navigatorService = locator<NavigationService>();
+  // final AuthenticationService _authenticationService =
+  //     locator<AuthenticationService>();
+  // final Clinic _clinicDataService = locator<Clinic>();
+  // final ClinicEmployee _clinicEmployeeDataService = locator<ClinicEmployee>();
+  // final DataFromApi _dataFromApiService = locator<DataFromApi>();
+
   // __________________________________________________________________________
   // Data for the UI
 
