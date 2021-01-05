@@ -4,6 +4,7 @@
 // flutter pub run build_runner build --delete-conflicting-outputs
 // _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
+import '../screens/homeScreens/addCustomerScreens/enterPatientNameScreens/enterPatientNameScreenView.dart';
 import '../screens/homeScreens/selectDoctorForClinicScreen/selectDoctorClinicScreen.dart';
 import '../screens/rootView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicServiceSelectionScreen/clinicServicesScreenView.dart';
@@ -22,7 +23,6 @@ import '../screens/homeScreens/doctorsListTabScreens/doctorsListScreen/doctorLis
 import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/confirmationScreen/confirmScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/timeAndDateSelectionScreen/timeAndDateSelectionScreenView.dart';
-import '../screens/homeScreens/addCustomerScreens/addBiolegeCardAddNameScreen/addBiolegeCardAddNameScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addBiolegeCardScreen/addBiolegeScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerDetailsScreen/addCustomerDetailsScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerScreen/addCustomerScreenView.dart';
@@ -141,8 +141,8 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     page: AddBiolegeScreenView,
   ),
   MaterialRoute(
-    path: AddBiolegeCardAddNameScreenView.routeName,
-    page: AddBiolegeCardAddNameScreenView,
+    path: EnterPatientNameScreenView.routeName,
+    page: EnterPatientNameScreenView,
   ),
   MaterialRoute(
     path: CustomerDoctorSelectionScreenView.routeName,

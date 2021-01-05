@@ -21,11 +21,11 @@ import '../screens/addClinicEmployeeProfileScreens/emailScreen/emailScreenView.d
 import '../screens/addClinicEmployeeProfileScreens/genderScreen/genderScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/nameScreen/nameScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/roleSelectScreen/roleSelectScreenView.dart';
-import '../screens/homeScreens/addCustomerScreens/addBiolegeCardAddNameScreen/addBiolegeCardAddNameScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addBiolegeCardScreen/addBiolegeScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerDetailsScreen/addCustomerDetailsScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerScreen/addCustomerScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/confirmationScreen/confirmScreenView.dart';
+import '../screens/homeScreens/addCustomerScreens/enterPatientNameScreens/enterPatientNameScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/timeAndDateSelectionScreen/timeAndDateSelectionScreenView.dart';
 import '../screens/homeScreens/appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../screens/homeScreens/changeAppointmentDetailsScreen/changeAppointmentDetailsScreenView.dart';
@@ -71,7 +71,7 @@ class Routes {
   static const String addCustomerDetailsScreenView =
       'addCustomerDetailsScreenView';
   static const String addBiolegeScreenView = '/addBiolegeScreenView';
-  static const String addBiolegeCardAddNameScreenView =
+  static const String enterPatientNameScreenView =
       'addBiolegeCardAddNameScreenView';
   static const String customerDoctorSelectionScreenView =
       '/customerDoctorSelectionScreenView';
@@ -105,7 +105,7 @@ class Routes {
     addCustomerScreenView,
     addCustomerDetailsScreenView,
     addBiolegeScreenView,
-    addBiolegeCardAddNameScreenView,
+    enterPatientNameScreenView,
     customerDoctorSelectionScreenView,
     timeAndDateSelectionScreenView,
     confirmScreenView,
@@ -148,8 +148,8 @@ class Router extends RouterBase {
     RouteDef(Routes.addCustomerDetailsScreenView,
         page: AddCustomerDetailsScreenView),
     RouteDef(Routes.addBiolegeScreenView, page: AddBiolegeScreenView),
-    RouteDef(Routes.addBiolegeCardAddNameScreenView,
-        page: AddBiolegeCardAddNameScreenView),
+    RouteDef(Routes.enterPatientNameScreenView,
+        page: EnterPatientNameScreenView),
     RouteDef(Routes.customerDoctorSelectionScreenView,
         page: CustomerDoctorSelectionScreenView),
     RouteDef(Routes.timeAndDateSelectionScreenView,
@@ -300,9 +300,9 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    AddBiolegeCardAddNameScreenView: (data) {
+    EnterPatientNameScreenView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => AddBiolegeCardAddNameScreenView(),
+        builder: (context) => EnterPatientNameScreenView(),
         settings: data,
       );
     },

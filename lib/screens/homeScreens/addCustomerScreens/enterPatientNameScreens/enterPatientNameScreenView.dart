@@ -3,13 +3,13 @@ import 'package:stacked/stacked.dart';
 import '../../../../app/size_configuration.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/reusables.dart';
-import 'addBiolegeCardAddNameScreenViewModel.dart';
+import 'enterPatientNameScreenViewModel.dart';
 
-class AddBiolegeCardAddNameScreenView extends StatelessWidget {
+class EnterPatientNameScreenView extends StatelessWidget {
   static const routeName = "addBiolegeCardAddNameScreenView";
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AddBiolegeCardAddNameScreenViewModel>.reactive(
+    return ViewModelBuilder<EnterPatientNameScreenViewModel>.reactive(
       builder: (context, model, child) {
         return Scaffold(
           appBar: buildAppBarWithLogoAndText(context, "", Text("Today")),
@@ -34,6 +34,8 @@ class AddBiolegeCardAddNameScreenView extends StatelessWidget {
                 Form(
                     key: model.addCustomerNameFormKey,
                     child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) => model.validateName(value),
                       keyboardType: TextInputType.emailAddress,
                       decoration: buildInputDecoration(
                           "Name",
@@ -59,7 +61,7 @@ class AddBiolegeCardAddNameScreenView extends StatelessWidget {
           )),
         );
       },
-      viewModelBuilder: () => AddBiolegeCardAddNameScreenViewModel(),
+      viewModelBuilder: () => EnterPatientNameScreenViewModel(),
     );
   }
 }

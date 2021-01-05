@@ -5,8 +5,6 @@ import '../services/services/local_storage.dart';
 import '../app/locator.dart';
 import '../app/router.gr.dart';
 import '../services/services/auth_service.dart';
-import '../model/clinic.dart';
-import '../model/clinicEmployee.dart';
 
 class RootViewModel extends BaseViewModel {
   // __________________________________________________________________________
@@ -15,8 +13,6 @@ class RootViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final StorageService _storageService = locator<StorageService>();
-  final Clinic _clinicDataService = locator<Clinic>();
-  final ClinicEmployee _clinicEmployeeDataService = locator<ClinicEmployee>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
   // __________________________________________________________________________
@@ -33,8 +29,6 @@ class RootViewModel extends BaseViewModel {
       await _storageService.initLocalStorages();
       // To be used when the user has filled all the data and is in homepage
       //  screens
-      await _clinicDataService.initClinicData();
-      await _clinicEmployeeDataService.initClinicEmployeeData();
       await _dataFromApiService.setDoctorsList();
       // ---------------------------------------------------------------------
       print("Phone       : " + _storageService.getPhoneNumber.toString());

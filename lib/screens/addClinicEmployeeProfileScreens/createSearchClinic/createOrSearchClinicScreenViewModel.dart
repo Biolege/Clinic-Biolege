@@ -3,7 +3,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../services/services/local_storage.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
-import '../../../services/services/api_service.dart';
+// import '../../../services/services/api_service.dart';
 import '../../../services/services/auth_service.dart';
 
 class CreateOrSearchClinicViewModel extends BaseViewModel {
@@ -12,7 +12,7 @@ class CreateOrSearchClinicViewModel extends BaseViewModel {
   final StorageService _storageService = locator<StorageService>();
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-  final APIServices _apiServices = locator<APIServices>();
+  // final APIServices _apiServices = locator<APIServices>();
   // ___________________________________________________________________________
   // Controller and Variables
   int _roleType;

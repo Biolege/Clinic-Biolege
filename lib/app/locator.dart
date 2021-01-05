@@ -6,9 +6,8 @@ import '../services/services/filePicker_service.dart';
 import '../services/services/auth_service.dart';
 import '../services/services/local_storage.dart';
 import '../services/services/api_service.dart';
-import '../model/clinic.dart';
-import '../model/clinicEmployee.dart';
 import '../services/services/dataFromApi_service.dart';
+import '../services/services/helperData_service.dart';
 
 final locator = GetIt.instance;
 
@@ -24,7 +23,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => APIServices());
   locator.registerLazySingleton(() => FilePickHelperService());
   // Data
-  locator.registerLazySingleton(() => Clinic());
-  locator.registerLazySingleton(() => ClinicEmployee());
   locator.registerLazySingleton(() => DataFromApi());
+  locator.registerLazySingleton(() => PatientDetails());
 }

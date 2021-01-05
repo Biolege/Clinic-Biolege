@@ -1,10 +1,10 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../services/services/local_storage.dart';
-import '../../services/services/auth_service.dart';
 import '../../app/locator.dart';
 import '../../app/router.gr.dart';
 
+// import '../../services/services/auth_service.dart';
 // import '../../model/clinic.dart';
 // import '../../model/clinicEmployee.dart';
 // import '../../services/services/dataFromApi_service.dart';
@@ -18,8 +18,8 @@ class WelcomeScreenViewModel extends FutureViewModel<Map<String, String>> {
   // final Clinic _clinicDataService = locator<Clinic>();
   // final APIServices _apiServices = locator<APIServices>();
   // final DataFromApi _dataFromApiService = locator<DataFromApi>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+  // final AuthenticationService _authenticationService =
+  //     locator<AuthenticationService>();
   // __________________________________________________________________________
   // Streams/Futures
   @override

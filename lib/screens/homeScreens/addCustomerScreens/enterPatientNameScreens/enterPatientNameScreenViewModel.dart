@@ -5,36 +5,34 @@ import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 import '../../../../services/services/helperData_service.dart';
 
-class AddCustomerScreenViewModel extends BaseViewModel {
+class EnterPatientNameScreenViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
   final PatientDetails _patientDetailsService = locator<PatientDetails>();
   // __________________________________________________________________________
   // Controller and Variables
-  final addCustomerFormKey = GlobalKey<FormState>();
-  TextEditingController newCustomerMobileNumber = TextEditingController();
+  final addCustomerNameFormKey = GlobalKey<FormState>();
+  TextEditingController newCustomerName = TextEditingController();
   // __________________________________________________________________________
   // Validators
 
-  String validatePhoneNumber(String phone) {
-    return phone.isEmpty
-        ? "Phone number cannot be empty"
-        : phone.length == 10
+  String validateName(String cname) {
+    return cname.isEmpty
+        ? "Patient name cannot be empty"
+        : cname.length > 2
             ? null
-            : "Phone number should be 10 digits";
+            : "Patient name should be atleast 3 characters long";
   }
 
   // __________________________________________________________________________
   // Helping Functions
+  void customerDoctorSelection() {
+    addCustomerNameFormKey.currentState.save();
+    if (!addCustomerNameFormKey.currentState.validate()) return;
+    _patientDetailsService.setDoctorsPatientPhoneNumber(newCustomerName.text);
 
-  void addCustomerDetails() async {
-    addCustomerFormKey.currentState.save();
-    if (!addCustomerFormKey.currentState.validate()) return;
-    _patientDetailsService
-        .setDoctorsPatientPhoneNumber(newCustomerMobileNumber.text);
-    _navigatorService.navigateTo(Routes.enterPatientNameScreenView);
+    _navigatorService.navigateTo(Routes.customerDoctorSelectionScreenView);
   }
-
   // __________________________________________________________________________
 }

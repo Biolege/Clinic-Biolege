@@ -11,7 +11,7 @@ class PhoneViewModel extends BaseViewModel {
       locator<AuthenticationService>();
   final StorageService _storageService = locator<StorageService>();
   // __________________________________________________________________________
-  // Controller
+  // Controller and Variables
   TextEditingController phoneNumber = TextEditingController();
   final phoneNumberFormKey = GlobalKey<FormState>();
   // __________________________________________________________________________
@@ -26,6 +26,7 @@ class PhoneViewModel extends BaseViewModel {
   }
 
   // __________________________________________________________________________
+  // Helper Functions
   void startVerifyPhoneAuthentication() async {
     phoneNumberFormKey.currentState.save();
 
@@ -34,8 +35,8 @@ class PhoneViewModel extends BaseViewModel {
     verifyPhoneAuthentication("+91" + phoneNumber.text);
   }
 
-  // __________________________________________________________________________
   void verifyPhoneAuthentication(String phone) async {
     await _authenticationService.verifyPhoneNumber(phone);
   }
+  // __________________________________________________________________________
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../app/size_configuration.dart';
@@ -35,7 +36,11 @@ class AddCustomerScreenView extends StatelessWidget {
                 Form(
                     key: model.addCustomerFormKey,
                     child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) => model.validatePhoneNumber(value),
+                      keyboardType: TextInputType.phone,
+                      maxLength: 10,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       decoration: buildInputDecoration(
                           "Phone",
                           Icon(
