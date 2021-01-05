@@ -9,7 +9,7 @@ class AppointmentHomeScreenViewModel extends BaseViewModel {
   TextEditingController searchedPatient = TextEditingController();
   final NavigationService _navigatorService = locator<NavigationService>();
   void openPatientDetailsView() {
-    _navigatorService.navigateTo(Routes.patientDetailsScreenView);
+    _navigatorService.navigateTo(Routes.patientAppointmentDetailsScreenView);
   }
 
   void addPatientView() {

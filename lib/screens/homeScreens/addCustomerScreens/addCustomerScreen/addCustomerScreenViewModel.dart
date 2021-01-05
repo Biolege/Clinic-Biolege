@@ -33,7 +33,7 @@ class AddCustomerScreenViewModel extends BaseViewModel {
     if (!addCustomerFormKey.currentState.validate()) return;
     _patientDetailsService
         .setDoctorsPatientPhoneNumber(newCustomerMobileNumber.text);
-    _navigatorService.navigateTo(Routes.enterPatientNameScreenView);
+    _navigatorService.navigateTo(Routes.addPatientNameScreenView);
   }
 
   // __________________________________________________________________________

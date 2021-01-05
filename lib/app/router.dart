@@ -4,7 +4,9 @@
 // flutter pub run build_runner build --delete-conflicting-outputs
 // _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
-import '../screens/homeScreens/addCustomerScreens/enterPatientNameScreens/enterPatientNameScreenView.dart';
+import '../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
+import '../screens/homeScreens/addCustomerScreens/addCustomerNameScreen/addPatientNameScreenView.dart';
+import '../screens/homeScreens/addCustomerScreens/showCustomerDetailsSummaryScreens/showCustomerDetailsSummaryScreenView.dart';
 import '../screens/homeScreens/selectDoctorForClinicScreen/selectDoctorClinicScreen.dart';
 import '../screens/rootView.dart';
 import '../screens/addClinicEmployeeProfileScreens/createSearchClinic/clinicServiceSelectionScreen/clinicServicesScreenView.dart';
@@ -24,11 +26,9 @@ import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctor
 import '../screens/homeScreens/addCustomerScreens/confirmationScreen/confirmScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/timeAndDateSelectionScreen/timeAndDateSelectionScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addBiolegeCardScreen/addBiolegeScreenView.dart';
-import '../screens/homeScreens/addCustomerScreens/addCustomerDetailsScreen/addCustomerDetailsScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerScreen/addCustomerScreenView.dart';
 import '../screens/homeScreens/customerDoctorSelectionScreen/customerDoctorSelectionScreenView.dart';
 import '../screens/homeScreens/changeAppointmentDetailsScreen/changeAppointmentDetailsScreenView.dart';
-import '../screens/homeScreens/patientDetailsScreen/patientDetailsScreenView.dart';
 import '../screens/homeScreens/appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../screens/homeScreens/homeScreenView.dart';
 import '../screens/welcomeScreen/welcomeScreenView.dart';
@@ -119,31 +119,33 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     path: AppointmentHomeScreenView.routeName,
     page: AppointmentHomeScreenView,
   ),
-  // ___________________________________________________________________________
+  // ---------------------------------------------------------------------------
   MaterialRoute(
-    path: PatientDetailsScreenView.routeName,
-    page: PatientDetailsScreenView,
+    path: PatientAppointmentDetailsScreenView.routeName,
+    page: PatientAppointmentDetailsScreenView,
   ),
   MaterialRoute(
     path: ChangeAppointmentDetailsScreenView.routeName,
     page: ChangeAppointmentDetailsScreenView,
   ),
+  // ___________________________________________________________________________
   MaterialRoute(
     path: AddCustomerScreenView.routeName,
     page: AddCustomerScreenView,
   ),
   MaterialRoute(
-    path: AddCustomerDetailsScreenView.routeName,
-    page: AddCustomerDetailsScreenView,
+    path: AddPatientNameScreenView.routeName,
+    page: AddPatientNameScreenView,
+  ),
+  MaterialRoute(
+    path: ShowCustomerDetailsSummaryScreen.routeName,
+    page: ShowCustomerDetailsSummaryScreen,
   ),
   MaterialRoute(
     path: AddBiolegeScreenView.routeName,
     page: AddBiolegeScreenView,
   ),
-  MaterialRoute(
-    path: EnterPatientNameScreenView.routeName,
-    page: EnterPatientNameScreenView,
-  ),
+
   MaterialRoute(
     path: CustomerDoctorSelectionScreenView.routeName,
     page: CustomerDoctorSelectionScreenView,

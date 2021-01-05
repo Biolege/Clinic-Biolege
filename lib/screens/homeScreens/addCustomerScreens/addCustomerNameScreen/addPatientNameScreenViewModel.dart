@@ -5,7 +5,7 @@ import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 import '../../../../services/services/helperData_service.dart';
 
-class EnterPatientNameScreenViewModel extends BaseViewModel {
+class AddPatientNameScreenViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
@@ -27,12 +27,12 @@ class EnterPatientNameScreenViewModel extends BaseViewModel {
 
   // __________________________________________________________________________
   // Helping Functions
-  void customerDoctorSelection() {
+  void navigateTocustomerDetails() {
     addCustomerNameFormKey.currentState.save();
     if (!addCustomerNameFormKey.currentState.validate()) return;
     _patientDetailsService.setDoctorsPatientPhoneNumber(newCustomerName.text);
 
-    _navigatorService.navigateTo(Routes.customerDoctorSelectionScreenView);
+    // _navigatorService.navigateTo(Routes.addCustomerDetailsScreenView);
   }
   // __________________________________________________________________________
 }

@@ -3,7 +3,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 
-class AddCustomerDetailsScreenViewModel extends BaseViewModel {
+class ShowCustomerDetailsSummaryScreenModel extends BaseViewModel {
   final NavigationService _navigatorService = locator<NavigationService>();
 
   void customerDoctorSelection() {

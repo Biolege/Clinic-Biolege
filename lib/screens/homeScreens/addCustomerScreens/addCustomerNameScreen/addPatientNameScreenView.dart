@@ -3,13 +3,13 @@ import 'package:stacked/stacked.dart';
 import '../../../../app/size_configuration.dart';
 import '../../../../theme/theme.dart';
 import '../../../../widgets/reusables.dart';
-import 'enterPatientNameScreenViewModel.dart';
+import 'addPatientNameScreenViewModel.dart';
 
-class EnterPatientNameScreenView extends StatelessWidget {
-  static const routeName = "addBiolegeCardAddNameScreenView";
+class AddPatientNameScreenView extends StatelessWidget {
+  static const routeName = "addPatientNameScreenViewModel";
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<EnterPatientNameScreenViewModel>.reactive(
+    return ViewModelBuilder<AddPatientNameScreenViewModel>.reactive(
       builder: (context, model, child) {
         return Scaffold(
           appBar: buildAppBarWithLogoAndText(context, "", Text("Today")),
@@ -52,7 +52,7 @@ class EnterPatientNameScreenView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       buildOutlineButton(
-                          "Continue", model.customerDoctorSelection)
+                          "Continue", model.navigateTocustomerDetails)
                     ],
                   ),
                 )
@@ -61,7 +61,7 @@ class EnterPatientNameScreenView extends StatelessWidget {
           )),
         );
       },
-      viewModelBuilder: () => EnterPatientNameScreenViewModel(),
+      viewModelBuilder: () => AddPatientNameScreenViewModel(),
     );
   }
 }

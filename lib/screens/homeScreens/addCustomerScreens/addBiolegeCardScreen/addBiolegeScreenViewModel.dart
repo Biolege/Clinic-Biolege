@@ -10,6 +10,6 @@ class AddBiolegeScreenViewModel extends BaseViewModel {
   GlobalKey<FormState> biolegeCardForm = GlobalKey<FormState>();
   TextEditingController biolegeCardNumber = TextEditingController();
   void addCustomerName() {
-    _navigatorService.navigateTo(Routes.enterPatientNameScreenView);
+    _navigatorService.navigateTo(Routes.addPatientNameScreenView);
   }
 }

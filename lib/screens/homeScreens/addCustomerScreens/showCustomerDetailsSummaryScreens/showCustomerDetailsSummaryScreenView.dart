@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../app/size_configuration.dart';
 import '../../../../widgets/reusables.dart';
-import 'addCustomerDetailsScreenViewModel.dart';
+import 'showCustomerDetailsSummaryScreenViewModel.dart';
 
-class AddCustomerDetailsScreenView extends StatelessWidget {
-  static const routeName = "addCustomerDetailsScreenView";
+class ShowCustomerDetailsSummaryScreen extends StatelessWidget {
+  static const routeName = "showCustomerDetailsSummaryScreenView";
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AddCustomerDetailsScreenViewModel>.reactive(
+    return ViewModelBuilder<ShowCustomerDetailsSummaryScreenModel>.reactive(
       builder: (context, model, child) {
         return Scaffold(
           appBar: buildAppBarWithLogoAndText(context, "", Text("Today")),
@@ -131,7 +131,7 @@ class AddCustomerDetailsScreenView extends StatelessWidget {
           ),
         );
       },
-      viewModelBuilder: () => AddCustomerDetailsScreenViewModel(),
+      viewModelBuilder: () => ShowCustomerDetailsSummaryScreenModel(),
     );
   }
 }

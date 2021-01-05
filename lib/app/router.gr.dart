@@ -22,10 +22,10 @@ import '../screens/addClinicEmployeeProfileScreens/genderScreen/genderScreenView
 import '../screens/addClinicEmployeeProfileScreens/nameScreen/nameScreenView.dart';
 import '../screens/addClinicEmployeeProfileScreens/roleSelectScreen/roleSelectScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addBiolegeCardScreen/addBiolegeScreenView.dart';
-import '../screens/homeScreens/addCustomerScreens/addCustomerDetailsScreen/addCustomerDetailsScreenView.dart';
+import '../screens/homeScreens/addCustomerScreens/addCustomerNameScreen/addPatientNameScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerScreen/addCustomerScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/confirmationScreen/confirmScreenView.dart';
-import '../screens/homeScreens/addCustomerScreens/enterPatientNameScreens/enterPatientNameScreenView.dart';
+import '../screens/homeScreens/addCustomerScreens/showCustomerDetailsSummaryScreens/showCustomerDetailsSummaryScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/timeAndDateSelectionScreen/timeAndDateSelectionScreenView.dart';
 import '../screens/homeScreens/appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../screens/homeScreens/changeAppointmentDetailsScreen/changeAppointmentDetailsScreenView.dart';
@@ -33,7 +33,7 @@ import '../screens/homeScreens/customerDoctorSelectionScreen/customerDoctorSelec
 import '../screens/homeScreens/doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../screens/homeScreens/homeScreenView.dart';
-import '../screens/homeScreens/patientDetailsScreen/patientDetailsScreenView.dart';
+import '../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
 import '../screens/homeScreens/selectDoctorForClinicScreen/selectDoctorClinicScreen.dart';
 import '../screens/onBoardingScreen/onBoardingScreenView.dart';
 import '../screens/rootView.dart';
@@ -64,15 +64,16 @@ class Routes {
   static const String welcomeScreenView = '/welcomeScreenView';
   static const String homeScreenView = '/homeScreenView';
   static const String appointmentHomeScreenView = '/appointmentHomeScreenView';
-  static const String patientDetailsScreenView = '/patientDetailsScreenView';
+  static const String patientAppointmentDetailsScreenView =
+      '/patientAppointmentDetailsScreenView';
   static const String changeAppointmentDetailsScreenView =
       '/changeAppointmentDetailsScreenView';
   static const String addCustomerScreenView = '/addCustomerScreen';
-  static const String addCustomerDetailsScreenView =
-      'addCustomerDetailsScreenView';
+  static const String addPatientNameScreenView =
+      'addPatientNameScreenViewModel';
+  static const String showCustomerDetailsSummaryScreen =
+      'showCustomerDetailsSummaryScreenView';
   static const String addBiolegeScreenView = '/addBiolegeScreenView';
-  static const String enterPatientNameScreenView =
-      'addBiolegeCardAddNameScreenView';
   static const String customerDoctorSelectionScreenView =
       '/customerDoctorSelectionScreenView';
   static const String timeAndDateSelectionScreenView =
@@ -100,12 +101,12 @@ class Routes {
     welcomeScreenView,
     homeScreenView,
     appointmentHomeScreenView,
-    patientDetailsScreenView,
+    patientAppointmentDetailsScreenView,
     changeAppointmentDetailsScreenView,
     addCustomerScreenView,
-    addCustomerDetailsScreenView,
+    addPatientNameScreenView,
+    showCustomerDetailsSummaryScreen,
     addBiolegeScreenView,
-    enterPatientNameScreenView,
     customerDoctorSelectionScreenView,
     timeAndDateSelectionScreenView,
     confirmScreenView,
@@ -141,15 +142,15 @@ class Router extends RouterBase {
     RouteDef(Routes.welcomeScreenView, page: WelcomeScreenView),
     RouteDef(Routes.homeScreenView, page: HomeScreenView),
     RouteDef(Routes.appointmentHomeScreenView, page: AppointmentHomeScreenView),
-    RouteDef(Routes.patientDetailsScreenView, page: PatientDetailsScreenView),
+    RouteDef(Routes.patientAppointmentDetailsScreenView,
+        page: PatientAppointmentDetailsScreenView),
     RouteDef(Routes.changeAppointmentDetailsScreenView,
         page: ChangeAppointmentDetailsScreenView),
     RouteDef(Routes.addCustomerScreenView, page: AddCustomerScreenView),
-    RouteDef(Routes.addCustomerDetailsScreenView,
-        page: AddCustomerDetailsScreenView),
+    RouteDef(Routes.addPatientNameScreenView, page: AddPatientNameScreenView),
+    RouteDef(Routes.showCustomerDetailsSummaryScreen,
+        page: ShowCustomerDetailsSummaryScreen),
     RouteDef(Routes.addBiolegeScreenView, page: AddBiolegeScreenView),
-    RouteDef(Routes.enterPatientNameScreenView,
-        page: EnterPatientNameScreenView),
     RouteDef(Routes.customerDoctorSelectionScreenView,
         page: CustomerDoctorSelectionScreenView),
     RouteDef(Routes.timeAndDateSelectionScreenView,
@@ -270,9 +271,9 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    PatientDetailsScreenView: (data) {
+    PatientAppointmentDetailsScreenView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => PatientDetailsScreenView(),
+        builder: (context) => PatientAppointmentDetailsScreenView(),
         settings: data,
       );
     },
@@ -288,21 +289,21 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    AddCustomerDetailsScreenView: (data) {
+    AddPatientNameScreenView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => AddCustomerDetailsScreenView(),
+        builder: (context) => AddPatientNameScreenView(),
+        settings: data,
+      );
+    },
+    ShowCustomerDetailsSummaryScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ShowCustomerDetailsSummaryScreen(),
         settings: data,
       );
     },
     AddBiolegeScreenView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => AddBiolegeScreenView(),
-        settings: data,
-      );
-    },
-    EnterPatientNameScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => EnterPatientNameScreenView(),
         settings: data,
       );
     },

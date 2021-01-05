@@ -4,13 +4,13 @@ import 'package:stacked/stacked.dart';
 import '../../../app/size_configuration.dart';
 import '../../../theme/theme.dart';
 import '../../../widgets/reusables.dart';
-import 'patientDetailsScreenViewModel.dart';
+import 'patientAppointmentDetailsScreenViewModel.dart';
 
-class PatientDetailsScreenView extends StatelessWidget {
-  static const routeName = "/patientDetailsScreenView";
+class PatientAppointmentDetailsScreenView extends StatelessWidget {
+  static const routeName = "/patientAppointmentDetailsScreenView";
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PatientDetailsScreenViewNModel>.reactive(
+    return ViewModelBuilder<PatientAppointmentDetailsScreenViewModel>.reactive(
         builder: (context, model, child) {
           return Scaffold(
             appBar: buildAppBarWithLogo(context),
@@ -237,6 +237,6 @@ class PatientDetailsScreenView extends StatelessWidget {
             )),
           );
         },
-        viewModelBuilder: () => PatientDetailsScreenViewNModel());
+        viewModelBuilder: () => PatientAppointmentDetailsScreenViewModel());
   }
 }

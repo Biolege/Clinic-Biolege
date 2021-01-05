@@ -3,7 +3,7 @@ import 'package:stacked/stacked.dart';
 import '../../../app/router.gr.dart';
 import '../../../app/locator.dart';
 
-class PatientDetailsScreenViewNModel extends BaseViewModel {
+class PatientAppointmentDetailsScreenViewModel extends BaseViewModel {
   final NavigationService _navigatorService = locator<NavigationService>();
 
   void changeAppointmentDetails() {
