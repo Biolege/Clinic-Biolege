@@ -10,126 +10,144 @@ class ShowCustomerDetailsSummaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ShowCustomerDetailsSummaryScreenModel>.reactive(
       builder: (context, model, child) {
-        return Scaffold(
-          appBar: buildAppBarWithLogoAndText(context, "", Text("Today")),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: buildOutlineButton(
-            "Set Appointment",
-            model.customerDoctorSelection,
-          ),
-          body: SingleChildScrollView(
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: getProportionateScreenHeight(10),
+        return !model.isBusy
+            ? Scaffold(
+                appBar: buildAppBarWithLogoAndText(context, "", Text("Today")),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.endFloat,
+                body: SingleChildScrollView(
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                          Text(
+                            "Patient details",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(20),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: getProportionateScreenHeight(20),
+                              ),
+                              Text(
+                                "Name",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                              Text(
+                                model.data['name'].toString(),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(20),
+                              ),
+                              Text(
+                                "Contact",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                              Text(
+                                model.data["phone"].toString(),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(20),
+                              ),
+                              Text(
+                                "Date of birth",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                              Text(
+                                model.data["dob"].substring(0, 10),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(20),
+                              ),
+                              Text(
+                                "Address",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                              Text(
+                                model.data["address"] +
+                                    " , " +
+                                    model.data["state"] +
+                                    " , " +
+                                    model.data["pincode"],
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(20),
+                              ),
+                              model.data["bg"] != null
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Blood Group",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              getProportionateScreenHeight(10),
+                                        ),
+                                        Text(
+                                          model.data["bg"],
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              getProportionateScreenHeight(20),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(),
+                              SizedBox(
+                                height: getProportionateScreenHeight(50),
+                              ),
+                              buildOutlineButton(
+                                "Set Appointment",
+                                model.customerDoctorSelection,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      "Patient details",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    SizedBox(
-                      height: getProportionateScreenHeight(20),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Text(
-                          "Name",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "Customer name",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Text(
-                          "Contact",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "0101010101",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Text(
-                          "Date of birth",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "September 04, 1998",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Text(
-                          "Address",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "Kedia puram, VIP colony, Hojai,Assam-782435",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Text(
-                          "Biolege points",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "192",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Text(
-                          "Biolege Card holder",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(10),
-                        ),
-                        Text(
-                          "No",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-        );
+              )
+            : Scaffold(
+                appBar: buildAppBarWithLogoAndText(
+                  context,
+                  "",
+                  Text(""),
+                ),
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
       },
       viewModelBuilder: () => ShowCustomerDetailsSummaryScreenModel(),
     );

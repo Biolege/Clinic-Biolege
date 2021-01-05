@@ -30,9 +30,8 @@ class AddPatientNameScreenViewModel extends BaseViewModel {
   void navigateTocustomerDetails() {
     addCustomerNameFormKey.currentState.save();
     if (!addCustomerNameFormKey.currentState.validate()) return;
-    _patientDetailsService.setDoctorsPatientPhoneNumber(newCustomerName.text);
-
-    // _navigatorService.navigateTo(Routes.addCustomerDetailsScreenView);
+    _patientDetailsService.setDoctorsPatientName(newCustomerName.text);
+    _navigatorService.navigateTo(Routes.addCustomerDetailsScreenView);
   }
   // __________________________________________________________________________
 }

@@ -74,8 +74,7 @@ class AddCustomerScreenView extends StatelessWidget {
                       //       ],
                       //     ),
                       //     model.addBiolegeCard),
-                      buildOutlineButton(
-                          "Continue", () => model.addCustomerDetails())
+                      buildOutlineButton("Continue", model.addCustomerPhone)
                     ],
                   ),
                 )

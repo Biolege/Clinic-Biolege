@@ -11,8 +11,8 @@ class PatientDetails {
   void setDoctorsPatientName(String name) => _doctorsPatientName = name;
 
   static DateTime _doctorsPatientDob;
-  DateTime getFoctorsPatientDob() => _doctorsPatientDob;
-  void setFoctorsPatientDob(DateTime dob) => _doctorsPatientDob = dob;
+  DateTime getDoctorsPatientDob() => _doctorsPatientDob;
+  void setDoctorsPatientDob(DateTime dob) => _doctorsPatientDob = dob;
 
   static String _doctorsPatientGender;
   String getDoctorsPatientGender() => _doctorsPatientGender;
@@ -22,27 +22,27 @@ class PatientDetails {
   int getDoctorsPatientAge() => _doctorsPatientAge;
   void setDoctorsPatientAge(int age) => _doctorsPatientAge = age;
 
-  static int _doctorsPatientBloodGroup;
-  int getDoctorsPatientBloodGroup() => _doctorsPatientBloodGroup;
-  void setDoctorsPatientBloodGroup(int blood) =>
+  static String _doctorsPatientBloodGroup;
+  String getDoctorsPatientBloodGroup() => _doctorsPatientBloodGroup;
+  void setDoctorsPatientBloodGroup(String blood) =>
       _doctorsPatientBloodGroup = blood;
 
-  static int _doctorsPatientStateName;
-  int getDoctorsPatientStateName() => _doctorsPatientStateName;
-  void setDoctorsPatientStateName(int state) =>
+  static String _doctorsPatientStateName;
+  String getDoctorsPatientStateName() => _doctorsPatientStateName;
+  void setDoctorsPatientStateName(String state) =>
       _doctorsPatientStateName = state;
 
-  static int _doctorsPatientCityName;
-  int getDoctorsPatientCityName() => _doctorsPatientCityName;
-  void setDoctorsPatientCityName(int city) => _doctorsPatientCityName = city;
+  static String _doctorsPatientCityName;
+  String getDoctorsPatientCityName() => _doctorsPatientCityName;
+  void setDoctorsPatientCityName(String city) => _doctorsPatientCityName = city;
 
-  static int _doctorsPatientPinCode;
-  int getDoctorsPatientPinCode() => _doctorsPatientPinCode;
-  void setDoctorsPatientPinCode(int pin) => _doctorsPatientPinCode = pin;
+  static String _doctorsPatientPinCode;
+  String getDoctorsPatientPinCode() => _doctorsPatientPinCode;
+  void setDoctorsPatientPinCode(String pin) => _doctorsPatientPinCode = pin;
 
-  static int _doctorsPatientHomeAddress;
-  int getDoctorsPatientHomeAddress() => _doctorsPatientHomeAddress;
-  void setDoctorsPatientHomeAddress(int address) =>
+  static String _doctorsPatientHomeAddress;
+  String getDoctorsPatientHomeAddress() => _doctorsPatientHomeAddress;
+  void setDoctorsPatientHomeAddress(String address) =>
       _doctorsPatientHomeAddress = address;
 
   void resetAllDoctorPatientVariable() {

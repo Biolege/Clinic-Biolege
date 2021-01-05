@@ -28,7 +28,7 @@ class AddCustomerScreenViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Helping Functions
 
-  void addCustomerDetails() async {
+  void addCustomerPhone() async {
     addCustomerFormKey.currentState.save();
     if (!addCustomerFormKey.currentState.validate()) return;
     _patientDetailsService

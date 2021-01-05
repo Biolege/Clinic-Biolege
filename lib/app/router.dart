@@ -4,6 +4,8 @@
 // flutter pub run build_runner build --delete-conflicting-outputs
 // _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
+import '../screens/homeScreens/addCustomerScreens/addCustomerAddressScreen/addCustomerAddressScreenView.dart';
+import '../screens/homeScreens/addCustomerScreens/addCustomerDetailsScreen/addCustomerDetailsScreenView.dart';
 import '../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerNameScreen/addPatientNameScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/showCustomerDetailsSummaryScreens/showCustomerDetailsSummaryScreenView.dart';
@@ -125,6 +127,10 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     page: PatientAppointmentDetailsScreenView,
   ),
   MaterialRoute(
+    path: AddCustomerAddressScreenView.routeName,
+    page: AddCustomerAddressScreenView,
+  ),
+  MaterialRoute(
     path: ChangeAppointmentDetailsScreenView.routeName,
     page: ChangeAppointmentDetailsScreenView,
   ),
@@ -137,6 +143,11 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
     path: AddPatientNameScreenView.routeName,
     page: AddPatientNameScreenView,
   ),
+  MaterialRoute(
+    path: AddCustomerDetailsScreenView.routeName,
+    page: AddCustomerDetailsScreenView,
+  ),
+
   MaterialRoute(
     path: ShowCustomerDetailsSummaryScreen.routeName,
     page: ShowCustomerDetailsSummaryScreen,

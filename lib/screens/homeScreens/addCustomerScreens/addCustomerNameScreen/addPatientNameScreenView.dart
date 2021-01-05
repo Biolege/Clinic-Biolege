@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../app/size_configuration.dart';
 import '../../../../theme/theme.dart';
@@ -36,7 +37,9 @@ class AddPatientNameScreenView extends StatelessWidget {
                     child: TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) => model.validateName(value),
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.name,
+                      maxLength: 40,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       decoration: buildInputDecoration(
                           "Name",
                           Icon(
