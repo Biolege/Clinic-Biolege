@@ -4,6 +4,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../services/services/helperData_service.dart';
 import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
+import '../../../../services/services/api_service.dart';
 
 class AddCustomerAddressScreenViewModel extends BaseViewModel {
   // _________________________________________________________________________
@@ -11,7 +12,7 @@ class AddCustomerAddressScreenViewModel extends BaseViewModel {
 
   final NavigationService _navigatorService = locator<NavigationService>();
   final PatientDetails _patientDetailsService = locator<PatientDetails>();
-
+  final APIServices _apiServices = locator<APIServices>();
   // _________________________________________________________________________
   // Controllers and Variables
   final addressFormKey = GlobalKey<FormState>();
@@ -60,10 +61,14 @@ class AddCustomerAddressScreenViewModel extends BaseViewModel {
   void saveAddressDetails() async {
     addressFormKey.currentState.save();
     if (!addressFormKey.currentState.validate()) return;
+    setBusy(true);
     _patientDetailsService.setDoctorsPatientStateName(state.text);
     _patientDetailsService.setDoctorsPatientCityName(city.text);
     _patientDetailsService.setDoctorsPatientPinCode(pinCode.text);
     _patientDetailsService.setDoctorsPatientHomeAddress(homeAddress.text);
+    await _apiServices.addDiagnosticCustomer();
+    setBusy(false);
+
     navigateToCustomerDetailsSummary();
   }
 

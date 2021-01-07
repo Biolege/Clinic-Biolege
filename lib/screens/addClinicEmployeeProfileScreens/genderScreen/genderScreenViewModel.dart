@@ -32,9 +32,7 @@ class GenderViewModel extends BaseViewModel {
   DateTime get getselectedDate => _selectedDOB;
   String get getGenderValue => _genderValue;
   // _________________________________________________________________________
-  void setGenderValue(String value) {
-    _genderValue = value;
-  }
+  void setGenderValue(String value) => _genderValue = value;
 
 // _________________________________________________________________________
 // DOB picker

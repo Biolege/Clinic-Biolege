@@ -223,13 +223,10 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
         clinicLocationLongitude: clinicLongitude,
         clinicOwnerIdProof: _selectedClinicOwnerIdProof,
         clinicOwnerIdProofType: _idProofType);
-    print(clinicLatitude);
-    print(clinicLongitude);
     // Next Page
     navigateToClinicServicesScreen();
   }
 
-  void init() {}
   // _________________________________________________________________________
   void navigateToClinicServicesScreen() {
     _navigatorService.navigateTo(

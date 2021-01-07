@@ -5,6 +5,7 @@ import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 import '../../../../services/services/local_storage.dart';
 import '../../../../services/services/api_service.dart';
+import '../../../../model/clinic.dart';
 
 class ClinicServiceSelectionViewModel extends BaseViewModel {
   // __________________________________________________________________________
@@ -63,7 +64,7 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
   }
 
   Future createClinic() async {
-    var clinic = await _aPIServices.createClinic();
+    Clinic clinic = await _aPIServices.createClinic();
     if (clinic != null) navigateToWelcomeScreen();
   }
 

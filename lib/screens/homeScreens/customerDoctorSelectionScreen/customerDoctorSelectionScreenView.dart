@@ -60,7 +60,9 @@ class CustomerDoctorSelectionScreenView extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ListTile(
-                                        onTap: () => {},
+                                        onTap: () =>
+                                            model.setTimeAndDateForAppointment(
+                                                model.data[index]),
                                         contentPadding:
                                             const EdgeInsets.symmetric(
                                                 vertical: 10, horizontal: 20),

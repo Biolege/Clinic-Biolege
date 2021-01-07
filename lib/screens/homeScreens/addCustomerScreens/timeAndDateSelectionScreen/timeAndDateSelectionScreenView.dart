@@ -1,3 +1,4 @@
+import 'package:clinicapp/model/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
@@ -8,6 +9,10 @@ import 'timeAndDateSelectionScreenViewModel.dart';
 
 class TimeAndDateSelectionScreenView extends StatelessWidget {
   static const routeName = "/timeAndDateSelectionScreenView";
+
+  TimeAndDateSelectionScreenView({this.doctor, this.clinicDetails});
+  final Doctor doctor;
+  final ClinicElement clinicDetails;
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TimeAndDateSelectionScreenViewModel>.reactive(
@@ -16,14 +21,25 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
           appBar: buildAppBarWithLogoAndText(context, "", Text("Today")),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActionButton.extended(
-            label: Text(
-              "      Confirm      ",
-              style: TextStyle(color: white),
-            ),
-            onPressed: () => model.confirm(),
-            backgroundColor: primaryColor,
-          ),
+          floatingActionButton: !model.isBusy
+              ? FloatingActionButton.extended(
+                  label: Text(
+                    "    Confirm    ",
+                    style: TextStyle(color: white),
+                  ),
+                  onPressed: () => model.setAppointment(),
+                  backgroundColor: primaryColor,
+                )
+              : FloatingActionButton.extended(
+                  label: Container(
+                      width: 25,
+                      height: 25,
+                      child: CircularProgressIndicator(
+                        backgroundColor: white,
+                      )),
+                  onPressed: () => model.setAppointment(),
+                  backgroundColor: primaryColor,
+                ),
           body: SafeArea(
               child: SingleChildScrollView(
             child: Padding(
@@ -52,14 +68,19 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    "Dr. Himmat Singh Rathore",
+                                    doctor.name,
                                     style: TextStyle(fontSize: 20),
                                   ),
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
-                                  Text("Chest specialist"),
-                                  Text("12 years experience")
+                                  Text(doctor.specialization[0]),
+                                  Text(((doctor.experience[0]
+                                                  .experienceEndYear) -
+                                              doctor.experience[0]
+                                                  .experienceStartYear)
+                                          .toString() +
+                                      " years experience")
                                 ],
                               ),
                             ),
@@ -74,8 +95,9 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
                           color: Colors.transparent,
                           child: CircleAvatar(
                             radius: 100.0,
+                            backgroundColor: offWhite,
                             backgroundImage: NetworkImage(
-                                'https://i.pinimg.com/474x/2e/17/2c/2e172cfc7c4a3c10114726bf1ce2b211.jpg'),
+                                'https://img.pngio.com/doc-doctor-pediatrician-icon-doctor-icon-png-512_512.png'),
                           ),
                         ),
                       ],
@@ -101,213 +123,137 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
                     height: getProportionateScreenHeight(20),
                   ),
                   Divider(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Set apointments",
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: blue,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                AntDesign.calendar,
-                                color: blue,
-                              ),
-                              SizedBox(
-                                width: getProportionateScreenWidth(20),
-                              ),
-                              Text(
-                                "Select Date",
-                                style: TextStyle(color: offBlack2),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(20),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Monday",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        Text(
-                                          "July 25",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300),
-                                        )
-                                      ],
+                  clinicDetails.days.length != 0
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Set apointments",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: blue,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: getProportionateScreenHeight(20),
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      AntDesign.calendar,
+                                      color: blue,
                                     ),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Monday",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        Text(
-                                          "July 25",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300),
-                                        )
-                                      ],
+                                    SizedBox(
+                                      width: getProportionateScreenWidth(20),
                                     ),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Monday",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        Text(
-                                          "July 25",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  () {}),
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(30),
-                      ),
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                AntDesign.clockcircle,
-                                color: blue,
-                              ),
-                              SizedBox(
-                                width: getProportionateScreenWidth(20),
-                              ),
-                              Text(
-                                "Select Time",
-                                style: TextStyle(color: offBlack2),
-                              )
-                            ],
+                                    Text(
+                                      "Select Day and Time",
+                                      style: TextStyle(color: offBlack2),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: getProportionateScreenHeight(20),
+                                ),
+                                ListView.builder(
+                                    itemCount: clinicDetails.days.length,
+                                    shrinkWrap: true,
+                                    primary: false,
+                                    itemBuilder: (context, index) =>
+                                        CheckboxListTile(
+                                          contentPadding:
+                                              const EdgeInsets.all(10),
+                                          value: clinicDetails.days
+                                                  .elementAt(index)
+                                                  .day ==
+                                              model.timeSlotDay,
+                                          onChanged: (_) => model.setTimeSlot(
+                                              clinicDetails.days
+                                                  .elementAt(index)
+                                                  .startTime
+                                                  .toString(),
+                                              clinicDetails.days
+                                                  .elementAt(index)
+                                                  .endTime
+                                                  .toString(),
+                                              clinicDetails.days
+                                                  .elementAt(index)
+                                                  .day),
+                                          title: Text(clinicDetails.days
+                                              .elementAt(index)
+                                              .day),
+                                          subtitle: Text(
+                                            clinicDetails.days
+                                                    .elementAt(index)
+                                                    .startTime
+                                                    .toString() +
+                                                " to " +
+                                                clinicDetails.days
+                                                    .elementAt(index)
+                                                    .endTime
+                                                    .toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                        )),
+                              ],
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(20),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  AntDesign.calendar,
+                                  color: blue,
+                                ),
+                                SizedBox(
+                                  width: getProportionateScreenWidth(20),
+                                ),
+                                Text(
+                                  "Select Date",
+                                  style: TextStyle(color: offBlack2),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(20),
+                            ),
+                            TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) => model.validateDate(),
+                              onTap: () => model.selectAssignedDate(context),
+                              controller: model.date,
+                              readOnly: true,
+                              keyboardType: TextInputType.datetime,
+                              decoration: buildInputDecoration(
+                                  "Select Date",
+                                  Icon(
+                                    AntDesign.calendar,
+                                    color: blue,
+                                  )),
+                            ),
+                          ],
+                        )
+                      : Container(
+                          height: getProportionateScreenHeight(100),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text("Doctor has not added thier time slot"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SelectableText(
+                                    "Phone Number +91" + doctor.phoneNumber),
+                              ],
+                            ),
                           ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(20),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Text(
-                                    "Morning",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Text(
-                                    "Noon",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Text(
-                                    "Evening",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Text(
-                                    "Night",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                  () {}),
-                            ],
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(20),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Text(
-                                      "09:30 AM",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Text(
-                                      "10:00 AM",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ),
-                                  () {}),
-                              buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Text(
-                                      "10:30 AM",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ),
-                                  () {}),
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  )
+                        )
                 ],
               ),
             ),

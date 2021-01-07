@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'clinic.dart';
+
 Doctor doctorFromJson(String str) => Doctor.fromJson(json.decode(str));
 
 String doctorToJson(Doctor data) => json.encode(data.toJson());
@@ -26,8 +28,9 @@ class Doctor {
     this.education,
     this.feedbacks,
     this.articles,
-    this.clinics,
     this.v,
+    this.clinics,
+    this.customers,
   });
 
   Address address;
@@ -46,8 +49,9 @@ class Doctor {
   List<Education> education;
   List<Article> feedbacks;
   List<Article> articles;
-  List<ClinicElement> clinics;
   int v;
+  List<ClinicElement> clinics;
+  List<CustomerElement> customers;
 
   factory Doctor.fromJson(Map<String, dynamic> json) => Doctor(
         address: Address.fromJson(json["address"]),
@@ -70,9 +74,11 @@ class Doctor {
             json["feedbacks"].map((x) => Article.fromJson(x))),
         articles: List<Article>.from(
             json["articles"].map((x) => Article.fromJson(x))),
+        v: json["__v"],
         clinics: List<ClinicElement>.from(
             json["clinics"].map((x) => ClinicElement.fromJson(x))),
-        v: json["__v"],
+        customers: List<CustomerElement>.from(
+            json["customers"].map((x) => CustomerElement.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -92,8 +98,9 @@ class Doctor {
         "education": List<dynamic>.from(education.map((x) => x.toJson())),
         "feedbacks": List<dynamic>.from(feedbacks.map((x) => x.toJson())),
         "articles": List<dynamic>.from(articles.map((x) => x.toJson())),
-        "clinics": List<dynamic>.from(clinics.map((x) => x.toJson())),
         "__v": v,
+        "clinics": List<dynamic>.from(clinics.map((x) => x.toJson())),
+        "customers": List<dynamic>.from(customers.map((x) => x.toJson())),
       };
 }
 
@@ -162,42 +169,30 @@ class ClinicElement {
     this.clinic,
     this.days,
     this.id,
-    this.fees,
-    this.avgTime,
-    this.avgPatientPerDay,
-    this.createdAt,
     this.updatedAt,
+    this.createdAt,
   });
 
   ClinicClinic clinic;
   List<Day> days;
   String id;
-  int fees;
-  int avgTime;
-  int avgPatientPerDay;
-  DateTime createdAt;
   DateTime updatedAt;
+  DateTime createdAt;
 
   factory ClinicElement.fromJson(Map<String, dynamic> json) => ClinicElement(
         clinic: ClinicClinic.fromJson(json["clinic"]),
         days: List<Day>.from(json["days"].map((x) => Day.fromJson(x))),
         id: json["_id"],
-        fees: json["fees"],
-        avgTime: json["avgTime"],
-        avgPatientPerDay: json["avgPatientPerDay"],
-        createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: DateTime.parse(json["createdAt"]),
       );
 
   Map<String, dynamic> toJson() => {
         "clinic": clinic.toJson(),
         "days": List<dynamic>.from(days.map((x) => x.toJson())),
         "_id": id,
-        "fees": fees,
-        "avgTime": avgTime,
-        "avgPatientPerDay": avgPatientPerDay,
-        "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
+        "createdAt": createdAt.toIso8601String(),
       };
 }
 
@@ -227,26 +222,22 @@ class ClinicClinic {
 
 class Day {
   Day({
-    this.id,
     this.day,
     this.startTime,
     this.endTime,
   });
 
-  String id;
   String day;
   int startTime;
   int endTime;
 
   factory Day.fromJson(Map<String, dynamic> json) => Day(
-        id: json["_id"],
         day: json["day"],
         startTime: json["startTime"],
         endTime: json["endTime"],
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "day": day,
         "startTime": startTime,
         "endTime": endTime,

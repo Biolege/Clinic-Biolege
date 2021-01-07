@@ -1,24 +1,31 @@
+import 'package:clinicapp/screens/homeScreens/addCustomerScreens/timeAndDateSelectionScreen/timeAndDateSelectionScreenView.dart';
+import 'package:clinicapp/services/services/helperData_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../model/doctor.dart';
-import '../../../services/services/api_service.dart';
 import '../../../services/services/dataFromApi_service.dart';
-import '../../../services/services/local_storage.dart';
 import '../../../app/locator.dart';
-import '../../../app/router.gr.dart';
 
 class CustomerDoctorSelectionScreenViewModel
     extends FutureViewModel<List<Doctor>> {
   // __________________________________________________________________________
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
-  final StorageService _storageService = locator<StorageService>();
+  final PatientDetails _patientDetailService = locator<PatientDetails>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
-  final APIServices _apiServices = locator<APIServices>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
   // __________________________________________________________________________
-  void selectTimeAndDate() =>
-      _navigatorService.navigateTo(Routes.timeAndDateSelectionScreenView);
+  void setTimeAndDateForAppointment(Doctor doctor) {
+    ClinicElement detailsForTheClinicOfDoctor =
+        _dataFromApiService.getClinicDetailsOfDoctor[doctor.id];
+
+    _patientDetailService.setDoctorsPatientSelectedDoctor(doctor);
+
+    _navigatorService.navigateToView(TimeAndDateSelectionScreenView(
+      doctor: doctor,
+      clinicDetails: detailsForTheClinicOfDoctor,
+    ));
+  }
 
   @override
   Future<List<Doctor>> futureToRun() async {

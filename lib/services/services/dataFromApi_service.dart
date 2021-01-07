@@ -1,3 +1,7 @@
+import 'package:clinicapp/model/clinic.dart';
+import 'package:clinicapp/model/clinicEmployee.dart';
+import 'package:clinicapp/model/diagnosticCustomer.dart';
+
 import '../../services/services/local_storage.dart';
 import '../../app/locator.dart';
 import '../../services/services/api_service.dart';
@@ -9,8 +13,27 @@ class DataFromApi {
   final APIServices _apiServices = locator<APIServices>();
   final StorageService _storageService = locator<StorageService>();
   // ___________________________________________________________________________
+  // Data to be used globally for current clinic
+  static Clinic _clinic;
+  Clinic get getClinic => _clinic;
+  void setClinic(Clinic x) => _clinic = x;
   // ___________________________________________________________________________
-  // Data to be used in the Doctors bottom navigationbar
+  // Data to be used in the doctors tab in bottom navigation bar for doctor's
+  // customer
+  static List<DiagnosticCustomer> _diagnosticCustomersList;
+  List<DiagnosticCustomer> get getDiagnosticCustomerList =>
+      _diagnosticCustomersList;
+  void setDiagnosticCustomerList(List<DiagnosticCustomer> x) =>
+      _diagnosticCustomersList = x;
+  void setDiagnosticCustomer(DiagnosticCustomer x) =>
+      _diagnosticCustomersList.add(x);
+  // ___________________________________________________________________________
+  // Data to be used to show clinic employees
+  static List<ClinicEmployee> _clinicEmployeeList;
+  List<ClinicEmployee> get getClinicEmployeeList => _clinicEmployeeList;
+  void setClinicEmployeeList(List<ClinicEmployee> x) => _clinicEmployeeList = x;
+  // ___________________________________________________________________________
+  // Data to be used in the doctors tab in bottom navigation bar
   static List<Doctor> _doctorsListForClinic;
   List<Doctor> get getDoctorsListForClinic => _doctorsListForClinic;
   // ------------------------------------------------------------------
@@ -19,8 +42,8 @@ class DataFromApi {
   Map<String, ClinicElement> get getClinicDetailsOfDoctor =>
       _clinicDetailsOfDoctor;
   // ------------------------------------------------------------------
-  // Data to be used during searching of doctors/ adding a doctors
-  // to clinic profile
+  // Data to be used during searching of doctors / adding a doctors
+  // to clinic profile  (Complete List of Doctors)
   static List<Doctor> _doctorsList;
   List<Doctor> get getDoctorsList => _doctorsList;
   // ------------------------------------------------------------------
@@ -41,6 +64,7 @@ class DataFromApi {
     // Filtering the doctors which work for ClinicId
     _doctorsListForClinic = [];
     _clinicDetailsOfDoctor = {};
+
     _doctorsList.forEach((doctor) =>
         doctor.clinics.forEach((clinic) => clinic.clinic.id == clinicId
             ? {

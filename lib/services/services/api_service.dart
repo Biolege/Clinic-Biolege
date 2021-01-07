@@ -5,11 +5,12 @@ import 'package:clinicapp/model/clinic.dart';
 import 'package:clinicapp/model/doctor.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
+import 'package:http_parser/http_parser.dart';
+import 'dataFromApi_service.dart';
+import 'helperData_service.dart';
+import 'local_storage.dart';
 import '../../app/locator.dart';
 import '../../model/clinicEmployee.dart';
-import 'dataFromApi_service.dart';
-import 'local_storage.dart';
-import 'package:http_parser/http_parser.dart';
 
 class APIServices {
   // __________________________________________________________________________
@@ -19,6 +20,8 @@ class APIServices {
   // Clinic
   String urlClinicEmployeeCreate = "clinicemployee/create";
   String urlClinicCreate = "clinic/create";
+  String urlClinicUpdate = "clinic/phone/";
+  String urlClinicGet = "clinic/";
   String updateClinicImages = "clinic/image/";
   // -------------------------------------------------------------
   // Doctors
@@ -29,6 +32,9 @@ class APIServices {
   // ------------------------------------------------------------
   // Diagnostic Customers
   String urlDiagnosticCustomerCreate = "diagnostic/customer/create";
+  String urlUpdateDiagnosticCustomer = "diagnostic/customer";
+  String urlDiagnosticCustomerGet = "diagnostic/customer";
+  // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
   // Create a new Clinic Employee and stores the response in the local storage
   Future<ClinicEmployee> createClinicEmployee() async {
@@ -59,31 +65,18 @@ class APIServices {
         'address.homeAddress': _storageService.getAddress,
         'address.city': _storageService.getCityName
       });
-      // request..fields['name'] = _storageService.getName;
-      // request
-      //   ..fields['phoneNumber'] = _storageService.getPhoneNumber.toString();
-      // request..fields['gender'] = _storageService.getGender;
-      // request..fields['dob'] = _storageService.getDateOfBirth;
-      // request..fields['role'] = _storageService.getRoleType.toString();
-      // request..fields['address.state'] = _storageService.getState;
-      // request..fields['address.city'] = _storageService.getCityName;
-      // request
-      //   ..fields['address.pincode'] = _storageService.getPinCode.toString();
-      // request..fields['address.homeAddress'] = _storageService.getAddress;
-
       // _______________________________________________________________________
       // Sending the post request
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
-      var resonseJson = json.decode(responseString);
-      print(json.encode(resonseJson));
+      var responseJson = json.decode(responseString);
       // _______________________________________________________________________
       // Saving id for the created user
       print("Clinic employee created with used id : " +
-          resonseJson["clinicEmployee"]["_id"]);
-      _storageService.setUID(resonseJson["clinicEmployee"]["_id"]);
+          responseJson["clinicEmployee"]["_id"]);
+      _storageService.setUID(responseJson["clinicEmployee"]["_id"]);
       // _______________________________________________________________________
-      return ClinicEmployee.fromJson(resonseJson["clinicEmployee"]);
+      return ClinicEmployee.fromJson(responseJson["clinicEmployee"]);
     } catch (e) {
       print("At create clinic employee :" + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
@@ -91,18 +84,21 @@ class APIServices {
     }
   }
 
+  // ***************************************************************************
+  // Create a new clinic
   Future<Clinic> createClinic() async {
     // _______________________________________________________________________
     // Locating Dependencies
     final StorageService _storageService = locator<StorageService>();
     final SnackbarService _snackBarService = locator<SnackbarService>();
-
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     try {
+      // _______________________________________________________________________
       // URL to be called
       var uri = Uri.parse('$url$urlClinicCreate');
       // Creating a Multipart request for sending formdata
       var request = new http.Request("POST", uri);
+      // _______________________________________________________________________
       // Preparing the data to be sent
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -129,39 +125,6 @@ class APIServices {
         'address.clinicAddress': _storageService.getClinicAddress,
         'services': _storageService.getClinicServices.toString()
       });
-
-      // request..fields['name'] = _storageService.getClinicName;
-      // request..fields['pincode'] = _storageService.getClinicPinCode;
-      // request
-      //   ..fields['phoneNumber'] =
-      //       _storageService.getClinicPhoneNumber.toString();
-      // request
-      //   ..fields['location.latitude'] =
-      //       _storageService.getClinicLocationLatitude.toString();
-      // request
-      //   ..fields['location.longitude'] =
-      //       _storageService.getClinicLocationLongitude.toString();
-      // request..fields['ownerName'] = _storageService.getClinicOwnerName;
-      // request
-      //   ..fields['ownerIdProofName'] =
-      //       _storageService.getClinicOwnerIdProofType == 0
-      //           ? "PAN Card"
-      //           : _storageService.getClinicOwnerIdProofType == 1
-      //               ? "Aadhar Card"
-      //               : "Voter Card";
-      // request
-      //   ..fields['ownerPhoneNumber'] =
-      //       _storageService.getClinicOwnerPhone.toString();
-      // request..fields['address.state'] = _storageService.getClinicStateName;
-      // request..fields['address.city'] = _storageService.getClinicCityName;
-      // request
-      //   ..fields['address.pinCode'] =
-      //       _storageService.getClinicPinCode.toString();
-      // request
-      //   ..fields['address.clinicAddress'] = _storageService.getClinicAddress;
-
-      // request
-      //   ..fields['services'] = _storageService.getClinicServices.toString();
       // _______________________________________________________________________
       // Sending the post request
       var response = await request.send();
@@ -169,9 +132,11 @@ class APIServices {
       var responseJson = json.decode(responseString);
       // _______________________________________________________________________
       // Updating the images related to clinic
-      print("Clinic created with clinic id : " + responseJson.toString());
-
-      var finalClinicWithImages =
+      print("Clinic created with clinic id : " +
+          responseJson["clinic"]["_id"].toString());
+      // _______________________________________________________________________
+      // Updates images related to clinic using seperate routes
+      Clinic finalClinicWithImages =
           await updateClinicImage(responseJson["clinic"]["_id"]);
       // _______________________________________________________________________
       // Saving id for the created clinic
@@ -185,6 +150,8 @@ class APIServices {
     }
   }
 
+  // Updates all clinic related images like address proof, logo from the
+  // local storages
   Future<Clinic> updateClinicImage(String clinicId) async {
     // _________________________________________________________________________
     // Locating Dependencies
@@ -203,7 +170,7 @@ class APIServices {
 
     // _________________________________________________________________________
     try {
-      // URL to be calleds
+      // URL to be called
       var uri = Uri.parse('$url$updateClinicImages$clinicId');
       // Creating a get request
       var request = new http.MultipartRequest("PUT", uri);
@@ -230,17 +197,201 @@ class APIServices {
       var responseJson = json.decode(responseString);
       // _______________________________________________________________________
       // Serializing Json to Doctor Class
-      print("Clinic Update images with clinic id : " + responseJson.toString());
+      print("Clinic images updated with clinic id : " +
+          Clinic.fromJson(responseJson).id);
 
       // _______________________________________________________________________
       return Clinic.fromJson(responseJson);
     } catch (e) {
-      print("At update clinic : " + e.toString());
+      print("At update clinic images: " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
     }
   }
 
+  // Fetches clinic data from the api by using CLINIC Id stored in local
+  Future<Clinic> getClinicById() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final StorageService _storageService = locator<StorageService>();
+    // _________________________________________________________________________
+    // Retreiving clinic id
+    String clinicId = _storageService.getClinicId;
+    // _________________________________________________________________________
+    try {
+      // _______________________________________________________________________
+      // URL to be called
+      var getClinicUri = Uri.parse('$url$urlClinicGet$clinicId');
+      // _______________________________________________________________________
+      // Creating get requests
+      var getClinicRequest = new http.Request("GET", getClinicUri);
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var getClinicResponse = await getClinicRequest.send();
+      var getClinicResponseString =
+          await getClinicResponse.stream.bytesToString();
+      var getClinicResponseJson = json.decode(getClinicResponseString);
+
+      // Clinic object generated from the incoming json
+      return Clinic.fromJson(getClinicResponseJson);
+    } catch (e) {
+      print("At get clinic by ID : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
+  // Adds a clinic customer by first fetching the complete clinic object
+  // and then checking whether the customer is already added or not. If added
+  // updates the appointment date field else creates a new customer object.
+  // Finally, prepares a modified version of the recieved clinic object and
+  // updaates via API.
+  Future<Clinic> addClinicCustomers() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final StorageService _storageService = locator<StorageService>();
+    final PatientDetails _patientDetailservice = locator<PatientDetails>();
+    final APIServices _apiServices = locator<APIServices>();
+    final DataFromApi _dataFromApiServices = locator<DataFromApi>();
+    // _________________________________________________________________________
+    // Retreiving clinic id
+    String clinicId = _storageService.getClinicId;
+    // _________________________________________________________________________
+    try {
+      // _______________________________________________________________________
+      // URL to be called
+      var uri = Uri.parse('$url$urlClinicUpdate$clinicId');
+      // _______________________________________________________________________
+      // Creating get requests
+      var request = new http.Request("PUT", uri);
+      // _______________________________________________________________________
+      // Clinic object from get clinic by id (API)
+      Clinic latestDoctorObjectFromApi = await _apiServices.getClinicById();
+      // List of customer of the respective clinic (API)
+      List<CustomerElement> latestCustomersListFromApi =
+          latestDoctorObjectFromApi.customers;
+
+      String diagnosticID =
+          _patientDetailservice.getDoctorsPatientDiagnosticID();
+
+      // _______________________________________________________________________
+      // Preparing the data to be sent
+      CustomerElement
+          customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist =
+          _patientDetailservice
+              .customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist(
+                  _patientDetailservice.customerDetailsToBeSentIfDoesntExist());
+      // _______________________________________________________________________
+      // Finding customer in the customers object of the clinic and
+      // returns the iterator
+      Iterable<CustomerElement> foundCustomer = latestCustomersListFromApi
+          .where((customer) => customer.customer.id == diagnosticID);
+      // _______________________________________________________________________
+      // Logic for updating customer object of doctor
+      if (foundCustomer.isEmpty) {
+        // If not found add the "customerObjectToBeSentIfDoesntExist" to latest
+        // customer list and covert all the customer to jsonobject
+        latestCustomersListFromApi
+            .add(customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist);
+        // ________________________________________________________
+        var object = [];
+        latestCustomersListFromApi
+            .forEach((customer) => object.add(customer.toJson()));
+        request.body = jsonEncode({'customers': object});
+        // ________________________________________________________
+      } else {
+        // If found update the appointment date where Customer ID is same as
+        // diagnostic id and covert all the customer to jsonobject
+        latestCustomersListFromApi
+            .where((customer) => customer.customer.id == diagnosticID)
+            .forEach((customer) {
+          customer.appointmentDate
+              .add(_patientDetailservice.getDoctorsPatientSelectedDate());
+        });
+        // ________________________________________________________
+        var object = [];
+        latestCustomersListFromApi
+            .forEach((customer) => object.add(customer.toJson()));
+        request.body = jsonEncode({'customers': object});
+      }
+
+      // _______________________________________________________________________
+      // Preparing the headers
+      request.headers.addAll({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var responseJson = json.decode(responseString);
+
+      _dataFromApiServices.setClinic(Clinic.fromJson(responseJson));
+
+      // _______________________________________________________________________
+      print("Clinic Customer added : " + responseJson["customers"].toString());
+      // _______________________________________________________________________
+      return Clinic.fromJson(responseJson);
+    } catch (e) {
+      print("At add clinic customer : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // This function add a clinic object to clinics feild of doctors object
+  // Note : There is no doctors feild in clinic model
+  Future addClinicToDoctorById(String id) async {
+    // _______________________________________________________________________
+    // Locating Dependencies
+    final StorageService _storageService = locator<StorageService>();
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final DataFromApi _dataFromApiService = locator<DataFromApi>();
+    // _______________________________________________________________________
+    try {
+      // URL to be called
+      var uri = Uri.parse('$url$updateDoctor/$id');
+      print(uri);
+      // Creating a get request
+
+      var request = new http.Request("PUT", uri);
+      request.headers.addAll({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      // _______________________________________________________________________
+      // Preparing the data to be sent
+      request.body = jsonEncode({
+        "clinics": {
+          "clinic": {
+            "_id": _storageService.getClinicId,
+            "name": _storageService.getClinicCityName,
+            "phoneNumber": _storageService.getPhoneNumber.toString()
+          },
+        }
+      });
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var responseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      // Refetch the updated doctors list from the API
+      await _dataFromApiService.setDoctorsList();
+      await _dataFromApiService.setDoctorsListForClinic();
+      // _______________________________________________________________________
+      return doctorFromJson(json.encode(responseJson));
+    } catch (e) {
+      print("At add doctors to clinic by Id " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
+  // ***************************************************************************
+  // ***************************************************************************
+  // Fetches all doctors from the API and stores in data services class
   Future<List<Doctor>> getAllDoctors() async {
     // _______________________________________________________________________
     // Locating Dependencies
@@ -248,7 +399,7 @@ class APIServices {
     // final StorageService _storageService = locator<StorageService>();
     // _______________________________________________________________________
     try {
-      // URL to be calleds
+      // URL to be called
       var uri = Uri.parse('$url$urlGetDoctors');
       // Creating a get request
       var request = new http.Request("GET", uri);
@@ -277,6 +428,7 @@ class APIServices {
   }
 
   // ---------------------------------------------------------------------------
+  // Fetches a doctor from the api using id
   Future<Doctor> getDoctorById(String id) async {
     // _______________________________________________________________________
     // Locating Dependencies
@@ -288,45 +440,12 @@ class APIServices {
       // Creating a get request
       var request = new http.Request("GET", uri);
       // _______________________________________________________________________
-
-      // _______________________________________________________________________
       // Receiving the JSON response
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
-      var resonseJson = json.decode(responseString);
+      var responseJson = json.decode(responseString);
       // _______________________________________________________________________
-      return Doctor.fromJson(resonseJson);
-    } catch (e) {
-      print("At get doctors by Id " + e.toString());
-      _snackBarService.showSnackbar(message: e.toString());
-      return null;
-    }
-  }
-  // ---------------------------------------------------------------------------
-
-  Future<dynamic> getAllDoctorCustomers() async {
-    // _______________________________________________________________________
-    // Locating Dependencies
-    final SnackbarService _snackBarService = locator<SnackbarService>();
-    // _______________________________________________________________________
-    try {
-      // URL to be called
-      var uri = Uri.parse('$url$getAllDoctorCustomers');
-      // Creating a get request
-      var request = new http.Request("GET", uri);
-      // _______________________________________________________________________
-
-      // _______________________________________________________________________
-      // Receiving the JSON response
-      var response = await request.send();
-      var responseString = await response.stream.bytesToString();
-      var resonseJson = json.decode(responseString);
-      // _______________________________________________________________________
-      // Serializing Json to Customers Class
-
-      // _______________________________________________________________________
-
-      return dynamic;
+      return Doctor.fromJson(responseJson);
     } catch (e) {
       print("At get doctors by Id " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
@@ -335,66 +454,128 @@ class APIServices {
   }
 
   // ---------------------------------------------------------------------------
-  Future addDoctorToClinicById(String id) async {
-    // _______________________________________________________________________
+
+  Future<Doctor> addCustomersToDoctor(String id) async {
+    // _________________________________________________________________________
     // Locating Dependencies
-    final StorageService _storageService = locator<StorageService>();
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    final DataFromApi _dataFromApiService = locator<DataFromApi>();
-    // _______________________________________________________________________
+    // final StorageService _storageService = locator<StorageService>();
+    final PatientDetails _patientDetailservice = locator<PatientDetails>();
+    final APIServices _apiServices = locator<APIServices>();
+    // final DataFromApi _dataFromApiServices = locator<DataFromApi>();
+    // _________________________________________________________________________
     try {
+      // _______________________________________________________________________
       // URL to be called
       var uri = Uri.parse('$url$updateDoctor/$id');
-      print(uri);
-      // Creating a get request
-      // var request = new http.MultipartRequest("PUT", uri);
+      // _______________________________________________________________________
+      // Creating get requests
+      // // This is for updating current clinic details
       var request = new http.Request("PUT", uri);
+      // _______________________________________________________________________
+      // Diagnostic Customer ID
+      String diagnosticID =
+          _patientDetailservice.getDoctorsPatientDiagnosticID();
+      // Clinic object from get clinic by id (API)
+      Doctor latestDoctorObjectFromApi = await _apiServices.getDoctorById(id);
+      // List of customer of the respective clinic (API)
+      List<CustomerElement> latestCustomersListFromApi =
+          latestDoctorObjectFromApi.customers;
+      // _______________________________________________________________________
+      // Preparing the data to be sent
+
+      CustomerElement
+          customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist =
+          _patientDetailservice
+              .customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist(
+                  _patientDetailservice.customerDetailsToBeSentIfDoesntExist());
+      // _______________________________________________________________________
+      // Finding customer in the customers object of the clinic and
+      // returns the iterator
+      Iterable<CustomerElement> foundCustomer = latestCustomersListFromApi
+          .where((customer) => customer.customer.id == diagnosticID);
+      // _______________________________________________________________________
+      // Logic for updating customer object of doctor
+      if (foundCustomer.isEmpty) {
+        // If not found add the "customerObjectToBeSentIfDoesntExist" to latest
+        // customer list and covert all the customer to jsonobject
+        latestCustomersListFromApi
+            .add(customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist);
+        // ________________________________________________________
+        request.body = _patientDetailservice
+            .latestCustomersListToBeSent(latestCustomersListFromApi);
+        // ________________________________________________________
+      } else {
+        // If found update the appointment date where Customer ID is same as
+        // diagnostic id and covert all the customer to jsonobject
+        latestCustomersListFromApi
+            .where((customer) => customer.customer.id == diagnosticID)
+            .forEach((customer) {
+          customer.appointmentDate
+              .add(_patientDetailservice.getDoctorsPatientSelectedDate());
+        });
+        // ________________________________________________________
+        request.body = _patientDetailservice
+            .latestCustomersListToBeSent(latestCustomersListFromApi);
+      }
+
+      // _______________________________________________________________________
+
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
       });
-      // _______________________________________________________________________
-      // Preparing the data to be sent
-      request.body = jsonEncode({
-        "clinics": {
-          "clinic": {
-            "_id": _storageService.getClinicId,
-            "name": _storageService.getClinicCityName,
-            "phoneNumber": _storageService.getPhoneNumber.toString()
-          },
-        }
-      });
 
-      // request..fields['clinics.clinic._id'] = _storageService.getClinicId;
-      // request
-      //   ..fields['clinics.clinic.name'] = _storageService.getClinicCityName;
-      // request
-      //   ..fields['clinics.clinic.phoneNumber'] =
-      //       _storageService.getPhoneNumber.toString();
-      // _______________________________________________________________________
-      // Receiving the JSON response
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
-      var resonseJson = json.decode(responseString);
+      var responseJson = json.decode(responseString);
+
       // _______________________________________________________________________
-      // Refetch the updated doctors list from the API
-      await _dataFromApiService.setDoctorsList();
-      await _dataFromApiService.setDoctorsListForClinic();
+      print("Doctor Customer added : " + responseJson["customers"].toString());
       // _______________________________________________________________________
-      return doctorFromJson(json.encode(resonseJson));
+      return Doctor.fromJson(responseJson);
     } catch (e) {
-      print("At add doctors to clinic by Id " + e.toString());
+      print("At add doctor customer : " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
     }
   }
+  // ---------------------------------------------------------------------------
 
-// ---------------------------------------------------------------------------
-  Future addDiagnosticCustomer(dynamic data) async {
+  // Future<dynamic> getAllDoctorCustomers() async {
+  //   // _______________________________________________________________________
+  //   // Locating Dependencies
+  //   final SnackbarService _snackBarService = locator<SnackbarService>();
+  //   // _______________________________________________________________________
+  //   try {
+  //     // URL to be called
+  //     var uri = Uri.parse('$url$getAllDoctorCustomers');
+  //     // Creating a get request
+  //     var request = new http.Request("GET", uri);
+  //     // _______________________________________________________________________
+
+  //     // _______________________________________________________________________
+  //     // Receiving the JSON response
+  //     var response = await request.send();
+  //     var responseString = await response.stream.bytesToString();
+  //     var responseJson = json.decode(responseString);
+  //     // _______________________________________________________________________
+
+  //     return dynamic;
+  //   } catch (e) {
+  //     print("At get doctors by Id " + e.toString());
+  //     _snackBarService.showSnackbar(message: e.toString());
+  //     return null;
+  //   }
+  // }
+
+  // ***************************************************************************
+  // ***************************************************************************
+  Future addDiagnosticCustomer() async {
     // _______________________________________________________________________
     // Locating Dependencies
-    final StorageService _storageService = locator<StorageService>();
+
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    final DataFromApi _dataFromApiService = locator<DataFromApi>();
+    final PatientDetails _patientDetailservice = locator<PatientDetails>();
     // _______________________________________________________________________
     try {
       // URL to be called
@@ -402,41 +583,95 @@ class APIServices {
 
       // Creating a get request
       // var request = new http.MultipartRequest("PUT", uri);
-      var request = new http.Request("PUT", uri);
+      var request = new http.Request("POST", uri);
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
       });
       // _______________________________________________________________________
       // Preparing the data to be sent
       request.body = jsonEncode({
-        "clinics": {
-          "clinic": {
-            "_id": _storageService.getClinicId,
-            "name": _storageService.getClinicCityName,
-            "phoneNumber": _storageService.getPhoneNumber.toString()
-          },
-        }
+        'name': _patientDetailservice.getDoctorsPatientName(),
+        'phoneNumber': _patientDetailservice.getDoctorsPatientPhoneNumber(),
+        // 'customers.customer.email':,
+        'gender': _patientDetailservice.getDoctorsPatientGender(),
+        'dob': _patientDetailservice.getDoctorsPatientDob().toString(),
+        'address.state': _patientDetailservice.getDoctorsPatientStateName(),
+        'address.city': _patientDetailservice.getDoctorsPatientCityName(),
+        'address.pincode': _patientDetailservice.getDoctorsPatientPinCode(),
+        'address.homeAddress':
+            _patientDetailservice.getDoctorsPatientHomeAddress(),
+        'bloodGroup': _patientDetailservice.getDoctorsPatientBloodGroup(),
       });
-
-      // request..fields['clinics.clinic._id'] = _storageService.getClinicId;
-      // request
-      //   ..fields['clinics.clinic.name'] = _storageService.getClinicCityName;
-      // request
-      //   ..fields['clinics.clinic.phoneNumber'] =
-      //       _storageService.getPhoneNumber.toString();
       // _______________________________________________________________________
       // Receiving the JSON response
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
-      var resonseJson = json.decode(responseString);
+      var responseJson = json.decode(responseString);
       // _______________________________________________________________________
       // Refetch the updated doctors list from the API
-      await _dataFromApiService.setDoctorsList();
-      await _dataFromApiService.setDoctorsListForClinic();
+      print("Added new Diagnostic Customer: " +
+          responseJson["diagnosticCustomer"]["_id"]);
+
+      _patientDetailservice.setDoctorsPatientDiagnosticID(
+          responseJson["diagnosticCustomer"]["_id"]);
+
       // _______________________________________________________________________
-      return doctorFromJson(json.encode(resonseJson));
     } catch (e) {
-      print("At add doctors to clinic by Id " + e.toString());
+      print("At Add Diagnostic Customer " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
+  Future addAppointmentToDiagnosticCustomer() async {
+    // _______________________________________________________________________
+    // Locating Dependencies
+
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final PatientDetails _patientDetailservice = locator<PatientDetails>();
+
+    // _______________________________________________________________________
+    //
+    try {
+      String id = _patientDetailservice.getDoctorsPatientDiagnosticID();
+      // URL to be called
+      var uri = Uri.parse('$url$urlUpdateDiagnosticCustomer/$id');
+      var getClinicUri = Uri.parse('$url$urlDiagnosticCustomerGet/$id');
+      print(uri);
+      // Creating a get request
+      // var request = new http.MultipartRequest("PUT", uri);
+      var request = new http.Request("PUT", uri);
+      var getClinicRequest = new http.Request("GET", getClinicUri);
+
+      request.headers.addAll({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      // _______________________________________________________________________
+      // Preparing the data to be sent
+      request.body = jsonEncode({
+        'doctors.doctor.id':
+            _patientDetailservice.getDoctorsPatientSelectedDoctor().id,
+        'doctors.visitingDate':
+            _patientDetailservice.getDoctorsPatientSelectedDate().toString()
+      });
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var getClinicResponse = await getClinicRequest.send();
+      var getClinicResponseString =
+          await getClinicResponse.stream.bytesToString();
+      var getClinicResponseJson = json.decode(getClinicResponseString);
+
+      print(getClinicResponseJson["doctors"]);
+
+      // var response = await request.send();
+      // var responseString = await response.stream.bytesToString();
+      // var responseJson = json.decode(responseString);
+      // // _______________________________________________________________________
+      // print("Added Appointment: " + jsonEncode(responseJson));
+
+      // _______________________________________________________________________
+    } catch (e) {
+      print("At add appointment to diagnostic customer " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
     }

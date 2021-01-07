@@ -36,7 +36,7 @@ class DoctorsProfileScreenViewModel extends BaseViewModel {
     // If user pressed continue then perform the API call
     if (res.confirmed == true) {
       setBusy(true);
-      await _apiServices.addDoctorToClinicById(docId);
+      await _apiServices.addClinicToDoctorById(docId);
       setBusy(false);
       goBackToHome(docName);
     }
