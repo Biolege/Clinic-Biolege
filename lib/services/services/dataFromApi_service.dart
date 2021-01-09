@@ -42,6 +42,14 @@ class DataFromApi {
   Map<String, ClinicElement> get getClinicDetailsOfDoctor =>
       _clinicDetailsOfDoctor;
   // ------------------------------------------------------------------
+  // Mapping of patients(ID) with their details for faster access
+  static Map<String, DiagnosticCustomer> _diagnosticCustomerOfDoctors;
+  Map<String, DiagnosticCustomer> get getDiagnosticCustomerOfDoctors =>
+      _diagnosticCustomerOfDoctors;
+  Future setDiagnosticCustomerOfDoctors(
+          Map<String, DiagnosticCustomer> x) async =>
+      _diagnosticCustomerOfDoctors = x;
+  // ------------------------------------------------------------------
   // Data to be used during searching of doctors / adding a doctors
   // to clinic profile  (Complete List of Doctors)
   static List<Doctor> _doctorsList;
@@ -61,25 +69,30 @@ class DataFromApi {
 
   Future setDoctorsListForClinic() async {
     String clinicId = _storageService.getClinicId;
-    // Filtering the doctors which work for ClinicId
+    // Filtering the doctors which work for Clinic Id
     _doctorsListForClinic = [];
     _clinicDetailsOfDoctor = {};
 
     _doctorsList.forEach((doctor) =>
         doctor.clinics.forEach((clinic) => clinic.clinic.id == clinicId
             ? {
-                print(clinic.id + " " + doctor.name),
                 _doctorsListForClinic.add(doctor),
                 _clinicDetailsOfDoctor.putIfAbsent(doctor.id, () => clinic)
               }
             : null));
 
-    print("ClinicDetails for $clinicId is saved : " +
+    print("Clinic details for $clinicId is saved : " +
         _clinicDetailsOfDoctor.toString());
+
     print(
-        "Doctors for $clinicId is saved : " + _doctorsListForClinic.toString());
+        "Doctors for $clinicId is saved :" + _doctorsListForClinic.toString());
   }
 
-  void setDoctorForAppointmentsTab() {}
+  Future setDiagnosticCustomersList() async {
+    _diagnosticCustomersList = [];
+    _diagnosticCustomersList = await _apiServices.getAllDiagnosticCustomers();
+    print("All doctors saved : " + _diagnosticCustomersList.toString());
+  }
+
   // ___________________________________________________________________________
 }

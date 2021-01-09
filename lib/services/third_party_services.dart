@@ -19,6 +19,7 @@ abstract class ThirdPartyServicesModule {
   DataFromApi get dataFromApi;
   StorageService get localStorageService;
   PatientDetails get patientDetailservice;
+  DoctorAppointments get doctorAppointmentsDetailservice;
   // ---------------------------------------------------
   // Navigation Services
   NavigationService get navigationService;

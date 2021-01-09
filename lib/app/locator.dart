@@ -24,5 +24,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => FilePickHelperService());
   // Data
   locator.registerLazySingleton(() => DataFromApi());
+  // Helper Data Service (Data inside these classes changes)
   locator.registerLazySingleton(() => PatientDetails());
+  locator.registerLazySingleton(() => DoctorAppointments());
 }

@@ -338,8 +338,14 @@ class Router extends RouterBase {
       );
     },
     TimeAndDateSelectionScreenView: (data) {
+      final args = data.getArgs<TimeAndDateSelectionScreenViewArguments>(
+        orElse: () => TimeAndDateSelectionScreenViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => TimeAndDateSelectionScreenView(),
+        builder: (context) => TimeAndDateSelectionScreenView(
+          doctor: args.doctor,
+          clinicDetails: args.clinicDetails,
+        ),
         settings: data,
       );
     },
@@ -380,6 +386,13 @@ class Router extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// TimeAndDateSelectionScreenView arguments holder class
+class TimeAndDateSelectionScreenViewArguments {
+  final Doctor doctor;
+  final ClinicElement clinicDetails;
+  TimeAndDateSelectionScreenViewArguments({this.doctor, this.clinicDetails});
+}
 
 /// DoctorsProfileScreenView arguments holder class
 class DoctorsProfileScreenViewArguments {

@@ -27,17 +27,18 @@ class RootViewModel extends BaseViewModel {
       // To be used when the user is filling up the detail and not yet created
       //  clinic and user
       await _storageService.initLocalStorages();
-      // To be used when the user has filled all the data and is in homepage
-      //  screens
+      // Get all the doctors in the beginning itself
       await _dataFromApiService.setDoctorsList();
+      // Get all the diagnotic customer in the beginning itself
+      await _dataFromApiService.setDiagnosticCustomersList();
       // ---------------------------------------------------------------------
-      print("Phone       : " + _storageService.getPhoneNumber.toString());
-      print("Name        : " + _storageService.getName.toString());
-      print("Email       : " + _storageService.getEmailAddress.toString());
-      print("DOB         : " + _storageService.getDateOfBirth.toString());
-      print("Address     : " + _storageService.getAddress.toString());
-      print("Role Type   : " + _storageService.getRoleType.toString());
-      print("Clinic Type : " + _storageService.getClinicName.toString());
+      // print("Phone       : " + _storageService.getPhoneNumber.toString());
+      // print("Name        : " + _storageService.getName.toString());
+      // print("Email       : " + _storageService.getEmailAddress.toString());
+      // print("DOB         : " + _storageService.getDateOfBirth.toString());
+      // print("Address     : " + _storageService.getAddress.toString());
+      // print("Role Type   : " + _storageService.getRoleType.toString());
+      // print("Clinic Type : " + _storageService.getClinicName.toString());
       // ---------------------------------------------------------------------
       if (hasLoggedIn) {
         if (_storageService.getName == null)

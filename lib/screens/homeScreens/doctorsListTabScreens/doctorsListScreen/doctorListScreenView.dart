@@ -10,6 +10,7 @@ import 'doctorListScreenViewModel.dart';
 
 class DoctorsListScreenView extends StatelessWidget {
   static const routeName = "/doctorsListScreenView";
+  DoctorsListScreenView();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<DoctorsListScreenViewModel>.reactive(
@@ -58,8 +59,10 @@ class DoctorsListScreenView extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ListTile(
-                                        onLongPress: () =>
-                                            model.profileDescriptionView(
+                                        selected: model.selectedDocID ==
+                                            model.data[index].id,
+                                        onTap: () =>
+                                            model.setDoctorToShowInAppointments(
                                                 model.data[index]),
                                         contentPadding:
                                             const EdgeInsets.symmetric(
@@ -74,12 +77,26 @@ class DoctorsListScreenView extends StatelessWidget {
                                           model.data[index].name,
                                           style: TextStyle(fontSize: 14),
                                         ),
-                                        subtitle: Text(model.data[index]
-                                                .specialization[0] ??
-                                            ''),
-                                        trailing: Text(
-                                          "Hold to show info",
-                                          style: TextStyle(fontSize: 9),
+                                        subtitle:
+                                            model.data[index].specialization !=
+                                                        null &&
+                                                    model
+                                                            .data[index]
+                                                            .specialization
+                                                            .length !=
+                                                        0
+                                                ? Text(model.data[index]
+                                                        .specialization[0] ??
+                                                    '')
+                                                : Container(),
+                                        trailing: InkWell(
+                                          onTap: () =>
+                                              model.profileDescriptionView(
+                                                  model.data[index]),
+                                          child: Text(
+                                            "Hold to show info",
+                                            style: TextStyle(fontSize: 9),
+                                          ),
                                         ),
                                       ),
                                     ),

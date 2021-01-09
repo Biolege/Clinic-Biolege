@@ -7,6 +7,7 @@ import 'doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import 'appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../../app/locator.dart';
 import '../../services/services/local_storage.dart';
+import '../../services/services/helperData_service.dart';
 // import '../../model/clinic.dart';
 // import '../../model/clinicEmployee.dart';
 // import '../../services/services/auth_service.dart';
@@ -17,6 +18,8 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   // Locating the Dependencies
   final StorageService _storageService = locator<StorageService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
+  final DoctorAppointments _doctorAppointmentsDetailservice =
+      locator<DoctorAppointments>();
   // final NavigationService _navigatorService = locator<NavigationService>();
   // final AuthenticationService _authenticationService =
   //     locator<AuthenticationService>();
@@ -28,6 +31,7 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   // Data for the UI
 
   //__________________________________________________________________________
+  final PageController pageController = PageController();
 
   final widgetOptions = [
     DoctorsListScreenView(),
@@ -36,7 +40,6 @@ class HomeScreenViewModel extends FutureViewModel<String> {
     Text('Profile'),
   ];
 
-  final PageController pageController = PageController();
   int _index = 0;
 
   int get getIndex => _index;
@@ -53,6 +56,7 @@ class HomeScreenViewModel extends FutureViewModel<String> {
 
   void setCurrentIndexForPageView(int selIndex) {
     _index = selIndex;
+    print(_index);
     pageController.animateToPage(selIndex,
         duration: Duration(milliseconds: 300), curve: Curves.elasticInOut);
     notifyListeners();
@@ -60,12 +64,15 @@ class HomeScreenViewModel extends FutureViewModel<String> {
 
   void selectCurrentPageForNavBar(int selIndex) {
     _index = selIndex;
+    print(_index);
     notifyListeners();
   }
 
   @override
   Future<String> futureToRun() async {
     try {
+      _doctorAppointmentsDetailservice.setController(
+          setCurrentIndexForPageView, selectCurrentPageForNavBar);
       return _storageService.getClinicName;
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());

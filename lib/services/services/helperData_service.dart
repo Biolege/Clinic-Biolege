@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:clinicapp/model/clinic.dart';
+import 'package:clinicapp/model/diagnosticCustomer.dart';
+import 'package:flutter/material.dart';
 
 import '../../model/doctor.dart';
 
@@ -113,4 +115,21 @@ class PatientDetails {
 }
 
 // Helper class used when creating a new doctor's customers
-class DoctorToShowInAppointmentTab {}
+class DoctorAppointments {
+  // __________________________________________________________________________
+  // Variables
+  static Doctor _selectedDoctor;
+  Doctor getSelectedDoctor() => _selectedDoctor;
+  void setSelectedDoctor(Doctor doc) {
+    print("Selected Doctor for appointments tab : " + doc.name);
+    _selectedDoctor = doc;
+  }
+
+  static void Function(int index) _controller1, _controller2;
+  void Function(int index) getController1() => _controller1;
+  void Function(int index) getController2() => _controller2;
+  void setController(void Function(int index) x, void Function(int index) y) {
+    _controller1 = x;
+    _controller2 = y;
+  }
+}

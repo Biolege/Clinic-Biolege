@@ -244,6 +244,21 @@ class APIServices {
     }
   }
 
+  // Fetches clinic data from the api and saves globally
+  Future getClinicFromApiAndSetGlobally() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final DataFromApi _dataFromApi = locator<DataFromApi>();
+    // _________________________________________________________________________
+    try {
+      _dataFromApi.setClinic(await getClinicById());
+    } catch (e) {
+      print("At saving clinic globally: " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+    }
+  }
+
   // Adds a clinic customer by first fetching the complete clinic object
   // and then checking whether the customer is already added or not. If added
   // updates the appointment date field else creates a new customer object.
@@ -602,7 +617,7 @@ class APIServices {
     // _______________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    // final StorageService _storageService = locator<StorageService>();
+    final DataFromApi _dataFromApi = locator<DataFromApi>();
     // _______________________________________________________________________
     try {
       // URL to be called
@@ -620,9 +635,16 @@ class APIServices {
       // _______________________________________________________________________
       // Serializing Json to DiagnosticCustomer Class
       List<DiagnosticCustomer> dgncstlist = [];
+      Map<String, DiagnosticCustomer> customerAndDetailsMapping = {};
 
-      responseJson.forEach((dgncst) =>
-          dgncstlist.add(diagnosticCustomerFromJson(json.encode(dgncst))));
+      responseJson.forEach((dgncst) {
+        DiagnosticCustomer x = diagnosticCustomerFromJson(json.encode(dgncst));
+        dgncstlist.add(x);
+        customerAndDetailsMapping[x.id] = x;
+      });
+
+      await _dataFromApi
+          .setDiagnosticCustomerOfDoctors(customerAndDetailsMapping);
 
       // _______________________________________________________________________
       return dgncstlist;

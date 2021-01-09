@@ -90,8 +90,11 @@ class SelectDoctorClinicScreen extends StatelessWidget {
                                           style: TextStyle(fontSize: 14),
                                         ),
                                         subtitle: Text(model.results[index]
-                                                .specialization[0] ??
-                                            ''),
+                                                    .specialization.length !=
+                                                0
+                                            ? model.results[index]
+                                                .specialization[0]
+                                            : ''),
                                         trailing: model.clinicDetailsOfDoctor
                                                 .containsKey(
                                                     model.results[index].id)

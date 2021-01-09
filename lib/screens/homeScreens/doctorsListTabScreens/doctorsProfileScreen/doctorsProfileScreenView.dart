@@ -57,13 +57,19 @@ class DoctorsProfileScreenView extends StatelessWidget {
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
-                                  Text(doctor.specialization[0]),
-                                  Text(((doctor.experience[0]
-                                                  .experienceEndYear) -
-                                              doctor.experience[0]
-                                                  .experienceStartYear)
-                                          .toString() +
-                                      " years experience")
+                                  doctor.specialization != null &&
+                                          doctor.specialization.length != 0
+                                      ? Text(doctor.specialization[0])
+                                      : Container(),
+                                  doctor.experience != null &&
+                                          doctor.experience.length != 0
+                                      ? Text(((doctor.experience[0]
+                                                      .experienceEndYear) -
+                                                  doctor.experience[0]
+                                                      .experienceStartYear)
+                                              .toString() +
+                                          " years experience")
+                                      : Container()
                                 ],
                               ),
                             ),
@@ -159,125 +165,102 @@ class DoctorsProfileScreenView extends StatelessWidget {
                           SizedBox(
                             height: getProportionateScreenHeight(20),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Education",
-                                style: TextStyle(color: offBlack3),
-                              ),
-                              SizedBox(
-                                height: getProportionateScreenHeight(20),
-                              ),
-                              ListView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  itemCount: doctor.education.length,
-                                  itemBuilder: (context, index) => Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: ListTile(
-                                            contentPadding:
-                                                const EdgeInsets.all(15.0),
-                                            tileColor: offWhite1,
-                                            title: Text(doctor.education[index]
-                                                .educationDegree),
-                                            trailing: Text(doctor
-                                                    .education[index]
-                                                    .educationStartYear
-                                                    .toString() +
-                                                " - " +
-                                                doctor.education[index]
-                                                    .educationEndYear
-                                                    .toString()),
-                                            subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(doctor.education[index]
-                                                    .educationField),
-                                                Text(doctor.education[index]
-                                                    .educationCollege)
-                                              ],
-                                            )),
-                                      ))
-                            ],
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: getProportionateScreenHeight(20),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Specialization",
-                                style: TextStyle(color: offBlack3),
-                              ),
-                              SizedBox(
-                                height: getProportionateScreenHeight(20),
-                              ),
-                              GridView.builder(
-                                  primary: false,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          mainAxisSpacing: 10,
-                                          crossAxisSpacing: 10,
-                                          childAspectRatio: 3.5,
-                                          crossAxisCount: 2),
-                                  shrinkWrap: true,
-                                  itemCount: doctor.specialization.length,
-                                  itemBuilder: (context, index) =>
-                                      buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                          Text(
-                                            doctor.specialization[index],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          null)),
-                            ],
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(20),
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: getProportionateScreenHeight(20),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Experience",
-                                style: TextStyle(color: offBlack3),
-                              ),
-                              SizedBox(
-                                height: getProportionateScreenHeight(20),
-                              ),
-                              ListView.builder(
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: doctor.experience.length,
-                                itemBuilder: (context, index) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ListTile(
-                                    contentPadding: const EdgeInsets.all(15.0),
-                                    tileColor: offWhite1,
-                                    title: Text(doctor
-                                        .experience[index].experienceTitle),
-                                    trailing: Text(doctor.experience[index]
-                                        .experienceOrganization),
-                                    subtitle: Text(doctor.experience[index]
-                                            .experienceStartYear
-                                            .toString() +
-                                        " - " +
-                                        doctor
-                                            .experience[index].experienceEndYear
-                                            .toString()),
+                          doctor.education != null &&
+                                  doctor.education.length != 0
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Education",
+                                      style: TextStyle(color: offBlack3),
+                                    ),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(20),
+                                    ),
+                                    ListView.builder(
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        itemCount: doctor.education.length,
+                                        itemBuilder: (context, index) =>
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: ListTile(
+                                                  contentPadding:
+                                                      const EdgeInsets.all(
+                                                          15.0),
+                                                  tileColor: offWhite1,
+                                                  title: Text(doctor
+                                                      .education[index]
+                                                      .educationDegree),
+                                                  trailing: Text(doctor
+                                                          .education[index]
+                                                          .educationStartYear
+                                                          .toString() +
+                                                      " - " +
+                                                      doctor.education[index]
+                                                          .educationEndYear
+                                                          .toString()),
+                                                  subtitle: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(doctor
+                                                          .education[index]
+                                                          .educationField),
+                                                      Text(doctor
+                                                          .education[index]
+                                                          .educationCollege)
+                                                    ],
+                                                  )),
+                                            ))
+                                  ],
+                                )
+                              : Container(
+                                  child: Center(
+                                    child: Text(
+                                        "This doctor profile has nothing to show"),
                                   ),
                                 ),
-                              ),
-                            ],
+                          Divider(),
+                          SizedBox(
+                            height: getProportionateScreenHeight(20),
                           ),
+                          doctor.specialization != null &&
+                                  doctor.specialization.length != 0
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Specialization",
+                                      style: TextStyle(color: offBlack3),
+                                    ),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(20),
+                                    ),
+                                    GridView.builder(
+                                        primary: false,
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                mainAxisSpacing: 10,
+                                                crossAxisSpacing: 10,
+                                                childAspectRatio: 3.5,
+                                                crossAxisCount: 2),
+                                        shrinkWrap: true,
+                                        itemCount: doctor.specialization.length,
+                                        itemBuilder: (context, index) =>
+                                            buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
+                                                Text(
+                                                  doctor.specialization[index],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                                null)),
+                                  ],
+                                )
+                              : Container(),
                           SizedBox(
                             height: getProportionateScreenHeight(20),
                           ),
@@ -285,48 +268,99 @@ class DoctorsProfileScreenView extends StatelessWidget {
                           SizedBox(
                             height: getProportionateScreenHeight(20),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Services",
-                                style: TextStyle(color: offBlack3),
-                              ),
-                              SizedBox(
-                                height: getProportionateScreenHeight(20),
-                              ),
-                              GridView.builder(
-                                  primary: false,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          mainAxisSpacing: 10,
-                                          crossAxisSpacing: 10,
-                                          childAspectRatio: 3.5,
-                                          crossAxisCount: 2),
-                                  shrinkWrap: true,
-                                  itemCount: doctor.specialization.length,
-                                  itemBuilder: (context, index) =>
-                                      buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
-                                          Text(
-                                            doctor.services[index],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          null)),
-                              // ListView.builder(
-                              //   primary: false,
-                              //   shrinkWrap: true,
-                              //   itemCount: doctor.services.length,
-                              //   itemBuilder: (context, index) => Padding(
-                              //     padding: const EdgeInsets.all(8.0),
-                              //     child: ListTile(
-                              //       tileColor: offWhite1,
-                              //       title: Text(doctor.services[index]),
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
-                          )
+                          doctor.experience != null &&
+                                  doctor.experience.length != 0
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Experience",
+                                      style: TextStyle(color: offBlack3),
+                                    ),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(20),
+                                    ),
+                                    ListView.builder(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      itemCount: doctor.experience.length,
+                                      itemBuilder: (context, index) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          contentPadding:
+                                              const EdgeInsets.all(15.0),
+                                          tileColor: offWhite1,
+                                          title: Text(doctor.experience[index]
+                                              .experienceTitle),
+                                          trailing: Text(doctor
+                                              .experience[index]
+                                              .experienceOrganization),
+                                          subtitle: Text(doctor
+                                                  .experience[index]
+                                                  .experienceStartYear
+                                                  .toString() +
+                                              " - " +
+                                              doctor.experience[index]
+                                                  .experienceEndYear
+                                                  .toString()),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+                          SizedBox(
+                            height: getProportionateScreenHeight(20),
+                          ),
+                          Divider(),
+                          SizedBox(
+                            height: getProportionateScreenHeight(20),
+                          ),
+                          doctor.services != null && doctor.services.length != 0
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Services",
+                                      style: TextStyle(color: offBlack3),
+                                    ),
+                                    SizedBox(
+                                      height: getProportionateScreenHeight(20),
+                                    ),
+                                    GridView.builder(
+                                        primary: false,
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                mainAxisSpacing: 10,
+                                                crossAxisSpacing: 10,
+                                                childAspectRatio: 3.5,
+                                                crossAxisCount: 2),
+                                        shrinkWrap: true,
+                                        itemCount: doctor.services.length,
+                                        itemBuilder: (context, index) =>
+                                            buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
+                                                Text(
+                                                  doctor.services[index],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                                null)),
+                                    // ListView.builder(
+                                    //   primary: false,
+                                    //   shrinkWrap: true,
+                                    //   itemCount: doctor.services.length,
+                                    //   itemBuilder: (context, index) => Padding(
+                                    //     padding: const EdgeInsets.all(8.0),
+                                    //     child: ListTile(
+                                    //       tileColor: offWhite1,
+                                    //       title: Text(doctor.services[index]),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ],
+                                )
+                              : Container()
                         ],
                       )
                     ],
