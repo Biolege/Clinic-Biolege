@@ -58,7 +58,7 @@ class DoctorsListScreenView extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ListTile(
-                                        onTap: () =>
+                                        onLongPress: () =>
                                             model.profileDescriptionView(
                                                 model.data[index]),
                                         contentPadding:
@@ -78,8 +78,8 @@ class DoctorsListScreenView extends StatelessWidget {
                                                 .specialization[0] ??
                                             ''),
                                         trailing: Text(
-                                          "Show info",
-                                          style: TextStyle(fontSize: 10),
+                                          "Hold to show info",
+                                          style: TextStyle(fontSize: 9),
                                         ),
                                       ),
                                     ),

@@ -127,13 +127,17 @@ class TimeAndDateSelectionScreenViewModel extends BaseViewModel {
     _patientDetailservice.setDoctorsPatientSelectedDate(_selectedDate);
 
     setBusy(true);
-    await _apiServices.addClinicCustomers();
-    // await _apiServices.addAppointmentToDiagnosticCustomer();
+    await _apiServices.addOrUpdateDiagnosticCustomerToClinic();
+    await _apiServices.addOrUpdateDiagnosticCustomersToDoctor(
+        _patientDetailservice.getDoctorsPatientSelectedDoctor().id);
+    await _apiServices.updateAppointmentInDiagnosticCustomer();
     setBusy(false);
-    // navigateToConfirm();
+    navigateToConfirm();
   }
 
   void navigateToConfirm() {
-    _navigatorService.navigateTo(Routes.confirmScreenView);
+    _patientDetailservice.resetAllDoctorPatientVariable();
+    _navigatorService.pushNamedAndRemoveUntil(Routes.confirmScreenView,
+        predicate: ModalRoute.withName(Routes.homeScreenView));
   }
 }

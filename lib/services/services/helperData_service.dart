@@ -70,27 +70,15 @@ class PatientDetails {
   // __________________________________________________________________________
   // Helper Functions
   CustomerCustomer customerDetailsToBeSentIfDoesntExist() {
-    return CustomerCustomer.fromJson({
-      'id': _doctorsPatientDiagnosticID,
-      'name': _doctorsPatientName,
-      'phoneNumber': int.parse(_doctorsPatientPhoneNumber),
-      // 'customers.customer.email':,
-      'gender': _doctorsPatientGender,
-      'dob': _doctorsPatientDob.toString(),
-      'address': {
-        'state': _doctorsPatientStateName,
-        'city': _doctorsPatientCityName,
-        'pinCode': int.parse(_doctorsPatientPinCode),
-        'homeAddress': _doctorsPatientHomeAddress,
-      },
-      'bloodGroup': _doctorsPatientBloodGroup,
-    });
+    return CustomerCustomer(id: _doctorsPatientDiagnosticID);
   }
 
-// ----------------------------------------------------------------
+  // ----------------------------------------------------------------
+  // Prepare the data for sending to the Clinic and Doctor Object
   CustomerElement customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist(
       CustomerCustomer cs) {
     return CustomerElement(
+      id: _doctorsPatientDiagnosticID,
       customer: cs,
       appointmentDate: [
         _doctorsPatientSelectedDate,
@@ -98,14 +86,14 @@ class PatientDetails {
     );
   }
 
-// ----------------------------------------------------------------
+  // ----------------------------------------------------------------
   String latestCustomersListToBeSent(List<CustomerElement> lce) {
     var object = [];
     lce.forEach((customer) => object.add(customer.toJson()));
     return jsonEncode({'customers': object});
   }
 
-// ----------------------------------------------------------------
+  // ----------------------------------------------------------------
   void resetAllDoctorPatientVariable() {
     _doctorsPatientPhoneNumber = null;
     _doctorsPatientName = null;
@@ -119,6 +107,7 @@ class PatientDetails {
     _doctorsPatientHomeAddress = null;
     _doctorsPatientSelectedDoctor = null;
     _doctorsPatientSelectedDate = null;
+    _doctorsPatientDiagnosticID = null;
   }
   // __________________________________________________________________________
 }

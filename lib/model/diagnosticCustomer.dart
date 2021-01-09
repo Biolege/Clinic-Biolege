@@ -12,50 +12,63 @@ String diagnosticCustomerToJson(DiagnosticCustomer data) =>
 
 class DiagnosticCustomer {
   DiagnosticCustomer({
+    this.address,
+    this.role,
+    this.id,
     this.name,
     this.phoneNumber,
-    this.email,
     this.gender,
     this.dob,
-    this.address,
-    this.customerImage,
-    this.role,
     this.bloodGroup,
+    this.doctors,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
   });
 
+  Address address;
+  dynamic role;
+  String id;
   String name;
   int phoneNumber;
-  String email;
   String gender;
   DateTime dob;
-  Address address;
-  String customerImage;
-  int role;
   String bloodGroup;
+  List<DoctorObject> doctors;
+  DateTime createdAt;
+  DateTime updatedAt;
+  int v;
 
   factory DiagnosticCustomer.fromJson(Map<String, dynamic> json) =>
       DiagnosticCustomer(
+        address: Address.fromJson(json["address"]),
+        role: json["role"],
+        id: json["_id"],
         name: json["name"],
         phoneNumber: json["phoneNumber"],
-        email: json["email"],
         gender: json["gender"],
         dob: DateTime.parse(json["dob"]),
-        address: Address.fromJson(json["address"]),
-        customerImage: json["customerImage"],
-        role: json["role"],
         bloodGroup: json["bloodGroup"],
+        doctors: List<DoctorObject>.from(
+            json["doctors"].map((x) => DoctorObject.fromJson(x))),
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+        v: json["__v"],
       );
 
   Map<String, dynamic> toJson() => {
+        "address": address.toJson(),
+        "role": role,
+        "_id": id,
         "name": name,
         "phoneNumber": phoneNumber,
-        "email": email,
         "gender": gender,
         "dob": dob.toIso8601String(),
-        "address": address.toJson(),
-        "customerImage": customerImage,
-        "role": role,
         "bloodGroup": bloodGroup,
+        "doctors": List<dynamic>.from(doctors.map((x) => x.toJson())),
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
+        "__v": v,
       };
 }
 
@@ -84,5 +97,57 @@ class Address {
         "city": city,
         "pincode": pincode,
         "homeAddress": homeAddress,
+      };
+}
+
+class DoctorObject {
+  DoctorObject({
+    this.visitingDate,
+    this.id,
+    this.doctor,
+    this.clinic,
+  });
+
+  List<DateTime> visitingDate;
+  String id;
+  ObjectWithID doctor;
+  ObjectWithID clinic;
+
+  factory DoctorObject.fromJson(Map<String, dynamic> json) => DoctorObject(
+        visitingDate: List<DateTime>.from(
+            json["visitingDate"].map((x) => DateTime.parse(x))),
+        id: json["_id"],
+        doctor: ObjectWithID.fromJson(json["doctor"]),
+        clinic: ObjectWithID.fromJson(json["clinic"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "visitingDate":
+            List<dynamic>.from(visitingDate.map((x) => x.toIso8601String())),
+        "_id": id,
+        "doctor": doctor.toJson(),
+        "clinic": clinic.toJson(),
+      };
+  Map<String, dynamic> toJsonForPut() => {
+        "visitingDate":
+            List<dynamic>.from(visitingDate.map((x) => x.toIso8601String())),
+        "doctor": doctor.toJson(),
+        "clinic": clinic.toJson(),
+      };
+}
+
+class ObjectWithID {
+  ObjectWithID({
+    this.id,
+  });
+
+  String id;
+
+  factory ObjectWithID.fromJson(Map<String, dynamic> json) => ObjectWithID(
+        id: json["_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
       };
 }

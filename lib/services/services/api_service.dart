@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:clinicapp/model/clinic.dart';
+import 'package:clinicapp/model/diagnosticCustomer.dart';
 import 'package:clinicapp/model/doctor.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
@@ -34,6 +35,7 @@ class APIServices {
   String urlDiagnosticCustomerCreate = "diagnostic/customer/create";
   String urlUpdateDiagnosticCustomer = "diagnostic/customer";
   String urlDiagnosticCustomerGet = "diagnostic/customer";
+  String urlGetAllDiagnosticCustomers = "diagnostic/customers";
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
   // Create a new Clinic Employee and stores the response in the local storage
@@ -247,7 +249,7 @@ class APIServices {
   // updates the appointment date field else creates a new customer object.
   // Finally, prepares a modified version of the recieved clinic object and
   // updaates via API.
-  Future<Clinic> addClinicCustomers() async {
+  Future<Clinic> addOrUpdateDiagnosticCustomerToClinic() async {
     // _________________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
@@ -455,7 +457,7 @@ class APIServices {
 
   // ---------------------------------------------------------------------------
 
-  Future<Doctor> addCustomersToDoctor(String id) async {
+  Future<Doctor> addOrUpdateDiagnosticCustomersToDoctor(String id) async {
     // _________________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
@@ -470,7 +472,6 @@ class APIServices {
       var uri = Uri.parse('$url$updateDoctor/$id');
       // _______________________________________________________________________
       // Creating get requests
-      // // This is for updating current clinic details
       var request = new http.Request("PUT", uri);
       // _______________________________________________________________________
       // Diagnostic Customer ID
@@ -539,34 +540,6 @@ class APIServices {
       return null;
     }
   }
-  // ---------------------------------------------------------------------------
-
-  // Future<dynamic> getAllDoctorCustomers() async {
-  //   // _______________________________________________________________________
-  //   // Locating Dependencies
-  //   final SnackbarService _snackBarService = locator<SnackbarService>();
-  //   // _______________________________________________________________________
-  //   try {
-  //     // URL to be called
-  //     var uri = Uri.parse('$url$getAllDoctorCustomers');
-  //     // Creating a get request
-  //     var request = new http.Request("GET", uri);
-  //     // _______________________________________________________________________
-
-  //     // _______________________________________________________________________
-  //     // Receiving the JSON response
-  //     var response = await request.send();
-  //     var responseString = await response.stream.bytesToString();
-  //     var responseJson = json.decode(responseString);
-  //     // _______________________________________________________________________
-
-  //     return dynamic;
-  //   } catch (e) {
-  //     print("At get doctors by Id " + e.toString());
-  //     _snackBarService.showSnackbar(message: e.toString());
-  //     return null;
-  //   }
-  // }
 
   // ***************************************************************************
   // ***************************************************************************
@@ -623,55 +596,152 @@ class APIServices {
     }
   }
 
-  Future addAppointmentToDiagnosticCustomer() async {
+  // ---------------------------------------------------------------------------
+  // Fetches all diagnostic customers from the API
+  Future getAllDiagnosticCustomers() async {
     // _______________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    // final StorageService _storageService = locator<StorageService>();
+    // _______________________________________________________________________
+    try {
+      // URL to be called
+      var uri = Uri.parse('$url$urlGetAllDiagnosticCustomers');
+      // Creating a get request
+      var request = new http.Request("GET", uri);
+      // _______________________________________________________________________
+
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var responseJson = json.decode(responseString);
+      print(responseJson);
+      // _______________________________________________________________________
+      // Serializing Json to DiagnosticCustomer Class
+      List<DiagnosticCustomer> dgncstlist = [];
+
+      responseJson.forEach((dgncst) =>
+          dgncstlist.add(diagnosticCustomerFromJson(json.encode(dgncst))));
+
+      // _______________________________________________________________________
+      return dgncstlist;
+    } catch (e) {
+      print("At get all diagnostic customer : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return [];
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+
+  Future updateAppointmentInDiagnosticCustomer() async {
+    // _________________________________________________________________________
     // Locating Dependencies
 
     final SnackbarService _snackBarService = locator<SnackbarService>();
     final PatientDetails _patientDetailservice = locator<PatientDetails>();
+    final APIServices _apiServices = locator<APIServices>();
+    final StorageService _storageService = locator<StorageService>();
 
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     //
     try {
-      String id = _patientDetailservice.getDoctorsPatientDiagnosticID();
+      // _______________________________________________________________________
+      // Variables to be used
+      String diagnostisId =
+          _patientDetailservice.getDoctorsPatientDiagnosticID();
+      String clinicId = _storageService.getClinicId;
+      String selectedDoctorId =
+          _patientDetailservice.getDoctorsPatientSelectedDoctor().id;
+      // _______________________________________________________________________
       // URL to be called
-      var uri = Uri.parse('$url$urlUpdateDiagnosticCustomer/$id');
-      var getClinicUri = Uri.parse('$url$urlDiagnosticCustomerGet/$id');
-      print(uri);
+      var uri = Uri.parse('$url$urlUpdateDiagnosticCustomer/$diagnostisId');
+      // _______________________________________________________________________
       // Creating a get request
-      // var request = new http.MultipartRequest("PUT", uri);
       var request = new http.Request("PUT", uri);
-      var getClinicRequest = new http.Request("GET", getClinicUri);
+      // _______________________________________________________________________
+      // Latest details of Diagnostic Customers fetched by ID (API)
+      DiagnosticCustomer latestDiagnosticCustomerObjectFromApi =
+          await _apiServices.getDiagnoticCustomerById(diagnostisId);
+      // _______________________________________________________________________
+      // List of Appointments from the doctors object of Diagnostic Customers(API)
+      List<DoctorObject> latestDoctorsAppointmentListFromApi =
+          latestDiagnosticCustomerObjectFromApi.doctors;
+      // _______________________________________________________________________
+      DoctorObject appointmentObjectIfDoesntExist = DoctorObject(
+          visitingDate: [_patientDetailservice.getDoctorsPatientSelectedDate()],
+          clinic: ObjectWithID(id: clinicId),
+          doctor: ObjectWithID(
+              id: _patientDetailservice.getDoctorsPatientSelectedDoctor().id));
+      // _______________________________________________________________________
+      // Check whether a an appointment this doctor is already exists or not
+      Iterable<DoctorObject> foundAppointment =
+          latestDoctorsAppointmentListFromApi.where((appointmentObject) =>
+              (appointmentObject.clinic.id == clinicId &&
+                  appointmentObject.doctor.id == selectedDoctorId));
+      // _______________________________________________________________________
+      // Logical for searching
+      if (foundAppointment.isEmpty)
+        latestDoctorsAppointmentListFromApi.add(appointmentObjectIfDoesntExist);
+      else
+        latestDoctorsAppointmentListFromApi
+            .where((appointmentObject) =>
+                (appointmentObject.clinic.id == clinicId &&
+                    appointmentObject.doctor.id == selectedDoctorId))
+            .first
+            .visitingDate
+            .add(_patientDetailservice.getDoctorsPatientSelectedDate());
+      // _______________________________________________________________________
+      // Preparing the data to be sent
+      var object = [];
+      latestDoctorsAppointmentListFromApi
+          .forEach((apt) => object.add(apt.toJsonForPut()));
+
+      request.body = jsonEncode({'doctors': object});
 
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
       });
-      // _______________________________________________________________________
-      // Preparing the data to be sent
-      request.body = jsonEncode({
-        'doctors.doctor.id':
-            _patientDetailservice.getDoctorsPatientSelectedDoctor().id,
-        'doctors.visitingDate':
-            _patientDetailservice.getDoctorsPatientSelectedDate().toString()
-      });
+
       // _______________________________________________________________________
       // Receiving the JSON response
-      var getClinicResponse = await getClinicRequest.send();
-      var getClinicResponseString =
-          await getClinicResponse.stream.bytesToString();
-      var getClinicResponseJson = json.decode(getClinicResponseString);
 
-      print(getClinicResponseJson["doctors"]);
-
-      // var response = await request.send();
-      // var responseString = await response.stream.bytesToString();
-      // var responseJson = json.decode(responseString);
-      // // _______________________________________________________________________
-      // print("Added Appointment: " + jsonEncode(responseJson));
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var responseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      print("Update Appointment to diagnotic customer: " +
+          responseJson["doctors"].toString());
 
       // _______________________________________________________________________
     } catch (e) {
-      print("At add appointment to diagnostic customer " + e.toString());
+      print("At Update appointment to diagnostic customer :" + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+  // ---------------------------------------------------------------------------
+
+  Future<DiagnosticCustomer> getDiagnoticCustomerById(String id) async {
+    // _______________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    // _______________________________________________________________________
+    try {
+      // URL to be called
+      var uri = Uri.parse('$url$urlUpdateDiagnosticCustomer/$id');
+      // Creating a get request
+      var request = new http.Request("GET", uri);
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var responseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      return DiagnosticCustomer.fromJson(responseJson);
+    } catch (e) {
+      print("At get diagnotic customer by Id " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
     }
