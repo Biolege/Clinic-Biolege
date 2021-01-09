@@ -123,7 +123,7 @@ class APIServices {
         'address.city': _storageService.getClinicCityName,
         'address.pincode': _storageService.getClinicPinCode.toString(),
         'address.clinicAddress': _storageService.getClinicAddress,
-        'services': _storageService.getClinicServices.toString()
+        'services': _storageService.getClinicServices
       });
       // _______________________________________________________________________
       // Sending the post request

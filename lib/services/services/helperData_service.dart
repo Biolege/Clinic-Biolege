@@ -91,11 +91,11 @@ class PatientDetails {
   CustomerElement customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist(
       CustomerCustomer cs) {
     return CustomerElement(
-        customer: cs,
-        appointmentDate: [
-          _doctorsPatientSelectedDate,
-        ],
-        id: _doctorsPatientDiagnosticID);
+      customer: cs,
+      appointmentDate: [
+        _doctorsPatientSelectedDate,
+      ],
+    );
   }
 
 // ----------------------------------------------------------------

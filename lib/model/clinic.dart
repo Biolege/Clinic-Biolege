@@ -22,15 +22,15 @@ class Clinic {
     this.ownerIdProofName,
     this.ownerIdProof,
     this.services,
-    this.clinicEmployee,
-    this.id,
-    this.customers,
     this.createdAt,
     this.updatedAt,
     this.v,
+    this.clinicEmployee,
+    this.id,
+    this.customers,
   });
 
-  ClinicAddress address;
+  Address address;
   Location location;
   String name;
   int phoneNumber;
@@ -42,35 +42,34 @@ class Clinic {
   String ownerIdProofName;
   String ownerIdProof;
   List<String> services;
-  List<dynamic> clinicEmployee;
-  String id;
-  List<CustomerElement> customers;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
+  List<ClinicEmployeeObject> clinicEmployee;
+  String id;
+  List<CustomerElement> customers;
 
   factory Clinic.fromJson(Map<String, dynamic> json) => Clinic(
-        address: ClinicAddress.fromJson(json["address"]) ?? '',
-        location: Location.fromJson(json["location"]) ?? '',
-        name: json["name"] ?? '',
-        phoneNumber: json["phoneNumber"] ?? '',
-        role: json["role"] ?? '',
-        logo: json["logo"] ?? '',
-        addressProof: json["addressProof"] ?? '',
-        ownerName: json["ownerName"] ?? '',
-        ownerPhoneNumber: json["ownerPhoneNumber"] ?? '',
-        ownerIdProofName: json["ownerIdProofName"] ?? '',
-        ownerIdProof: json["ownerIdProof"] ?? '',
-        services: List<String>.from(json["services"].map((x) => x)) ?? '',
-        clinicEmployee:
-            List<dynamic>.from(json["clinicEmployee"].map((x) => x)) ?? '',
-        id: json["_id"] ?? '',
+        address: Address.fromJson(json["address"]),
+        location: Location.fromJson(json["location"]),
+        name: json["name"],
+        phoneNumber: json["phoneNumber"],
+        role: json["role"],
+        logo: json["logo"],
+        addressProof: json["addressProof"],
+        ownerName: json["ownerName"],
+        ownerPhoneNumber: json["ownerPhoneNumber"],
+        ownerIdProofName: json["ownerIdProofName"],
+        ownerIdProof: json["ownerIdProof"],
+        services: List<String>.from(json["services"].map((x) => x)),
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+        v: json["__v"],
+        clinicEmployee: List<ClinicEmployeeObject>.from(json["clinicEmployee"]
+            .map((x) => ClinicEmployeeObject.fromJson(x))),
+        id: json["_id"],
         customers: List<CustomerElement>.from(
-                json["customers"].map((x) => CustomerElement.fromJson(x))) ??
-            '',
-        createdAt: DateTime.parse(json["createdAt"]) ?? '',
-        updatedAt: DateTime.parse(json["updatedAt"]) ?? '',
-        v: json["__v"] ?? '',
+            json["customers"].map((x) => CustomerElement.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -86,17 +85,18 @@ class Clinic {
         "ownerIdProofName": ownerIdProofName,
         "ownerIdProof": ownerIdProof,
         "services": List<dynamic>.from(services.map((x) => x)),
-        "clinicEmployee": List<dynamic>.from(clinicEmployee.map((x) => x)),
-        "_id": id,
-        "customers": List<dynamic>.from(customers.map((x) => x.toJson())),
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
+        "clinicEmployee":
+            List<dynamic>.from(clinicEmployee.map((x) => x.toJson())),
+        "_id": id,
+        "customers": List<dynamic>.from(customers.map((x) => x.toJson())),
       };
 }
 
-class ClinicAddress {
-  ClinicAddress({
+class Address {
+  Address({
     this.state,
     this.city,
     this.pincode,
@@ -108,7 +108,7 @@ class ClinicAddress {
   int pincode;
   String clinicAddress;
 
-  factory ClinicAddress.fromJson(Map<String, dynamic> json) => ClinicAddress(
+  factory Address.fromJson(Map<String, dynamic> json) => Address(
         state: json["state"],
         city: json["city"],
         pincode: json["pincode"],
@@ -121,6 +121,15 @@ class ClinicAddress {
         "pincode": pincode,
         "clinicAddress": clinicAddress,
       };
+}
+
+class ClinicEmployeeObject {
+  ClinicEmployeeObject();
+
+  factory ClinicEmployeeObject.fromJson(Map<String, dynamic> json) =>
+      ClinicEmployeeObject();
+
+  Map<String, dynamic> toJson() => {};
 }
 
 class CustomerElement {
@@ -148,108 +157,22 @@ class CustomerElement {
         "_id": id,
         "customer": customer.toJson(),
       };
-  Map<String, dynamic> toJsonForApi() => {
-        "appointmentDate":
-            List<dynamic>.from(appointmentDate.map((x) => x.toIso8601String())),
-        "customer": customer.toJson(),
-      };
-}
-
-class CustomerElementForPUT {
-  CustomerElementForPUT({
-    this.appointmentDate,
-    this.customer,
-  });
-
-  List<DateTime> appointmentDate;
-  CustomerCustomer customer;
-
-  factory CustomerElementForPUT.fromJson(Map<String, dynamic> json) =>
-      CustomerElementForPUT(
-        appointmentDate: List<DateTime>.from(
-            json["appointmentDate"].map((x) => DateTime.parse(x))),
-        customer: CustomerCustomer.fromJson(json["customer"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "appointmentDate":
-            List<dynamic>.from(appointmentDate.map((x) => x.toIso8601String())),
-        "customer": customer.toJson(),
-      };
 }
 
 class CustomerCustomer {
   CustomerCustomer({
     this.id,
-    this.name,
-    this.phoneNumber,
-    this.email,
-    this.gender,
-    this.dob,
-    this.address,
-    this.bloodGroup,
   });
 
   String id;
-  String name;
-  int phoneNumber;
-  String email;
-  String gender;
-  DateTime dob;
-  CustomerAddress address;
-  String bloodGroup;
 
   factory CustomerCustomer.fromJson(Map<String, dynamic> json) =>
       CustomerCustomer(
-        id: json["id"] ?? '',
-        name: json["name"] ?? '',
-        phoneNumber: json["phoneNumber"] ?? '',
-        email: json["email"] ?? '',
-        gender: json["gender"] ?? '',
-        dob: DateTime.parse(json["dob"]) ?? '',
-        address: CustomerAddress.fromJson(json["address"]) ?? '',
-        bloodGroup: json["bloodGroup"] ?? '',
+        id: json["_id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "phoneNumber": phoneNumber,
-        "email": email,
-        "gender": gender,
-        "dob":
-            "${dob.year.toString().padLeft(4, '0')}-${dob.month.toString().padLeft(2, '0')}-${dob.day.toString().padLeft(2, '0')}",
-        "address": address.toJson(),
-        "bloodGroup": bloodGroup,
-      };
-}
-
-class CustomerAddress {
-  CustomerAddress({
-    this.state,
-    this.city,
-    this.pinCode,
-    this.homeAddress,
-  });
-
-  String state;
-  String city;
-  int pinCode;
-  String homeAddress;
-
-  factory CustomerAddress.fromJson(Map<String, dynamic> json) =>
-      CustomerAddress(
-        state: json["state"] ?? '',
-        city: json["city"] ?? '',
-        pinCode: json["pinCode"] ?? '',
-        homeAddress: json["homeAddress"] ?? '',
-      );
-
-  Map<String, dynamic> toJson() => {
-        "state": state,
-        "city": city,
-        "pinCode": pinCode,
-        "homeAddress": homeAddress,
+        "_id": id,
       };
 }
 
