@@ -59,12 +59,14 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          model.data.name,
+                                          model.getSelectedDiagnosticCustomer
+                                              .name,
                                           style: TextStyle(fontSize: 18),
                                         ),
                                         Text((DateTimeRange(
-                                                            start:
-                                                                model.data.dob,
+                                                            start: model
+                                                                .getSelectedDiagnosticCustomer
+                                                                .dob,
                                                             end: DateTime.now())
                                                         .duration
                                                         .inDays /
@@ -104,7 +106,7 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                   style: TextStyle(fontSize: 12),
                                 ),
                                 subtitle: Text(
-                                  model.data.gender,
+                                  model.getSelectedDiagnosticCustomer.gender,
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
@@ -115,7 +117,7 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                   style: TextStyle(fontSize: 12),
                                 ),
                                 subtitle: Text(
-                                  model.data.dob
+                                  model.getSelectedDiagnosticCustomer.dob
                                       .toIso8601String()
                                       .substring(0, 10),
                                   style: TextStyle(fontSize: 20),
@@ -128,7 +130,9 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                   style: TextStyle(fontSize: 12),
                                 ),
                                 subtitle: Text(
-                                  model.data.phoneNumber.toString(),
+                                  model
+                                      .getSelectedDiagnosticCustomer.phoneNumber
+                                      .toString(),
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
@@ -139,13 +143,18 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                   style: TextStyle(fontSize: 12),
                                 ),
                                 subtitle: Text(
-                                  model.data.address.homeAddress +
+                                  model.getSelectedDiagnosticCustomer.address
+                                          .homeAddress +
                                       ", " +
-                                      model.data.address.city +
+                                      model.getSelectedDiagnosticCustomer
+                                          .address.city +
                                       ", " +
-                                      model.data.address.state +
+                                      model.getSelectedDiagnosticCustomer
+                                          .address.state +
                                       ", " +
-                                      model.data.address.pincode.toString(),
+                                      model.getSelectedDiagnosticCustomer
+                                          .address.pincode
+                                          .toString(),
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
@@ -156,7 +165,8 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                   style: TextStyle(fontSize: 12),
                                 ),
                                 subtitle: Text(
-                                  model.data.bloodGroup,
+                                  model
+                                      .getSelectedDiagnosticCustomer.bloodGroup,
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
@@ -174,19 +184,20 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Appointment",
+                                    "Appointments",
                                     style: TextStyle(fontSize: 24),
                                   ),
-                                  Text(
-                                    "First Visit",
-                                    style: TextStyle(fontSize: 15),
-                                  ),
+                                  // Text(
+                                  //   "First Visit",
+                                  //   style: TextStyle(fontSize: 15),
+                                  // ),
                                 ],
                               ),
                               Divider(),
                               ListView.builder(
                                   primary: false,
-                                  itemCount: model.data.doctors.length,
+                                  itemCount: model.getSelectedDiagnosticCustomer
+                                      .doctors.length,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
                                     return Card(
@@ -206,91 +217,79 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                                   Colors.transparent,
                                             ),
                                             title: Text(model
-                                                .getDoctorsMapped[model.data
-                                                    .doctors[index].doctor.id]
+                                                .getDoctorsMapped[model
+                                                    .getSelectedDiagnosticCustomer
+                                                    .doctors[index]
+                                                    .doctor
+                                                    .id]
                                                 .name),
                                             subtitle: Text(
                                                 model.getDoctorSpecialization(
                                                     index)),
                                           ),
-                                          ListView.builder(
-                                              primary: false,
-                                              itemCount: model
-                                                  .getAppointmentsLength(index),
-                                              shrinkWrap: true,
-                                              itemBuilder: (context, index2) {
-                                                return Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    FlatButton.icon(
-                                                      label: Text(
-                                                        model
-                                                                .getAppointmentDates(index)[
-                                                                    index2]
-                                                                .toIso8601String()
-                                                                .substring(
-                                                                    0, 10) +
-                                                            ", " +
-                                                            model.getWeekDay(model
-                                                                .getAppointmentDates(
-                                                                    index)[index2]
-                                                                .weekday),
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: offBlack2),
-                                                      ),
-                                                      icon: Icon(
-                                                        AntDesign.calendar,
-                                                        size: 12,
-                                                        color: blue,
-                                                      ),
-                                                      onPressed: null,
-                                                    ),
-                                                    FlatButton.icon(
-                                                      label: Text(
-                                                        model
-                                                                .getAppointmentDates(index)[
-                                                                    index2]
-                                                                .hour
-                                                                .toString() +
-                                                            ":" +
-                                                            model
-                                                                .getAppointmentDates(
-                                                                    index)[index2]
-                                                                .minute
-                                                                .toString(),
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: offBlack2),
-                                                      ),
-                                                      icon: Icon(
-                                                        AntDesign.clockcircle,
-                                                        size: 12,
-                                                        color: blue,
-                                                      ),
-                                                      onPressed: () {},
-                                                    ),
-                                                    FlatButton.icon(
-                                                      label: Text(
-                                                        "500",
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: offBlack2),
-                                                      ),
-                                                      icon: Icon(
-                                                        FontAwesome.rupee,
-                                                        size: 12,
-                                                        color: blue,
-                                                      ),
-                                                      onPressed: null,
-                                                    )
-                                                  ],
-                                                );
-                                              }),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              FlatButton.icon(
+                                                label: Text(
+                                                  model.getAppoinmentDateTime
+                                                          .toIso8601String()
+                                                          .substring(0, 10) +
+                                                      ", " +
+                                                      model.getWeekDay(model
+                                                          .getAppoinmentDateTime
+                                                          .weekday),
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: offBlack2),
+                                                ),
+                                                icon: Icon(
+                                                  AntDesign.calendar,
+                                                  size: 12,
+                                                  color: blue,
+                                                ),
+                                                onPressed: null,
+                                              ),
+                                              FlatButton.icon(
+                                                label: Text(
+                                                  model.getAppoinmentDateTime
+                                                          .hour
+                                                          .toString() +
+                                                      ":" +
+                                                      model
+                                                          .getAppoinmentDateTime
+                                                          .minute
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: offBlack2),
+                                                ),
+                                                icon: Icon(
+                                                  AntDesign.clockcircle,
+                                                  size: 12,
+                                                  color: blue,
+                                                ),
+                                                onPressed: () {},
+                                              ),
+                                              FlatButton.icon(
+                                                label: Text(
+                                                  "500",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: offBlack2),
+                                                ),
+                                                icon: Icon(
+                                                  FontAwesome.rupee,
+                                                  size: 12,
+                                                  color: blue,
+                                                ),
+                                                onPressed: null,
+                                              )
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     );

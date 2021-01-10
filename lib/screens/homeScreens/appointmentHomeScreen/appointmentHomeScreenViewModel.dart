@@ -22,19 +22,11 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
 
   // __________________________________________________________________________
   // Variables
-  DateTime _selectedDate;
+
   TextEditingController searchedPatient = TextEditingController();
   Doctor selectedDoctor;
   List<DiagnosticCustomer> customersForSelectedDoctor = [];
   List<DiagnosticCustomer> customerForSelectedDateSelectedDoctor = [];
-  void search(DateTime dt) {
-    customersForSelectedDoctor
-        .forEach(((cst) => cst.doctors.forEach((appoinment) {
-              if (appoinment.visitingDate.contains(_selectedDate))
-                customerForSelectedDateSelectedDoctor.add(cst);
-            })));
-    notifyListeners();
-  }
 
   // __________________________________________________________________________
   void openPatientDetailsView(DiagnosticCustomer dgtcst) {
@@ -46,13 +38,26 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
     _navigatorService.navigateTo(Routes.addCustomerScreenView);
   }
 
+  void refresh() {
+    customersForSelectedDoctor.clear();
+    DateTime x =
+        _doctorAppointmentsDetailservice.getSelectedDateInAppointmentTab;
+    selectedDoctor = _doctorAppointmentsDetailservice.getSelectedDoctor();
+    selectedDoctor.customers.forEach((customer) {
+      if (customer.appointmentDate
+          .any((dt) => dt.day == x.day && dt.month == x.month))
+        customersForSelectedDoctor.add(
+            _dataFromApiService.getDiagnosticCustomersMappedList[customer.id]);
+    });
+
+    notifyListeners();
+  }
+
   @override
   Future futureToRun() async {
     try {
-      selectedDoctor = _doctorAppointmentsDetailservice.getSelectedDoctor();
-      selectedDoctor.customers.forEach((customer) =>
-          customersForSelectedDoctor.add(_dataFromApiService
-              .getDiagnosticCustomersMappedList[customer.id]));
+      _doctorAppointmentsDetailservice.setRefreshAppointmentList(refresh);
+      refresh();
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());
     }

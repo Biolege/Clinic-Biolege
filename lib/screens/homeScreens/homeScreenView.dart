@@ -41,16 +41,24 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           ),
                         ),
                         centerTitle: true,
-                        title: Text(
-                          "Today",
-                          style: TextStyle(color: offBlack1, fontSize: 18),
+                        title: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Image.asset(
+                            logoPath,
+                            width: SizeConfig.screenWidth / 4.5,
+                          ),
                         ),
                         actions: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Image.asset(
-                              logoPath,
-                              width: SizeConfig.screenWidth / 4.5,
+                          InkWell(
+                            onTap: () => model.selectAssignedDate(context),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 20, top: 20),
+                              child: Text(
+                                model.getReadableDate,
+                                style:
+                                    TextStyle(color: offBlack1, fontSize: 14),
+                              ),
                             ),
                           )
                         ]),

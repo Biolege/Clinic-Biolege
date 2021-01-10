@@ -7,8 +7,7 @@ import '../../../app/locator.dart';
 import '../../../model/diagnosticCustomer.dart';
 import '../../../model/doctor.dart';
 
-class PatientAppointmentDetailsScreenViewModel
-    extends FutureViewModel<DiagnosticCustomer> {
+class PatientAppointmentDetailsScreenViewModel extends FutureViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
@@ -19,8 +18,16 @@ class PatientAppointmentDetailsScreenViewModel
   // __________________________________________________________________________
   // Variables
   DiagnosticCustomer _selectedDiagnosticCustomer;
+  DiagnosticCustomer get getSelectedDiagnosticCustomer =>
+      _selectedDiagnosticCustomer;
   Map<String, Doctor> _doctorsMapped = {};
   Map<String, Doctor> get getDoctorsMapped => _doctorsMapped;
+
+  DateTime _selectedDate;
+  DateTime get getSelectedDate => _selectedDate;
+
+  DateTime _appoinmentDateTime;
+  DateTime get getAppoinmentDateTime => _appoinmentDateTime;
   // __________________________________________________________________________
   // Helper Functions
 
@@ -64,12 +71,20 @@ class PatientAppointmentDetailsScreenViewModel
   }
 
   @override
-  Future<DiagnosticCustomer> futureToRun() async {
+  Future futureToRun() async {
     try {
       _doctorsMapped = _dataFromApiService.getDoctorsListMapped;
       _selectedDiagnosticCustomer =
           _doctorAppointmentsDetailService.getSelectedDiagnosticCustomer();
-      return _selectedDiagnosticCustomer;
+
+      DateTime x =
+          _doctorAppointmentsDetailService.getSelectedDateInAppointmentTab;
+
+      _selectedDiagnosticCustomer.doctors
+          .forEach((docobj) => docobj.visitingDate.forEach((datetime) {
+                if (datetime.day == x.day && datetime.month == x.month)
+                  _appoinmentDateTime = datetime;
+              }));
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());
     }

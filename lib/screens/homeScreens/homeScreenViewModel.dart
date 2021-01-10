@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -7,6 +8,7 @@ import 'doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import 'appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../../app/locator.dart';
 import '../../services/services/local_storage.dart';
+import '../../services/services/helperData_service.dart';
 // import '../../model/clinic.dart';
 // import '../../model/clinicEmployee.dart';
 // import '../../services/services/auth_service.dart';
@@ -17,8 +19,8 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   // Locating the Dependencies
   final StorageService _storageService = locator<StorageService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
-  // final DoctorAppointments _doctorAppointmentsDetailservice =
-  //     locator<DoctorAppointments>();
+  final DoctorAppointments _doctorAppointmentsDetailservice =
+      locator<DoctorAppointments>();
   // final NavigationService _navigatorService = locator<NavigationService>();
   // final AuthenticationService _authenticationService =
   //     locator<AuthenticationService>();
@@ -27,8 +29,35 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   // final DataFromApi _dataFromApiService = locator<DataFromApi>();
 
   // __________________________________________________________________________
-  // Data for the UI
+  // Date Selectors
 
+  DateFormat formatter = DateFormat('dd-MM-yyyy');
+  DateTime _firstDate = DateTime.now().subtract(Duration(days: 20));
+  DateTime _lastDate = DateTime.now().add(Duration(days: 20));
+  DateTime _selectedDate = DateTime.now();
+  String _readableDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+  String get getReadableDate => _readableDate;
+
+  void selectAssignedDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: _firstDate,
+        lastDate: _lastDate);
+
+    if (picked != null && picked != _selectedDate) {
+      _selectedDate = picked;
+      _readableDate = formatter.format(_selectedDate);
+    }
+
+    _doctorAppointmentsDetailservice
+        .setSelectedDateInAppointmentTab(_selectedDate);
+    _doctorAppointmentsDetailservice.getRefreshAppointmentList();
+
+    FocusScope.of(context).requestFocus(new FocusNode());
+    notifyListeners();
+  }
   //__________________________________________________________________________
 
   final widgetOptions = [
@@ -69,6 +98,8 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   @override
   Future<String> futureToRun() async {
     try {
+      _doctorAppointmentsDetailservice
+          .setSelectedDateInAppointmentTab(_selectedDate);
       return _storageService.getClinicName;
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());

@@ -8,11 +8,11 @@ import 'appointmentHomeScreenViewModel.dart';
 class AppointmentHomeScreenView extends StatefulWidget {
   static const routeName = "/appointmentHomeScreenView";
   @override
-  _AppointmentHomeScreenViewState createState() =>
-      _AppointmentHomeScreenViewState();
+  AppointmentHomeScreenViewState createState() =>
+      AppointmentHomeScreenViewState();
 }
 
-class _AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
+class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AppointmentHomeScreenViewModel>.reactive(

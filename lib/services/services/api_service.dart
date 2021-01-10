@@ -360,7 +360,7 @@ class APIServices {
   // ---------------------------------------------------------------------------
   // This function add a clinic object to clinics feild of doctors object
   // Note : There is no doctors feild in clinic model
-  Future addClinicToDoctorById(String id) async {
+  Future addOrUpdateClinicToDoctorById(String id) async {
     // _______________________________________________________________________
     // Locating Dependencies
     final StorageService _storageService = locator<StorageService>();
@@ -383,14 +383,6 @@ class APIServices {
               id: _storageService.getClinicId,
               name: _storageService.getClinicCityName,
               phoneNumber: _storageService.getPhoneNumber.toString()));
-
-      // ClinicElement.fromJson({
-      //   "clinic": {
-      //     "_id": _storageService.getClinicId,
-      //     "name": _storageService.getClinicCityName,
-      //     "phoneNumber": _storageService.getPhoneNumber.toString()
-      //   },
-      // });
 
       Iterable<ClinicElement> foundClinic = latestClinicListFromDoctors
           .where((clinic) => clinic.clinic.id == clinicId);

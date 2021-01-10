@@ -117,6 +117,7 @@ class PatientDetails {
 
 // Helper class used when creating a new doctor's customers
 class DoctorAppointments {
+  // __________________________________________________________________________
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // __________________________________________________________________________
   // Variables and their setters
@@ -126,6 +127,15 @@ class DoctorAppointments {
     print(doc.name);
     _selectedDoctorToShow = doc;
   }
+
+  static void Function() _refesh;
+  void setRefreshAppointmentList(void Function() x) => _refesh = x;
+  void Function() get getRefreshAppointmentList => _refesh;
+
+  static DateTime _selectedDateInAppointmentTab;
+  DateTime get getSelectedDateInAppointmentTab => _selectedDateInAppointmentTab;
+  void setSelectedDateInAppointmentTab(DateTime dt) =>
+      _selectedDateInAppointmentTab = dt;
 
   static ClinicElement _clinicDetailsForSelectedDoctorToShow;
   ClinicElement getClinicDetailsForSelectedDoctorToShow() =>
