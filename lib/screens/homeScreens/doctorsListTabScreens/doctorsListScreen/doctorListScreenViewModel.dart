@@ -33,8 +33,8 @@ class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
   void setDoctorToShowInAppointments(Doctor x) async {
     selectedDocID = x.id;
     _doctorAppointmentsDetailservice.setSelectedDoctor(x);
-    _doctorAppointmentsDetailservice.getController1().call(1);
-    _doctorAppointmentsDetailservice.getController2().call(1);
+    // _doctorAppointmentsDetailservice.getController1().call(1);
+    // _doctorAppointmentsDetailservice.getController2().call(1);
     notifyListeners();
   }
 

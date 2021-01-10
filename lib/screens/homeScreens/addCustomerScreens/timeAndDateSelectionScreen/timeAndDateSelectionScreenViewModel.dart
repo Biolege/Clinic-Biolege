@@ -110,9 +110,9 @@ class TimeAndDateSelectionScreenViewModel extends BaseViewModel {
       case "Sunday":
         wd = 7;
         break;
-        break;
       default:
         wd = null;
+        break;
     }
 
     if (wd == null) {

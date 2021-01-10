@@ -31,7 +31,6 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   // Data for the UI
 
   //__________________________________________________________________________
-  final PageController pageController = PageController();
 
   final widgetOptions = [
     DoctorsListScreenView(),
@@ -43,7 +42,7 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   int _index = 0;
 
   int get getIndex => _index;
-
+  final PageController pageController = PageController();
   List<BottomNavigationBarItem> items = <BottomNavigationBarItem>[
     BottomNavigationBarItem(icon: Icon(FontAwesome5.user), label: 'Doctors'),
     BottomNavigationBarItem(
@@ -71,12 +70,10 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   @override
   Future<String> futureToRun() async {
     try {
-      _doctorAppointmentsDetailservice.setController(
-          setCurrentIndexForPageView, selectCurrentPageForNavBar);
       return _storageService.getClinicName;
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());
-      throw UnimplementedError(e.toString());
     }
+    throw UnimplementedError("Error in homepage");
   }
 }

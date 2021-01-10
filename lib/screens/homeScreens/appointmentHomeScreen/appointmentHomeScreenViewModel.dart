@@ -1,3 +1,5 @@
+import '../../../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
+
 import '../../../services/services/dataFromApi_service.dart';
 import '../../../services/services/helperData_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +12,6 @@ import '../../../model/diagnosticCustomer.dart';
 import '../../../model/doctor.dart';
 
 class AppointmentHomeScreenViewModel extends FutureViewModel {
-  TextEditingController searchedPatient = TextEditingController();
   // __________________________________________________________________________
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
@@ -21,11 +22,24 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
 
   // __________________________________________________________________________
   // Variables
+  DateTime _selectedDate;
+  TextEditingController searchedPatient = TextEditingController();
   Doctor selectedDoctor;
   List<DiagnosticCustomer> customersForSelectedDoctor = [];
+  List<DiagnosticCustomer> customerForSelectedDateSelectedDoctor = [];
+  void search(DateTime dt) {
+    customersForSelectedDoctor
+        .forEach(((cst) => cst.doctors.forEach((appoinment) {
+              if (appoinment.visitingDate.contains(_selectedDate))
+                customerForSelectedDateSelectedDoctor.add(cst);
+            })));
+    notifyListeners();
+  }
 
-  void openPatientDetailsView() {
-    _navigatorService.navigateTo(Routes.patientAppointmentDetailsScreenView);
+  // __________________________________________________________________________
+  void openPatientDetailsView(DiagnosticCustomer dgtcst) {
+    _doctorAppointmentsDetailservice.setSelectedDiagnosticCustomer(dgtcst);
+    _navigatorService.navigateTo(PatientAppointmentDetailsScreenView.routeName);
   }
 
   void addPatientView() {
@@ -37,8 +51,8 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
     try {
       selectedDoctor = _doctorAppointmentsDetailservice.getSelectedDoctor();
       selectedDoctor.customers.forEach((customer) =>
-          customersForSelectedDoctor.add(
-              _dataFromApiService.getDiagnosticCustomerOfDoctors[customer.id]));
+          customersForSelectedDoctor.add(_dataFromApiService
+              .getDiagnosticCustomersMappedList[customer.id]));
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());
     }

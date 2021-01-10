@@ -52,15 +52,16 @@ class DoctorsListScreenView extends StatelessWidget {
                                   return FadeInLTR(
                                     0.2,
                                     Card(
-                                      color: offWhite,
+                                      color: model.selectedDocID ==
+                                              model.data[index].id
+                                          ? offWhite2
+                                          : offWhite,
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
                                             color: white, width: 0.1),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ListTile(
-                                        selected: model.selectedDocID ==
-                                            model.data[index].id,
                                         onTap: () =>
                                             model.setDoctorToShowInAppointments(
                                                 model.data[index]),
@@ -116,7 +117,8 @@ class DoctorsListScreenView extends StatelessWidget {
                 ),
               );
       },
-      createNewModelOnInsert: true,
+      disposeViewModel: false,
+      // createNewModelOnInsert: true,
       viewModelBuilder: () => DoctorsListScreenViewModel(),
     );
   }

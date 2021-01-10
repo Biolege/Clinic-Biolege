@@ -22,14 +22,23 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: !model.isBusy
-              ? FloatingActionButton.extended(
-                  label: Text(
-                    "    Confirm    ",
-                    style: TextStyle(color: white),
-                  ),
-                  onPressed: () => model.setAppointment(),
-                  backgroundColor: primaryColor,
-                )
+              ? doctor.services != null && doctor.services.length != 0
+                  ? FloatingActionButton.extended(
+                      label: Text(
+                        "    Confirm    ",
+                        style: TextStyle(color: white),
+                      ),
+                      onPressed: () => model.setAppointment(),
+                      backgroundColor: primaryColor,
+                    )
+                  : FloatingActionButton.extended(
+                      label: Text(
+                        "    Confirm    ",
+                        style: TextStyle(color: white),
+                      ),
+                      onPressed: null,
+                      backgroundColor: offBlack3,
+                    )
               : FloatingActionButton.extended(
                   label: Container(
                       width: 25,
@@ -74,13 +83,19 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
                                   SizedBox(
                                     height: getProportionateScreenHeight(10),
                                   ),
-                                  Text(doctor.specialization[0]),
-                                  Text(((doctor.experience[0]
-                                                  .experienceEndYear) -
-                                              doctor.experience[0]
-                                                  .experienceStartYear)
-                                          .toString() +
-                                      " years experience")
+                                  doctor.specialization != null &&
+                                          doctor.specialization.length != 0
+                                      ? Text(doctor.specialization[0])
+                                      : Container(),
+                                  doctor.experience != null &&
+                                          doctor.experience.length != 0
+                                      ? Text(((doctor.experience[0]
+                                                      .experienceEndYear) -
+                                                  doctor.experience[0]
+                                                      .experienceStartYear)
+                                              .toString() +
+                                          " years experience")
+                                      : Container(),
                                 ],
                               ),
                             ),
@@ -244,7 +259,8 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
                           child: Center(
                             child: Column(
                               children: [
-                                Text("Doctor has not added thier time slot"),
+                                Text(
+                                    "Doctor has not added thier time slot yet"),
                                 SizedBox(
                                   height: 10,
                                 ),

@@ -14,14 +14,25 @@ class ConfirmScreenView extends StatelessWidget {
         return Scaffold(
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActionButton.extended(
-            label: Text(
-              "      Done      ",
-              style: TextStyle(color: white),
-            ),
-            onPressed: () => model.confirmedAddition(),
-            backgroundColor: primaryColor,
-          ),
+          floatingActionButton: !model.isBusy
+              ? FloatingActionButton.extended(
+                  label: Text(
+                    "      Done      ",
+                    style: TextStyle(color: white),
+                  ),
+                  onPressed: () => model.confirmedAddition(),
+                  backgroundColor: primaryColor,
+                )
+              : FloatingActionButton.extended(
+                  label: Container(
+                      width: 25,
+                      height: 25,
+                      child: CircularProgressIndicator(
+                        backgroundColor: white,
+                      )),
+                  onPressed: () => model.setAppointment(),
+                  backgroundColor: primaryColor,
+                ),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

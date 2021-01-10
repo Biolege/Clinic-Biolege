@@ -413,7 +413,7 @@ class APIServices {
     // _______________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    // final StorageService _storageService = locator<StorageService>();
+    final DataFromApi _dataFromApiService = locator<DataFromApi>();
     // _______________________________________________________________________
     try {
       // URL to be called
@@ -431,9 +431,15 @@ class APIServices {
       // _______________________________________________________________________
       // Serializing Json to Doctor Class
       List<Doctor> dlist = [];
+      Map<String, Doctor> dmap = {};
 
-      responseJson
-          .forEach((doctor) => dlist.add(doctorFromJson(json.encode(doctor))));
+      responseJson.forEach((doctor) {
+        Doctor x = doctorFromJson(json.encode(doctor));
+        dlist.add(x);
+        dmap[x.id] = x;
+      });
+
+      await _dataFromApiService.setDoctorsListMapped(dmap);
 
       // _______________________________________________________________________
       return dlist;
@@ -644,7 +650,7 @@ class APIServices {
       });
 
       await _dataFromApi
-          .setDiagnosticCustomerOfDoctors(customerAndDetailsMapping);
+          .setDiagnosticCustomersMappedList(customerAndDetailsMapping);
 
       // _______________________________________________________________________
       return dgncstlist;

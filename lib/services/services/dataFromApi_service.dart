@@ -37,18 +37,24 @@ class DataFromApi {
   static List<Doctor> _doctorsListForClinic;
   List<Doctor> get getDoctorsListForClinic => _doctorsListForClinic;
   // ------------------------------------------------------------------
+  // Mapping of Doctors(ID) with their details
+  static Map<String, Doctor> _doctorsListMapped;
+  Map<String, Doctor> get getDoctorsListMapped => _doctorsListMapped;
+  Future setDoctorsListMapped(Map<String, Doctor> x) async =>
+      _doctorsListMapped = x;
   // Mapping of Doctors(ID) with their clinic details
   static Map<String, ClinicElement> _clinicDetailsOfDoctor;
   Map<String, ClinicElement> get getClinicDetailsOfDoctor =>
       _clinicDetailsOfDoctor;
+
   // ------------------------------------------------------------------
   // Mapping of patients(ID) with their details for faster access
-  static Map<String, DiagnosticCustomer> _diagnosticCustomerOfDoctors;
-  Map<String, DiagnosticCustomer> get getDiagnosticCustomerOfDoctors =>
-      _diagnosticCustomerOfDoctors;
-  Future setDiagnosticCustomerOfDoctors(
+  static Map<String, DiagnosticCustomer> _diagnosticCustomerOfDoctorsMapped;
+  Map<String, DiagnosticCustomer> get getDiagnosticCustomersMappedList =>
+      _diagnosticCustomerOfDoctorsMapped;
+  Future setDiagnosticCustomersMappedList(
           Map<String, DiagnosticCustomer> x) async =>
-      _diagnosticCustomerOfDoctors = x;
+      _diagnosticCustomerOfDoctorsMapped = x;
   // ------------------------------------------------------------------
   // Data to be used during searching of doctors / adding a doctors
   // to clinic profile  (Complete List of Doctors)

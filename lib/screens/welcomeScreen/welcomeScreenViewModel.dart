@@ -1,3 +1,4 @@
+import 'package:clinicapp/services/services/helperData_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../services/services/local_storage.dart';
@@ -20,6 +21,8 @@ class WelcomeScreenViewModel extends FutureViewModel<Map<String, String>> {
   // final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // final AuthenticationService _authenticationService =
   //     locator<AuthenticationService>();
+  final DoctorAppointments _doctorAppointmentsDetailService =
+      locator<DoctorAppointments>();
   // __________________________________________________________________________
   // Streams/Futures
   @override
@@ -28,7 +31,6 @@ class WelcomeScreenViewModel extends FutureViewModel<Map<String, String>> {
       return {
         "clinicEmployeeName": _storageService.getName,
         "clinicName": _storageService.getClinicName,
-        "roleType": _storageService.getRoleType.toString(),
         "designation": (_storageService.getRoleType == 0)
             ? "Owner"
             : (_storageService.getRoleType == 1)
@@ -42,8 +44,9 @@ class WelcomeScreenViewModel extends FutureViewModel<Map<String, String>> {
   }
   // __________________________________________________________________________
 
-  void navigateToHomePageView() =>
-      // _authenticationService.signOut();
-      _navigatorService.navigateTo(Routes.homeScreenView);
+  void navigateToHomePageView() {
+    _doctorAppointmentsDetailService.setDefaultSelectedDoctor();
+    _navigatorService.navigateTo(Routes.homeScreenView);
+  }
   // __________________________________________________________________________
 }

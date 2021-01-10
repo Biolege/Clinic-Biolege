@@ -76,9 +76,18 @@ class CustomerDoctorSelectionScreenView extends StatelessWidget {
                                           model.data[index].name,
                                           style: TextStyle(fontSize: 14),
                                         ),
-                                        subtitle: Text(model.data[index]
-                                                .specialization[0] ??
-                                            ''),
+                                        subtitle:
+                                            model.data[index].specialization !=
+                                                        null &&
+                                                    model
+                                                            .data[index]
+                                                            .specialization
+                                                            .length !=
+                                                        0
+                                                ? Text(model.data[index]
+                                                        .specialization[0] ??
+                                                    '')
+                                                : Container(),
                                         trailing: Text(
                                           "Show info",
                                           style: TextStyle(fontSize: 10),
