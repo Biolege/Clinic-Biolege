@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:clinicapp/app/locator.dart';
 import 'package:clinicapp/model/clinic.dart';
 import 'package:clinicapp/model/diagnosticCustomer.dart';
-import 'package:flutter/material.dart';
 
 import '../../model/doctor.dart';
 import 'dataFromApi_service.dart';
@@ -120,7 +119,28 @@ class PatientDetails {
 class DoctorAppointments {
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // __________________________________________________________________________
-  // Variables
+  // Variables and their setters
+  static Doctor _selectedDoctorToShow;
+  Doctor getSelectedDoctorToShow() => _selectedDoctorToShow;
+  void setSelectedDoctorToShow(Doctor doc) {
+    print(doc.name);
+    _selectedDoctorToShow = doc;
+  }
+
+  static ClinicElement _clinicDetailsForSelectedDoctorToShow;
+  ClinicElement getClinicDetailsForSelectedDoctorToShow() =>
+      _clinicDetailsForSelectedDoctorToShow;
+  void setClinicDetailsForSelectedDoctorToShow(ClinicElement clielem) {
+    _clinicDetailsForSelectedDoctorToShow = clielem;
+  }
+
+  static bool isFromClinic;
+  bool getIsFromClinic() => isFromClinic;
+  void setIsFromClinic(bool x) {
+    print(x);
+    isFromClinic = x;
+  }
+
   static Doctor _selectedDoctor;
   Doctor getSelectedDoctor() => _selectedDoctor;
   void setSelectedDoctor(Doctor doc) {
@@ -128,8 +148,11 @@ class DoctorAppointments {
     _selectedDoctor = doc;
   }
 
-  void setDefaultSelectedDoctor() =>
+  void setDefaultSelectedDoctor() {
+    if (_dataFromApiService.getDoctorsListForClinic != null &&
+        _dataFromApiService.getDoctorsListForClinic.length != 0)
       _selectedDoctor = _dataFromApiService.getDoctorsListForClinic[0];
+  }
 
   // ----------------------------------------------------------------
   static DiagnosticCustomer _selectedDiagnosticCustomer;
@@ -139,4 +162,5 @@ class DoctorAppointments {
     print("Selected Diagnostic Customer for appointments tab : " + doc.name);
     _selectedDiagnosticCustomer = doc;
   }
+  // __________________________________________________________________________
 }

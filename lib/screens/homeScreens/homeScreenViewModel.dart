@@ -7,7 +7,6 @@ import 'doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import 'appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../../app/locator.dart';
 import '../../services/services/local_storage.dart';
-import '../../services/services/helperData_service.dart';
 // import '../../model/clinic.dart';
 // import '../../model/clinicEmployee.dart';
 // import '../../services/services/auth_service.dart';
@@ -18,8 +17,8 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   // Locating the Dependencies
   final StorageService _storageService = locator<StorageService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
-  final DoctorAppointments _doctorAppointmentsDetailservice =
-      locator<DoctorAppointments>();
+  // final DoctorAppointments _doctorAppointmentsDetailservice =
+  //     locator<DoctorAppointments>();
   // final NavigationService _navigatorService = locator<NavigationService>();
   // final AuthenticationService _authenticationService =
   //     locator<AuthenticationService>();

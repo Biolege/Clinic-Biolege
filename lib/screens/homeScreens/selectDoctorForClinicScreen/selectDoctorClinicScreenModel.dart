@@ -1,9 +1,11 @@
+import 'package:clinicapp/app/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../model/doctor.dart';
 import '../../../app/locator.dart';
 import '../../../services/services/dataFromApi_service.dart';
+import '../../../services/services/helperData_service.dart';
 import '../../../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 // import '../../../model/clinic.dart';
 // import '../../../model/clinicEmployee.dart';
@@ -15,6 +17,8 @@ class SelectDoctorClinicScreenViewModel extends BaseViewModel {
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
+  final DoctorAppointments _doctorAppointmentsDetailservice =
+      locator<DoctorAppointments>();
   // final AuthenticationService _authenticationService =
   //     locator<AuthenticationService>();
   // final StorageService _storageService = locator<StorageService>();
@@ -51,10 +55,10 @@ class SelectDoctorClinicScreenViewModel extends BaseViewModel {
   }
 
   void profileDescriptionView(Doctor doctor) async {
-    _navigatorService.navigateToView(DoctorsProfileScreenView(
-      doctor: doctor,
-      clinicDetails: null,
-      isFromClinic: false,
-    ));
+    _doctorAppointmentsDetailservice.setSelectedDoctorToShow(doctor);
+    _doctorAppointmentsDetailservice
+        .setClinicDetailsForSelectedDoctorToShow(null);
+    _doctorAppointmentsDetailservice.setIsFromClinic(false);
+    _navigatorService.navigateTo(Routes.doctorsProfileScreenView);
   }
 }

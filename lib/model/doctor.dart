@@ -206,6 +206,15 @@ class ClinicElement {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
       };
+  Map<String, dynamic> toJsonForPut() => {
+        "clinic": clinic.toJson(),
+        // "days": List<dynamic>.from(days.map((x) => x.toJson())),
+        // "fees": fees,
+        // "avgTime": avgTime,
+        // "avgPatientPerDay": avgPatientPerDay,
+        // "createdAt": createdAt.toIso8601String(),
+        // "updatedAt": updatedAt.toIso8601String(),
+      };
 }
 
 class ClinicClinic {

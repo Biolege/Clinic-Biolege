@@ -3,7 +3,6 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/router.gr.dart';
 import '../../../../services/services/helperData_service.dart';
 import '../../../../model/doctor.dart';
-import '../../../../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../../../../app/locator.dart';
 import '../../../../services/services/dataFromApi_service.dart';
 
@@ -23,11 +22,11 @@ class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
   void profileDescriptionView(Doctor doctor) async {
     ClinicElement detailsForTheClinicOfDoctor =
         _dataFromApiService.getClinicDetailsOfDoctor[doctor.id];
-    _navigatorService.navigateToView(DoctorsProfileScreenView(
-      doctor: doctor,
-      clinicDetails: detailsForTheClinicOfDoctor,
-      isFromClinic: true,
-    ));
+    _doctorAppointmentsDetailservice.setSelectedDoctorToShow(doctor);
+    _doctorAppointmentsDetailservice
+        .setClinicDetailsForSelectedDoctorToShow(detailsForTheClinicOfDoctor);
+    _doctorAppointmentsDetailservice.setIsFromClinic(true);
+    _navigatorService.navigateTo(Routes.doctorsProfileScreenView);
   }
 
   void setDoctorToShowInAppointments(Doctor x) async {

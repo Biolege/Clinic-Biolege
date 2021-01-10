@@ -10,7 +10,7 @@ import 'doctorListScreenViewModel.dart';
 
 class DoctorsListScreenView extends StatelessWidget {
   static const routeName = "/doctorsListScreenView";
-  DoctorsListScreenView();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<DoctorsListScreenViewModel>.reactive(
@@ -43,7 +43,7 @@ class DoctorsListScreenView extends StatelessWidget {
                         SizedBox(
                           height: getProportionateScreenHeight(20),
                         ),
-                        model.data.length != 0
+                        model.data != null && model.data.length != 0
                             ? ListView.builder(
                                 primary: false,
                                 itemCount: model.data.length,
@@ -95,7 +95,7 @@ class DoctorsListScreenView extends StatelessWidget {
                                               model.profileDescriptionView(
                                                   model.data[index]),
                                           child: Text(
-                                            "Hold to show info",
+                                            "Tap here to\nshow info",
                                             style: TextStyle(fontSize: 9),
                                           ),
                                         ),

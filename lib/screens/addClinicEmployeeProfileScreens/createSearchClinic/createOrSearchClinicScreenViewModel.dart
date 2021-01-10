@@ -4,14 +4,14 @@ import '../../../services/services/local_storage.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
 // import '../../../services/services/api_service.dart';
-import '../../../services/services/auth_service.dart';
+// import '../../../services/services/auth_service.dart';
 
 class CreateOrSearchClinicViewModel extends BaseViewModel {
   // ___________________________________________________________________________
   final NavigationService _navigatorService = locator<NavigationService>();
   final StorageService _storageService = locator<StorageService>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+  // final AuthenticationService _authenticationService =
+  //     locator<AuthenticationService>();
   // final APIServices _apiServices = locator<APIServices>();
   // ___________________________________________________________________________
   // Controller and Variables
@@ -21,8 +21,8 @@ class CreateOrSearchClinicViewModel extends BaseViewModel {
   // Helper Functions
 
   void navigateToSeachClinicView() async {
-    _authenticationService.signOut();
-    // _navigatorService.navigateTo(Routes.searchClinicScreenView);
+    // _authenticationService.signOut();
+    _navigatorService.navigateTo(Routes.searchClinicScreenView);
   }
 
   void setRoleType() {

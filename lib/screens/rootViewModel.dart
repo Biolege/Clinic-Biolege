@@ -1,3 +1,4 @@
+import 'package:location/location.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../services/services/dataFromApi_service.dart';
@@ -18,8 +19,35 @@ class RootViewModel extends BaseViewModel {
   // __________________________________________________________________________
   // Reroutes the user to either Emailscreenview or Onboarding Screen
 
+  Future getCurrentLocation() async {
+    // Check for services and permission
+    bool _serviceEnabled;
+
+    PermissionStatus _permissionGranted;
+    Location location = new Location();
+    _serviceEnabled = await location.serviceEnabled();
+
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) return null;
+    }
+    _permissionGranted = await location.hasPermission();
+
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) return null;
+    }
+    notifyListeners();
+
+    // If all services and permission are granted returns current location
+    // var data = await location.getLocation();
+    // locationData = data;
+    // return data;
+  }
+
   Future handleStartupLogic() async {
     try {
+      getCurrentLocation();
       // ---------------------------------------------------------------------
       // Check whether user has logged in or not
       var hasLoggedIn = await _authenticationService.isUserLoggedIn();
@@ -58,10 +86,12 @@ class RootViewModel extends BaseViewModel {
               .clearStackAndShow(Routes.createOrSearchClinicScreenView);
         else {
           await _dataFromApiService.setDoctorsListForClinic();
-          _navigatorService.clearStackAndShow(Routes.welcomeScreenView);
+          _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
+              predicate: (_) => false);
         }
       } else
-        _navigatorService.clearStackAndShow(Routes.onBoardingScreen);
+        _navigatorService.pushNamedAndRemoveUntil(Routes.onBoardingScreen,
+            predicate: (_) => false);
     } catch (e) {
       print("At Handle Startup Logic : " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());

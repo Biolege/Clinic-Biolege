@@ -55,6 +55,7 @@ class PatientAppointmentDetailsScreenViewModel
       case 7:
         return "Sunday";
     }
+    return "N/A";
   }
 
   // __________________________________________________________________________

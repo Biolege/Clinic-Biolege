@@ -75,7 +75,6 @@ class AddClinicOwnerDetailsViewModel extends BaseViewModel {
     bool _serviceEnabled;
 
     PermissionStatus _permissionGranted;
-
     Location location = new Location();
     _serviceEnabled = await location.serviceEnabled();
 

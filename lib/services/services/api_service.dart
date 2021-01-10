@@ -368,25 +368,46 @@ class APIServices {
     final DataFromApi _dataFromApiService = locator<DataFromApi>();
     // _______________________________________________________________________
     try {
+      String clinicId = _storageService.getClinicId;
       // URL to be called
       var uri = Uri.parse('$url$updateDoctor/$id');
       print(uri);
       // Creating a get request
 
+      Doctor latestDoctorFromApi = await getDoctorById(id);
+      List<ClinicElement> latestClinicListFromDoctors =
+          latestDoctorFromApi.clinics;
+
+      ClinicElement clinicIfDoesntExist = ClinicElement(
+          clinic: ClinicClinic(
+              id: _storageService.getClinicId,
+              name: _storageService.getClinicCityName,
+              phoneNumber: _storageService.getPhoneNumber.toString()));
+
+      // ClinicElement.fromJson({
+      //   "clinic": {
+      //     "_id": _storageService.getClinicId,
+      //     "name": _storageService.getClinicCityName,
+      //     "phoneNumber": _storageService.getPhoneNumber.toString()
+      //   },
+      // });
+
+      Iterable<ClinicElement> foundClinic = latestClinicListFromDoctors
+          .where((clinic) => clinic.clinic.id == clinicId);
+
+      if (foundClinic.isEmpty)
+        latestClinicListFromDoctors.add(clinicIfDoesntExist);
+
+      var object = [];
+      latestClinicListFromDoctors
+          .forEach((clinic) => object.add(clinic.toJsonForPut()));
+
       var request = new http.Request("PUT", uri);
+
+      request.body = jsonEncode({'clinics': object});
+
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
-      });
-      // _______________________________________________________________________
-      // Preparing the data to be sent
-      request.body = jsonEncode({
-        "clinics": {
-          "clinic": {
-            "_id": _storageService.getClinicId,
-            "name": _storageService.getClinicCityName,
-            "phoneNumber": _storageService.getPhoneNumber.toString()
-          },
-        }
       });
       // _______________________________________________________________________
       // Receiving the JSON response

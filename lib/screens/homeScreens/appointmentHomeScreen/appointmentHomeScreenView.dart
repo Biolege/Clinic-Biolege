@@ -235,7 +235,25 @@ class _AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                                     index]
                                                 .phoneNumber
                                                 .toString()),
-                                            trailing: Text("11 AM"),
+                                            trailing: Text(model
+                                                    .customersForSelectedDoctor[
+                                                        index]
+                                                    .doctors
+                                                    .last
+                                                    .visitingDate
+                                                    .last
+                                                    .hour
+                                                    .toString() +
+                                                ":" +
+                                                model
+                                                    .customersForSelectedDoctor[
+                                                        index]
+                                                    .doctors
+                                                    .last
+                                                    .visitingDate
+                                                    .last
+                                                    .minute
+                                                    .toString()),
                                           ),
                                         ),
                                       );
