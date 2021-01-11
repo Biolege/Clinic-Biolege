@@ -4,6 +4,7 @@
 // flutter pub run build_runner build --delete-conflicting-outputs
 // _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
+import '../screens/homeScreens/profileScreen/clinicProfileScreen/clinicProfileScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerAddressScreen/addCustomerAddressScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerDetailsScreen/addCustomerDetailsScreenView.dart';
 import '../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
@@ -182,6 +183,12 @@ import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
   MaterialRoute(
     path: SelectDoctorClinicScreen.routeName,
     page: SelectDoctorClinicScreen,
+  ),
+
+  // ___________________________________________________________________________
+  MaterialRoute(
+    path: ClinicProfileScreenView.routeName,
+    page: ClinicProfileScreenView,
   ),
 ])
 class $Router {}

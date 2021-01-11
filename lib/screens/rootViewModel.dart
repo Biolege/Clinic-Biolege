@@ -86,6 +86,7 @@ class RootViewModel extends BaseViewModel {
               .clearStackAndShow(Routes.createOrSearchClinicScreenView);
         else {
           await _dataFromApiService.setDoctorsListForClinic();
+          await _dataFromApiService.setClinicDetails();
           _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
               predicate: (_) => false);
         }

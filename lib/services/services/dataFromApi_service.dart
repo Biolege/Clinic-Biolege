@@ -100,5 +100,10 @@ class DataFromApi {
     print("All doctors saved : " + _diagnosticCustomersList.toString());
   }
 
+  Future setClinicDetails() async {
+    _clinic = Clinic();
+    await _apiServices.getClinicFromApiAndSetGlobally();
+    print("Clinic saved : " + _doctorsList.toString());
+  }
   // ___________________________________________________________________________
 }

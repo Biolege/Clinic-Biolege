@@ -54,10 +54,19 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                             child: Padding(
                               padding:
                                   const EdgeInsets.only(right: 20, top: 20),
-                              child: Text(
-                                model.getReadableDate,
-                                style:
-                                    TextStyle(color: offBlack1, fontSize: 14),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Tap to change date",
+                                    style: TextStyle(
+                                        color: offBlack1, fontSize: 8),
+                                  ),
+                                  Text(
+                                    model.getReadableDate,
+                                    style: TextStyle(
+                                        color: offBlack1, fontSize: 14),
+                                  ),
+                                ],
                               ),
                             ),
                           )

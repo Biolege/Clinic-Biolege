@@ -466,10 +466,10 @@ class APIServices {
   // ---------------------------------------------------------------------------
   // Fetches a doctor from the api using id
   Future<Doctor> getDoctorById(String id) async {
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     try {
       // URL to be called
       var uri = Uri.parse('$url$urlGetDoctorByID/$id');

@@ -70,8 +70,6 @@ class DoctorsListScreenView extends StatelessWidget {
                                                 vertical: 10, horizontal: 20),
                                         leading: CircleAvatar(
                                           radius: 25.0,
-                                          // backgroundImage: NetworkImage(
-                                          //     'https://via.placeholder.com/150'),
                                           backgroundColor: Colors.black12,
                                         ),
                                         title: Text(

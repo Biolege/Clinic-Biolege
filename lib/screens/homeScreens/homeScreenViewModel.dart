@@ -9,6 +9,7 @@ import 'appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../../app/locator.dart';
 import '../../services/services/local_storage.dart';
 import '../../services/services/helperData_service.dart';
+import 'profileScreen/profileScreenView.dart';
 // import '../../model/clinic.dart';
 // import '../../model/clinicEmployee.dart';
 // import '../../services/services/auth_service.dart';
@@ -64,7 +65,7 @@ class HomeScreenViewModel extends FutureViewModel<String> {
     DoctorsListScreenView(),
     AppointmentHomeScreenView(),
     Text('Notification'),
-    Text('Profile'),
+    ProfileScreenView(),
   ];
 
   int _index = 0;
