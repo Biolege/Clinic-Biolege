@@ -37,6 +37,7 @@ import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctor
 import '../screens/homeScreens/homeScreenView.dart';
 import '../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
 import '../screens/homeScreens/profileScreen/clinicProfileScreen/clinicProfileScreenView.dart';
+import '../screens/homeScreens/profileScreen/employeeProfileScreen/employeeProfileScreenView.dart';
 import '../screens/homeScreens/selectDoctorForClinicScreen/selectDoctorClinicScreen.dart';
 import '../screens/onBoardingScreen/onBoardingScreenView.dart';
 import '../screens/rootView.dart';
@@ -90,6 +91,7 @@ class Routes {
   static const String doctorsProfileScreenView = '/doctorsProfileScreenView';
   static const String selectDoctorClinicScreen = '/selectDoctorClinicScreen';
   static const String clinicProfileScreenView = '/clinicProfileScreenView';
+  static const String employeeProfileScreenView = '/employeeProfileScreenView';
   static const all = <String>{
     root,
     onBoardingScreen,
@@ -124,6 +126,7 @@ class Routes {
     doctorsProfileScreenView,
     selectDoctorClinicScreen,
     clinicProfileScreenView,
+    employeeProfileScreenView,
   };
 }
 
@@ -175,6 +178,7 @@ class Router extends RouterBase {
     RouteDef(Routes.doctorsProfileScreenView, page: DoctorsProfileScreenView),
     RouteDef(Routes.selectDoctorClinicScreen, page: SelectDoctorClinicScreen),
     RouteDef(Routes.clinicProfileScreenView, page: ClinicProfileScreenView),
+    RouteDef(Routes.employeeProfileScreenView, page: EmployeeProfileScreenView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -380,6 +384,12 @@ class Router extends RouterBase {
     ClinicProfileScreenView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => ClinicProfileScreenView(),
+        settings: data,
+      );
+    },
+    EmployeeProfileScreenView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => EmployeeProfileScreenView(),
         settings: data,
       );
     },

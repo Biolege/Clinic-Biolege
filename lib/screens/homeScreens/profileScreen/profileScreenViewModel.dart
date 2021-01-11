@@ -3,21 +3,22 @@ import 'dart:typed_data';
 import 'package:clinicapp/app/router.gr.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/locator.dart';
-import '../../../services/services/helperData_service.dart';
 import '../../../services/services/local_storage.dart';
 import 'package:stacked/stacked.dart';
 import '../../../services/services/filePicker_service.dart';
 
+// import '../../../services/services/helperData_service.dart';
 class ProfileScreenViewModel extends FutureViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
   final StorageService _storageService = locator<StorageService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
-  final DoctorAppointments _doctorAppointmentsDetailservice =
-      locator<DoctorAppointments>();
   final FilePickHelperService _filePickHelperService =
       locator<FilePickHelperService>();
   final NavigationService _navigatorService = locator<NavigationService>();
+  // final DoctorAppointments _doctorAppointmentsDetailservice =
+  //     locator<DoctorAppointments>();
+
   // final AuthenticationService _authenticationService =
   //     locator<AuthenticationService>();
   // final Clinic _clinicDataService = locator<Clinic>();
@@ -35,6 +36,8 @@ class ProfileScreenViewModel extends FutureViewModel {
   void openClinicDetails() =>
       _navigatorService.navigateTo(Routes.clinicProfileScreenView);
 
+  void openClinicEmployeeDetails() =>
+      _navigatorService.navigateTo(Routes.employeeProfileScreenView);
   @override
   Future futureToRun() async {
     try {

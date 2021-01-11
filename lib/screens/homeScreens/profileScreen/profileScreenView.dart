@@ -88,6 +88,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                       child: Column(
                         children: [
                           ListTile(
+                            onTap: model.openClinicEmployeeDetails,
                             contentPadding: const EdgeInsets.all(10),
                             leading: Icon(
                               MaterialCommunityIcons.account,

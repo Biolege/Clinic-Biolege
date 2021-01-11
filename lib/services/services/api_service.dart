@@ -18,8 +18,11 @@ class APIServices {
   // Variables for Clinic API
   String url = "https://biolegenew.herokuapp.com/api/";
   // -------------------------------------------------------------
-  // Clinic
+  // Clinic Employee
   String urlClinicEmployeeCreate = "clinicemployee/create";
+  String urlGetClinicEmployee = "clinicemployee";
+  // -------------------------------------------------------------
+  // Clinic
   String urlClinicCreate = "clinic/create";
   String urlClinicUpdate = "clinic/phone/";
   String urlClinicGet = "clinic/";
@@ -83,6 +86,57 @@ class APIServices {
       print("At create clinic employee :" + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
+    }
+  }
+
+  // Fetches clinic data from the api by using CLINIC Id stored in local
+  Future<ClinicEmployee> getClinicEmployeeById() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final StorageService _storageService = locator<StorageService>();
+    // _________________________________________________________________________
+    // Retreiving clinic id
+    String clinicEmployeeId = _storageService.getUID;
+    // _________________________________________________________________________
+    try {
+      // _______________________________________________________________________
+      // URL to be called
+      var getClinicUri =
+          Uri.parse('$url$urlGetClinicEmployee/$clinicEmployeeId');
+      print(getClinicUri);
+      // _______________________________________________________________________
+      // Creating get requests
+      var getClinicEmployeeRequest = new http.Request("GET", getClinicUri);
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var getClinicEmployeeResponse = await getClinicEmployeeRequest.send();
+      var getClinicEmployeeResponseString =
+          await getClinicEmployeeResponse.stream.bytesToString();
+      var getClinicEmployeeResponseJson =
+          json.decode(getClinicEmployeeResponseString);
+
+      // Clinic Employee object generated from the incoming json
+      return ClinicEmployee.fromJson(getClinicEmployeeResponseJson);
+    } catch (e) {
+      print("At get clinic employee by ID : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
+  // Fetches clinic data from the api and saves globally
+  Future getClinicEmployeeFromApiAndSetGlobally() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final DataFromApi _dataFromApi = locator<DataFromApi>();
+    // _________________________________________________________________________
+    try {
+      _dataFromApi.setClinicEmployee(await getClinicEmployeeById());
+    } catch (e) {
+      print("At saving clinic employee globally: " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
     }
   }
 

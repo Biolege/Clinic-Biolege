@@ -1,23 +1,23 @@
 import 'dart:typed_data';
 
-import 'package:clinicapp/model/clinic.dart';
-import 'package:clinicapp/services/services/dataFromApi_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../app/locator.dart';
 import '../../../../services/services/local_storage.dart';
 import '../../../../services/services/filePicker_service.dart';
+import '../../../../model/clinic.dart';
+import '../../../../services/services/dataFromApi_service.dart';
 
 class ClinicProfileScreenViewModel extends FutureViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
-  final NavigationService _navigatorService = locator<NavigationService>();
-  final StorageService _storageService = locator<StorageService>();
-  final FilePickHelperService _filePickHelperService =
-      locator<FilePickHelperService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
+  final StorageService _storageService = locator<StorageService>();
+  // final NavigationService _navigatorService = locator<NavigationService>();
+  final FilePickHelperService _filePickHelperService =
+      locator<FilePickHelperService>();
 
   // __________________________________________________________________________
   // Variables
@@ -48,6 +48,9 @@ class ClinicProfileScreenViewModel extends FutureViewModel {
   Future futureToRun() async {
     try {
       _clinic = _dataFromApiService.getClinic;
+
+      _clinicLogoToDisplay = _filePickHelperService
+          .dataFromBase64String(_storageService.getClinicLogo);
       _clinicLocationType = _storageService.getClinicLocationType == 0
           ? "Attach to pharmacy"
           : "Separate clinic";

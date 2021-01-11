@@ -18,6 +18,11 @@ class DataFromApi {
   Clinic get getClinic => _clinic;
   void setClinic(Clinic x) => _clinic = x;
   // ___________________________________________________________________________
+  // Data to be used globally for current employee
+  static ClinicEmployee _employee;
+  get getClinicEmployee => _employee;
+  void setClinicEmployee(ClinicEmployee x) => _employee = x;
+  // ___________________________________________________________________________
   // Data to be used in the doctors tab in bottom navigation bar for doctor's
   // customer
   static List<DiagnosticCustomer> _diagnosticCustomersList;
@@ -104,6 +109,12 @@ class DataFromApi {
     _clinic = Clinic();
     await _apiServices.getClinicFromApiAndSetGlobally();
     print("Clinic saved : " + _doctorsList.toString());
+  }
+
+  Future setEmployeeDetails() async {
+    _employee = ClinicEmployee();
+    await _apiServices.getClinicEmployeeFromApiAndSetGlobally();
+    print("Clinic Employee saved : " + _employee.toString());
   }
   // ___________________________________________________________________________
 }

@@ -87,6 +87,7 @@ class RootViewModel extends BaseViewModel {
         else {
           await _dataFromApiService.setDoctorsListForClinic();
           await _dataFromApiService.setClinicDetails();
+          await _dataFromApiService.setEmployeeDetails();
           _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
               predicate: (_) => false);
         }

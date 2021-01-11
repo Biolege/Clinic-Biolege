@@ -104,14 +104,14 @@ class Address {
   factory Address.fromJson(Map<String, dynamic> json) => Address(
         state: json["state"],
         city: json["city"],
-        pinCode: json["pinCode"],
+        pinCode: json["pincode"],
         homeAddress: json["homeAddress"],
       );
 
   Map<String, dynamic> toJson() => {
         "state": state,
         "city": city,
-        "pinCode": pinCode,
+        "pincode": pinCode,
         "homeAddress": homeAddress,
       };
 }
