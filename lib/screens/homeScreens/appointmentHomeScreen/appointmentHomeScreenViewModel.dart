@@ -29,6 +29,7 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
   Doctor selectedDoctor;
   Clinic _clinic;
   List<DiagnosticCustomer> customersForSelectedDoctor = [];
+  List<DiagnosticCustomer> temporaryList = [];
   List<DiagnosticCustomer> customerForSelectedDateSelectedDoctor = [];
 
   // __________________________________________________________________________
@@ -43,20 +44,27 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
 
   void refresh() {
     setBusy(true);
+    temporaryList.clear();
     customersForSelectedDoctor.clear();
     DateTime x =
         _doctorAppointmentsDetailservice.getSelectedDateInAppointmentTab;
     selectedDoctor = _doctorAppointmentsDetailservice.getSelectedDoctor();
 
+    var mapped = _dataFromApiService.getDiagnosticCustomersMappedList;
+
     selectedDoctor.customers.forEach((customer) {
       if (customer.appointmentDate
-          .any((dt) => dt.day == x.day && dt.month == x.month))
-        customersForSelectedDoctor.add(
-            _dataFromApiService.getDiagnosticCustomersMappedList[customer.id]);
+          .any((dt) => dt.day == x.day && dt.month == x.month)) {
+        temporaryList.add(mapped[customer.id]);
+      }
     });
 
-    print(customersForSelectedDoctor);
-    print(_clinic.customers);
+    temporaryList.forEach((dgcCustomer) {
+      dgcCustomer.doctors.forEach((x) {
+        if (x.clinic.id == _clinic.id)
+          customersForSelectedDoctor.add(dgcCustomer);
+      });
+    });
 
     setBusy(false);
     notifyListeners();
