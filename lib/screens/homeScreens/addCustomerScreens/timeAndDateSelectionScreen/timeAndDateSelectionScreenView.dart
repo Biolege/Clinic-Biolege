@@ -22,7 +22,10 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: !model.isBusy
-              ? doctor.services != null && doctor.services.length != 0
+              ? doctor.services != null &&
+                      doctor.services.length != 0 &&
+                      clinicDetails.days.length != 0 &&
+                      clinicDetails.days != null
                   ? FloatingActionButton.extended(
                       label: Text(
                         "    Confirm    ",

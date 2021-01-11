@@ -29,7 +29,6 @@ class PhoneViewModel extends BaseViewModel {
   // Helper Functions
   void startVerifyPhoneAuthentication() async {
     phoneNumberFormKey.currentState.save();
-
     if (!phoneNumberFormKey.currentState.validate()) return;
     await _storageService.setPhoneNumber(int.parse(phoneNumber.text));
     verifyPhoneAuthentication("+91" + phoneNumber.text);

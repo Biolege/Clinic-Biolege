@@ -70,7 +70,7 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
 
   // ___________________________________________________________________________
   void navigateToWelcomeScreen() {
-    _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
+    _navigatorService.pushNamedAndRemoveUntil(Routes.root,
         predicate: (route) => false);
   }
   // ___________________________________________________________________________

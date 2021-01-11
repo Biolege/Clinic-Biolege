@@ -72,6 +72,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           )
                         ]),
                     body: PageView(
+                      restorationId: "Hello",
                       reverse: false,
                       onPageChanged: (index) =>
                           model.selectCurrentPageForNavBar(index),

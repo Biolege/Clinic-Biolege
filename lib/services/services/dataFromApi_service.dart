@@ -18,6 +18,11 @@ class DataFromApi {
   Clinic get getClinic => _clinic;
   void setClinic(Clinic x) => _clinic = x;
   // ___________________________________________________________________________
+  // Data to be used globally for all clinics
+  static List<Clinic> _clinicsList;
+  List<Clinic> get getAllClinics => _clinicsList;
+  void setclinicList(List<Clinic> x) => _clinicsList = x;
+  // ___________________________________________________________________________
   // Data to be used globally for current employee
   static ClinicEmployee _employee;
   get getClinicEmployee => _employee;
@@ -75,7 +80,31 @@ class DataFromApi {
   Future setDoctorsList() async {
     _doctorsList = [];
     _doctorsList = await _apiServices.getAllDoctors();
-    print("All doctors saved : " + _doctorsList.toString());
+    print("All doctors saved");
+  }
+
+  Future setClinicsList() async {
+    _clinicsList = [];
+    _clinicsList = await _apiServices.getAllClinics();
+    print("All clinics saved");
+  }
+
+  Future setDiagnosticCustomersList() async {
+    _diagnosticCustomersList = [];
+    _diagnosticCustomersList = await _apiServices.getAllDiagnosticCustomers();
+    print("All diagnostic customers saved");
+  }
+
+  Future setClinicDetails() async {
+    _clinic = Clinic();
+    await _apiServices.getClinicFromApiAndSetGlobally();
+    print("Clinic saved");
+  }
+
+  Future setEmployeeDetails() async {
+    _employee = ClinicEmployee();
+    await _apiServices.getClinicEmployeeFromApiAndSetGlobally();
+    print("Clinic Employee saved");
   }
 
   Future setDoctorsListForClinic() async {
@@ -92,29 +121,10 @@ class DataFromApi {
               }
             : null));
 
-    print("Clinic details for $clinicId is saved : " +
-        _clinicDetailsOfDoctor.toString());
+    print("Clinic details for $clinicId is saved");
 
-    print(
-        "Doctors for $clinicId is saved :" + _doctorsListForClinic.toString());
+    print("Doctors for $clinicId is saved ");
   }
 
-  Future setDiagnosticCustomersList() async {
-    _diagnosticCustomersList = [];
-    _diagnosticCustomersList = await _apiServices.getAllDiagnosticCustomers();
-    print("All doctors saved : " + _diagnosticCustomersList.toString());
-  }
-
-  Future setClinicDetails() async {
-    _clinic = Clinic();
-    await _apiServices.getClinicFromApiAndSetGlobally();
-    print("Clinic saved : " + _doctorsList.toString());
-  }
-
-  Future setEmployeeDetails() async {
-    _employee = ClinicEmployee();
-    await _apiServices.getClinicEmployeeFromApiAndSetGlobally();
-    print("Clinic Employee saved : " + _employee.toString());
-  }
   // ___________________________________________________________________________
 }

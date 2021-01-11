@@ -36,6 +36,7 @@ class OTPScreenViewModel extends BaseViewModel {
   // __________________________________________________________________________
   void onComplete() {
     _hasError = _currentText.length < 6 ? false : true;
+    startVerifingOTP();
     notifyListeners();
   }
 

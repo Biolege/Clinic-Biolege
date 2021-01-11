@@ -1,10 +1,11 @@
 import 'dart:typed_data';
-
-import 'package:clinicapp/app/router.gr.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/locator.dart';
 import '../../../services/services/local_storage.dart';
-import 'package:stacked/stacked.dart';
+import '../../../app/router.gr.dart';
+import '../../../services/services/auth_service.dart';
+
 import '../../../services/services/filePicker_service.dart';
 
 // import '../../../services/services/helperData_service.dart';
@@ -16,11 +17,12 @@ class ProfileScreenViewModel extends FutureViewModel {
   final FilePickHelperService _filePickHelperService =
       locator<FilePickHelperService>();
   final NavigationService _navigatorService = locator<NavigationService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
+  final DialogService _dialogService = locator<DialogService>();
   // final DoctorAppointments _doctorAppointmentsDetailservice =
   //     locator<DoctorAppointments>();
 
-  // final AuthenticationService _authenticationService =
-  //     locator<AuthenticationService>();
   // final Clinic _clinicDataService = locator<Clinic>();
   // final ClinicEmployee _clinicEmployeeDataService = locator<ClinicEmployee>();
   // final DataFromApi _dataFromApiService = locator<DataFromApi>();
@@ -38,6 +40,21 @@ class ProfileScreenViewModel extends FutureViewModel {
 
   void openClinicEmployeeDetails() =>
       _navigatorService.navigateTo(Routes.employeeProfileScreenView);
+
+  void logOut() async {
+    var response = await _dialogService.showConfirmationDialog(
+        title: "Do you want to log out ?",
+        description: "",
+        cancelTitle: "Cancel",
+        confirmationTitle: "Continue",
+        dialogPlatform: DialogPlatform.Custom);
+
+    if (response.confirmed) {
+      _authenticationService.signOut();
+    }
+  }
+
+  // __________________________________________________________________________
   @override
   Future futureToRun() async {
     try {

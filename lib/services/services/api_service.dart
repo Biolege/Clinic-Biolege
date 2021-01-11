@@ -26,6 +26,7 @@ class APIServices {
   String urlClinicCreate = "clinic/create";
   String urlClinicUpdate = "clinic/phone/";
   String urlClinicGet = "clinic/";
+  String urlGetAllClinic = "clinics";
   String updateClinicImages = "clinic/image/";
   // -------------------------------------------------------------
   // Doctors
@@ -104,7 +105,7 @@ class APIServices {
       // URL to be called
       var getClinicUri =
           Uri.parse('$url$urlGetClinicEmployee/$clinicEmployeeId');
-      print(getClinicUri);
+
       // _______________________________________________________________________
       // Creating get requests
       var getClinicEmployeeRequest = new http.Request("GET", getClinicUri);
@@ -141,9 +142,48 @@ class APIServices {
   }
 
   // ***************************************************************************
+  // Fetches all clinics from the API and stores in data services class
+  Future<List<Clinic>> getAllClinics() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final DataFromApi _dataFromApiService = locator<DataFromApi>();
+    // _________________________________________________________________________
+    try {
+      // URL to be called
+      var uri = Uri.parse('$url$urlGetAllClinic');
+      // Creating a get request
+      var request = new http.Request("GET", uri);
+      // _______________________________________________________________________
+
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var responseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      // Serializing Json to Doctor Class
+      List<Clinic> clist = [];
+
+      responseJson.forEach((clinic) {
+        Clinic x = clinicFromJson(json.encode(clinic));
+        clist.add(x);
+      });
+
+      _dataFromApiService.setclinicList(clist);
+      // _______________________________________________________________________
+      return clist;
+    } catch (e) {
+      print("At get all clinics : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return [];
+    }
+  }
+
+  // ___________________________________________________________________________
   // Create a new clinic
   Future<Clinic> createClinic() async {
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     // Locating Dependencies
     final StorageService _storageService = locator<StorageService>();
     final SnackbarService _snackBarService = locator<SnackbarService>();
@@ -401,7 +441,8 @@ class APIServices {
       _dataFromApiServices.setClinic(Clinic.fromJson(responseJson));
 
       // _______________________________________________________________________
-      print("Clinic Customer added : " + responseJson["customers"].toString());
+      print("Clinic Customer added" +
+          responseJson["customers"]["_id"].toString());
       // _______________________________________________________________________
       return Clinic.fromJson(responseJson);
     } catch (e) {
@@ -415,17 +456,16 @@ class APIServices {
   // This function add a clinic object to clinics feild of doctors object
   // Note : There is no doctors feild in clinic model
   Future addOrUpdateClinicToDoctorById(String id) async {
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     // Locating Dependencies
     final StorageService _storageService = locator<StorageService>();
     final SnackbarService _snackBarService = locator<SnackbarService>();
     final DataFromApi _dataFromApiService = locator<DataFromApi>();
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     try {
       String clinicId = _storageService.getClinicId;
       // URL to be called
       var uri = Uri.parse('$url$updateDoctor/$id');
-      print(uri);
       // Creating a get request
 
       Doctor latestDoctorFromApi = await getDoctorById(id);
@@ -435,7 +475,7 @@ class APIServices {
       ClinicElement clinicIfDoesntExist = ClinicElement(
           clinic: ClinicClinic(
               id: _storageService.getClinicId,
-              name: _storageService.getClinicCityName,
+              name: _storageService.getClinicName,
               phoneNumber: _storageService.getPhoneNumber.toString()));
 
       Iterable<ClinicElement> foundClinic = latestClinicListFromDoctors
@@ -445,8 +485,16 @@ class APIServices {
         latestClinicListFromDoctors.add(clinicIfDoesntExist);
 
       var object = [];
-      latestClinicListFromDoctors
-          .forEach((clinic) => object.add(clinic.toJsonForPut()));
+
+      if (latestClinicListFromDoctors.length != 1) {
+        latestClinicListFromDoctors.forEach((clinic) {
+          if (clinic.clinic.id == clinicId)
+            object.add(clinic.toJsonForPut());
+          else
+            object.add(clinic.toJson());
+        });
+      } else
+        object.add(latestClinicListFromDoctors.first.toJsonForPut());
 
       var request = new http.Request("PUT", uri);
 
@@ -494,7 +542,7 @@ class APIServices {
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
       var responseJson = json.decode(responseString);
-      print(responseJson);
+
       // _______________________________________________________________________
       // Serializing Json to Doctor Class
       List<Doctor> dlist = [];
@@ -704,7 +752,7 @@ class APIServices {
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
       var responseJson = json.decode(responseString);
-      print(responseJson);
+
       // _______________________________________________________________________
       // Serializing Json to DiagnosticCustomer Class
       List<DiagnosticCustomer> dgncstlist = [];

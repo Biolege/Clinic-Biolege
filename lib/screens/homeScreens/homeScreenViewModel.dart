@@ -61,7 +61,7 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   }
   //__________________________________________________________________________
 
-  final widgetOptions = [
+  List<Widget> widgetOptions = [
     DoctorsListScreenView(),
     AppointmentHomeScreenView(),
     Text('Notification'),

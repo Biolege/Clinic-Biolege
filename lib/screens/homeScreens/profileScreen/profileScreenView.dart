@@ -100,6 +100,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                             ),
                           ),
                           ListTile(
+                            onTap: model.logOut,
                             contentPadding: const EdgeInsets.all(10),
                             leading: Icon(AntDesign.logout),
                             title: Text('Log Out'),
