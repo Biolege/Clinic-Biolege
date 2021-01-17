@@ -663,8 +663,6 @@ class APIServices {
       // Creating a get request
       var request = new http.Request("GET", uri);
       // _______________________________________________________________________
-
-      // _______________________________________________________________________
       // Receiving the JSON response
       var response = await request.send();
       var responseString = await response.stream.bytesToString();

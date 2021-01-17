@@ -186,7 +186,6 @@ class ClinicElement {
   DateTime updatedAt;
 
   factory ClinicElement.fromJson(Map<String, dynamic> json) {
-    print(json);
     return ClinicElement(
       id: json["_id"],
       clinic: ClinicClinic.fromJson(json["clinic"]),

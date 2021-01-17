@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../app/size_configuration.dart';
@@ -72,6 +73,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           )
                         ]),
                     body: PageView(
+                      dragStartBehavior: DragStartBehavior.down,
                       pageSnapping: true,
                       onPageChanged: (index) =>
                           model.selectCurrentPageForNavBar(index),
@@ -90,6 +92,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                       unselectedItemColor: offBlack2,
                       unselectedLabelStyle: TextStyle(color: offBlack2),
                       items: model.items,
+                      elevation: 0,
                     ),
                   )
                 : Scaffold(body: Center(child: CircularProgressIndicator()))

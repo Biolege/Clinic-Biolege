@@ -45,6 +45,7 @@ class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
   Future<List<Doctor>> futureToRun() async {
     try {
       var x = _dataFromApiService.getDoctorsListForClinic;
+      selectedDocID = _doctorAppointmentsDetailservice.getSelectedDoctor().id;
       return x;
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());

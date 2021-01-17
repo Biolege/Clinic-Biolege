@@ -168,9 +168,8 @@ class DataFromApi {
               }
             : null));
 
-    print("Clinic details for $clinicId is saved");
-
-    print("Doctors for $clinicId is saved ");
+    print("Clinic Details for Clinic ID : $clinicId , is saved");
+    print("Doctors for Clinic ID : $clinicId , is saved ");
   }
 
   // ___________________________________________________________________________

@@ -22,7 +22,6 @@ class RootViewModel extends BaseViewModel {
   Future getCurrentLocation() async {
     // Check for services and permission
     bool _serviceEnabled;
-
     PermissionStatus _permissionGranted;
     Location location = new Location();
     _serviceEnabled = await location.serviceEnabled();
@@ -38,16 +37,11 @@ class RootViewModel extends BaseViewModel {
       if (_permissionGranted != PermissionStatus.granted) return null;
     }
     notifyListeners();
-
-    // If all services and permission are granted returns current location
-    // var data = await location.getLocation();
-    // locationData = data;
-    // return data;
   }
 
   Future handleStartupLogic() async {
     try {
-      getCurrentLocation();
+      await getCurrentLocation();
       // ---------------------------------------------------------------------
       // Check whether user has logged in or not
       var hasLoggedIn = await _authenticationService.isUserLoggedIn();
@@ -65,15 +59,17 @@ class RootViewModel extends BaseViewModel {
       if (_dataFromApiService.getDiagnosticCustomerList == null)
         await _dataFromApiService.setDiagnosticCustomersList();
       // ---------------------------------------------------------------------
-      print("Phone       : " + _storageService.getPhoneNumber.toString());
-      print("Name        : " + _storageService.getName.toString());
-      print("Email       : " + _storageService.getEmailAddress.toString());
-      print("DOB         : " + _storageService.getDateOfBirth.toString());
-      print("Address     : " + _storageService.getAddress.toString());
-      print("Role Type   : " + _storageService.getRoleType.toString());
-      print("Clinic Name : " + _storageService.getClinicName.toString());
-      print("Clinic City : " + _storageService.getClinicCityName.toString());
-      print("Clinic Owner : " + _storageService.getClinicOwnerName.toString());
+      print("----------------------------------------------------------------");
+      print("Phone        : " + _storageService.getPhoneNumber.toString());
+      print("Name         : " + _storageService.getName.toString());
+      print("Email        : " + _storageService.getEmailAddress.toString());
+      print("DOB          : " + _storageService.getDateOfBirth.toString());
+      print("Address      : " + _storageService.getAddress.toString());
+      print("Role Type    : " + _storageService.getRoleType.toString());
+      print("Clinic Name  : " + _storageService.getClinicName.toString());
+      print("Clinic City  : " + _storageService.getClinicCityName.toString());
+      print("Clinic Owner  : " + _storageService.getClinicOwnerName.toString());
+      print("----------------------------------------------------------------");
       // ---------------------------------------------------------------------
       if (hasLoggedIn) {
         if (_storageService.getName == null)

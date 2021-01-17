@@ -37,8 +37,10 @@ class DoctorsListScreenView extends StatelessWidget {
                           height: getProportionateScreenHeight(10),
                         ),
                         Text(
-                          model.data.length != 0 ? "Available Today" : "",
-                          style: TextStyle(fontSize: 16, color: offBlack3),
+                          model.data.length != 0
+                              ? "To show doctor's appointment, select a doctor and swipe to appointments tab"
+                              : "",
+                          style: TextStyle(fontSize: 12, color: offBlack3),
                         ),
                         SizedBox(
                           height: getProportionateScreenHeight(20),
@@ -52,9 +54,10 @@ class DoctorsListScreenView extends StatelessWidget {
                                   return FadeInLTR(
                                     0.2,
                                     Card(
+                                      elevation: 0.3,
                                       color: model.selectedDocID ==
                                               model.data[index].id
-                                          ? offWhite2
+                                          ? white
                                           : offWhite,
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
@@ -62,6 +65,7 @@ class DoctorsListScreenView extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ListTile(
+                                        enabled: true,
                                         onTap: () =>
                                             model.setDoctorToShowInAppointments(
                                                 model.data[index]),
@@ -94,6 +98,7 @@ class DoctorsListScreenView extends StatelessWidget {
                                                   model.data[index]),
                                           child: Text(
                                             "Tap here to\nshow info",
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(fontSize: 9),
                                           ),
                                         ),

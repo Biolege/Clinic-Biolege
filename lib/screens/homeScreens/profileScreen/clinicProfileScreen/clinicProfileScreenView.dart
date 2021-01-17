@@ -1,12 +1,11 @@
-import 'package:clinicapp/app/size_configuration.dart';
-import 'package:clinicapp/theme/theme.dart';
-import 'package:clinicapp/widgets/animations.dart';
-import 'package:clinicapp/widgets/reusables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
-
 import 'clinicProfileScreenViewModel.dart';
+import '../../../../app/size_configuration.dart';
+import '../../../../theme/theme.dart';
+import '../../../../widgets/animations.dart';
+import '../../../../widgets/reusables.dart';
 
 class ClinicProfileScreenView extends StatefulWidget {
   static const routeName = "/clinicProfileScreenView";

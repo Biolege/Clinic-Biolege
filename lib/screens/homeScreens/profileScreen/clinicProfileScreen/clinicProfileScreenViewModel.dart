@@ -33,12 +33,12 @@ class ClinicProfileScreenViewModel extends FutureViewModel {
   void showMap() async {
     String lat = _clinic.location.latitude.toString();
     String lang = _clinic.location.longitude.toString();
-    // String url =
-    //     "https://www.google.com/maps/@?api=1&map_action=map&center=$lat,$lang";
+    String url = "http://maps.google.com/maps?&z=10&q=loc:$lat+$lang";
 
-    var uri = Uri.parse("google.navigation:q=$lat,$lang");
-    if (await canLaunch(uri.toString()))
-      await launch(uri.toString());
+    var uri = Uri.parse("google.maps:q=$lat,$lang");
+    print(url);
+    if (await canLaunch(url))
+      await launch(url);
     else
       throw 'Could not launch ${uri.toString()}';
   }

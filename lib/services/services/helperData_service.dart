@@ -121,6 +121,7 @@ class DoctorAppointments {
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // __________________________________________________________________________
   // Variables and their setters
+
   static Doctor _selectedDoctorToShow;
   Doctor getSelectedDoctorToShow() => _selectedDoctorToShow;
   void setSelectedDoctorToShow(Doctor doc) {
