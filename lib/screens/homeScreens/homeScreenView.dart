@@ -72,8 +72,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           )
                         ]),
                     body: PageView(
-                      restorationId: "Hello",
-                      reverse: false,
+                      pageSnapping: true,
                       onPageChanged: (index) =>
                           model.selectCurrentPageForNavBar(index),
                       controller: model.pageController,
@@ -81,8 +80,9 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                     ),
                     bottomNavigationBar: BottomNavigationBar(
                       currentIndex: model.getIndex,
-                      // onTap: (selIndex) =>
-                      //     model.setCurrentIndexForPageView(selIndex),
+                      type: BottomNavigationBarType.shifting,
+                      onTap: (selIndex) =>
+                          model.setCurrentIndexForPageView(selIndex),
                       iconSize: 18,
                       showUnselectedLabels: true,
                       selectedFontSize: 12,

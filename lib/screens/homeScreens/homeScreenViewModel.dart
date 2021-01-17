@@ -84,9 +84,9 @@ class HomeScreenViewModel extends FutureViewModel<String> {
 
   void setCurrentIndexForPageView(int selIndex) {
     _index = selIndex;
-    print(_index);
+
     pageController.animateToPage(selIndex,
-        duration: Duration(milliseconds: 300), curve: Curves.elasticInOut);
+        duration: Duration(milliseconds: 200), curve: Curves.elasticInOut);
     notifyListeners();
   }
 
