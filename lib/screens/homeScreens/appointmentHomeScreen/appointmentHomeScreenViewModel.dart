@@ -1,27 +1,24 @@
-import 'package:clinicapp/model/clinic.dart';
-
-import '../../../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
-
-import '../../../services/services/dataFromApi_service.dart';
-import '../../../services/services/helperData_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../../../services/services/dataFromApi_service.dart';
+import '../../../services/services/helperData_service.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
 import '../../../model/diagnosticCustomer.dart';
 import '../../../model/doctor.dart';
+import '../../../model/clinic.dart';
+import '../../../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
 
 class AppointmentHomeScreenViewModel extends FutureViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
-  final SnackbarService _snackBarService = locator<SnackbarService>();
   final DoctorAppointments _doctorAppointmentsDetailservice =
       locator<DoctorAppointments>();
-
+  // final SnackbarService _snackBarService = locator<SnackbarService>();
   // __________________________________________________________________________
   // Variables
 
@@ -50,20 +47,19 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
         _doctorAppointmentsDetailservice.getSelectedDateInAppointmentTab;
     selectedDoctor = _doctorAppointmentsDetailservice.getSelectedDoctor();
 
-    var mapped = _dataFromApiService.getDiagnosticCustomersMappedList;
+    Map<String, DiagnosticCustomer> mapped =
+        _dataFromApiService.getDiagnosticCustomersMappedList;
 
-    selectedDoctor.customers.forEach((customer) {
-      if (customer.appointmentDate
-          .any((dt) => dt.day == x.day && dt.month == x.month)) {
-        temporaryList.add(mapped[customer.id]);
-      }
-    });
+    selectedDoctor.customers.forEach((customer) => ((customer.appointmentDate
+                .any((dt) => dt.day == x.day && dt.month == x.month)) ==
+            true)
+        ? temporaryList.add(mapped[customer.id])
+        : null);
 
     temporaryList.forEach((dgcCustomer) {
-      dgcCustomer.doctors.forEach((x) {
-        if (x.clinic.id == _clinic.id)
-          customersForSelectedDoctor.add(dgcCustomer);
-      });
+      dgcCustomer.doctors.forEach((x) => (x.clinic.id == _clinic.id)
+          ? customersForSelectedDoctor.add(dgcCustomer)
+          : null);
     });
 
     setBusy(false);
