@@ -12,7 +12,7 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
   // Locating the Dependencies
   final NavigationService _navigatorService = locator<NavigationService>();
   final StorageService _storageService = locator<StorageService>();
-  // final SnackbarService _snackBarService = locator<SnackbarService>();
+  final SnackbarService _snackBarService = locator<SnackbarService>();
   final DialogService _dialogService = locator<DialogService>();
   final APIServices _aPIServices = locator<APIServices>();
   // __________________________________________________________________________
@@ -65,7 +65,11 @@ class ClinicServiceSelectionViewModel extends BaseViewModel {
 
   Future createClinic() async {
     Clinic clinic = await _aPIServices.createClinic();
-    if (clinic != null) navigateToWelcomeScreen();
+    if (clinic != null)
+      navigateToWelcomeScreen();
+    else
+      _snackBarService.showSnackbar(
+          message: "We couldn't complete the request. Try again later.");
   }
 
   // ___________________________________________________________________________

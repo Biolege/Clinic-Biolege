@@ -34,7 +34,7 @@ class OTPScreenViewModel extends BaseViewModel {
   int get getOtpCount => _otpCounter;
   String get getEnteredPhoneNumber => _enteredPhoneNumber;
   // __________________________________________________________________________
-  void onComplete() {
+  void onComplete() async {
     _hasError = _currentText.length < 6 ? false : true;
     startVerifingOTP();
     notifyListeners();
@@ -47,8 +47,10 @@ class OTPScreenViewModel extends BaseViewModel {
   }
 
   void startVerifingOTP() async {
+    setBusy(true);
     await _authenticationService
         .signInPhoneNumberWithOTP(otpTextController.text);
+    setBusy(false);
   }
 
   void resendOTP() async {

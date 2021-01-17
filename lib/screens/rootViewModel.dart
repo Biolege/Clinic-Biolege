@@ -53,29 +53,31 @@ class RootViewModel extends BaseViewModel {
       var hasLoggedIn = await _authenticationService.isUserLoggedIn();
       // ---------------------------------------------------------------------
       // To be used when the user is filling up the detail and not yet created
-      //  clinic and user
+      // clinic and user
       await _storageService.initLocalStorages();
-
       // Get all the doctors in the beginning itself
-      if (hasLoggedIn == null) await _dataFromApiService.setClinicsList();
+      if (_dataFromApiService.getAllClinics == null)
+        await _dataFromApiService.setClinicsList();
       // Get all the diagnotic customer in the beginning itself
-      await _dataFromApiService.setDoctorsList();
+      if (_dataFromApiService.getDoctorsList == null)
+        await _dataFromApiService.setDoctorsList();
       // Get all the diagnotic customer in the beginning itself
-      await _dataFromApiService.setDiagnosticCustomersList();
+      if (_dataFromApiService.getDiagnosticCustomerList == null)
+        await _dataFromApiService.setDiagnosticCustomersList();
       // ---------------------------------------------------------------------
-      // print("Phone       : " + _storageService.getPhoneNumber.toString());
-      // print("Name        : " + _storageService.getName.toString());
-      // print("Email       : " + _storageService.getEmailAddress.toString());
-      // print("DOB         : " + _storageService.getDateOfBirth.toString());
-      // print("Address     : " + _storageService.getAddress.toString());
-      // print("Role Type   : " + _storageService.getRoleType.toString());
-      // print("Clinic Type : " + _storageService.getClinicName.toString());
+      print("Phone       : " + _storageService.getPhoneNumber.toString());
+      print("Name        : " + _storageService.getName.toString());
+      print("Email       : " + _storageService.getEmailAddress.toString());
+      print("DOB         : " + _storageService.getDateOfBirth.toString());
+      print("Address     : " + _storageService.getAddress.toString());
+      print("Role Type   : " + _storageService.getRoleType.toString());
+      print("Clinic Name : " + _storageService.getClinicName.toString());
+      print("Clinic City : " + _storageService.getClinicCityName.toString());
+      print("Clinic Owner : " + _storageService.getClinicOwnerName.toString());
       // ---------------------------------------------------------------------
       if (hasLoggedIn) {
         if (_storageService.getName == null)
           _navigatorService.clearStackAndShow(Routes.nameScreenView);
-        else if (_storageService.getEmailAddress == null)
-          _navigatorService.clearTillFirstAndShow(Routes.emailScreenView);
         else if (_storageService.getDateOfBirth == null)
           _navigatorService.clearTillFirstAndShow(Routes.genderScreenView);
         else if (_storageService.getAddress == null)
@@ -88,9 +90,13 @@ class RootViewModel extends BaseViewModel {
           _navigatorService
               .clearStackAndShow(Routes.createOrSearchClinicScreenView);
         else {
+          // Setter for all the doctors available in the clinic
           await _dataFromApiService.setDoctorsListForClinic();
+          // Setter for clinic details
           await _dataFromApiService.setClinicDetails();
+          // Setter for clinic employee details
           await _dataFromApiService.setEmployeeDetails();
+
           _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
               predicate: (_) => false);
         }

@@ -107,7 +107,7 @@ class DoctorsProfileScreenView extends StatelessWidget {
                           height: getProportionateScreenHeight(130),
                         ),
                         !model.getIsFromClinic
-                            ? !model.isBusy
+                            ? model.isWorking == false
                                 ? Center(
                                     child:
                                         buildBasicOutlineButtonWithLessPaddingAndRounderCornersWithCustomBackground(

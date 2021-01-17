@@ -36,6 +36,8 @@ class DoctorsProfileScreenViewModel extends FutureViewModel {
       _clinicDetailsForSelectedDoctorToShow;
   bool _isFromClinic;
   bool get getIsFromClinic => _isFromClinic;
+
+  bool isWorking = false;
   // __________________________________________________________________________
   // Helper Functions
   void addThisDoctorToClinc(String docName, String docId) async {
@@ -47,9 +49,11 @@ class DoctorsProfileScreenViewModel extends FutureViewModel {
         title: "Confirm");
     // If user pressed continue then perform the API call
     if (res.confirmed == true) {
-      setBusy(true);
+      isWorking = true;
+      notifyListeners();
       await _apiServices.addOrUpdateClinicToDoctorById(docId);
-      setBusy(false);
+      isWorking = false;
+      notifyListeners();
       goBackToHome(docName);
     }
   }

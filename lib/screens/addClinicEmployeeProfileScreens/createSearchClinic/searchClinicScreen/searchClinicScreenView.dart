@@ -59,19 +59,24 @@ class SearchClinicScreenView extends StatelessWidget {
                                 color: primaryColor,
                               )),
                           controller: model.search,
+                          onChanged: (_) => model.searchClinic(),
                         ),
                         SizedBox(
                           height: getProportionateScreenHeight(10),
                         ),
-                        ListView.builder(
-                            primary: false,
-                            itemCount: model.data.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return SearchCards(
-                                data: model.data[index],
-                              );
-                            }),
+                        model.results.length != 0 &&
+                                model.search.text.length != 0
+                            ? ListView.builder(
+                                primary: false,
+                                itemCount: model.results.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return SearchCards(
+                                    data: model.results[index],
+                                    model: model,
+                                  );
+                                })
+                            : Text("Type in the searchbox."),
                       ],
                     ),
                   ),
@@ -91,40 +96,36 @@ class SearchClinicScreenView extends StatelessWidget {
 
 class SearchCards extends StatelessWidget {
   final Clinic data;
-  SearchCards({this.data});
+  final SearchClinicViewModel model;
+  SearchCards({this.data, this.model});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Card(
-        color: white,
-        borderOnForeground: false,
-        elevation: 1,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Container(
-                width: 50,
-                height: 50,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset("asset/images/2.png")),
-              ),
-              title: Text(
-                data.name,
-                style: TextStyle(fontSize: 18),
-              ),
-              subtitle: Text(
-                data.address.clinicAddress +
-                    ", " +
-                    data.address.city +
-                    ", " +
-                    data.address.state,
-                style: TextStyle(fontSize: 12, color: offBlack2),
-              ),
-            )),
-      ),
+      child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            onTap: () => model.setClinicForEmployee(data),
+            leading: Container(
+              width: 50,
+              height: 50,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset("asset/images/2.png")),
+            ),
+            title: Text(
+              data.name,
+              style: TextStyle(fontSize: 18),
+            ),
+            subtitle: Text(
+              data.address.clinicAddress +
+                  ", " +
+                  data.address.city +
+                  ", " +
+                  data.address.state,
+              style: TextStyle(fontSize: 12, color: offBlack2),
+            ),
+          )),
     );
   }
 }

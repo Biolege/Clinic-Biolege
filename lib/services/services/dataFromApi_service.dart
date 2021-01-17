@@ -1,7 +1,9 @@
-import 'package:clinicapp/model/clinic.dart';
-import 'package:clinicapp/model/clinicEmployee.dart';
-import 'package:clinicapp/model/diagnosticCustomer.dart';
-
+import 'dart:typed_data';
+import 'package:stacked_services/stacked_services.dart';
+import '../../app/router.gr.dart';
+import '../../model/clinic.dart';
+import '../../model/clinicEmployee.dart';
+import '../../model/diagnosticCustomer.dart';
 import '../../services/services/local_storage.dart';
 import '../../app/locator.dart';
 import '../../services/services/api_service.dart';
@@ -12,6 +14,7 @@ class DataFromApi {
   // Locating the Dependencies
   final APIServices _apiServices = locator<APIServices>();
   final StorageService _storageService = locator<StorageService>();
+  final NavigationService _navigatorService = locator<NavigationService>();
   // ___________________________________________________________________________
   // Data to be used globally for current clinic
   static Clinic _clinic;
@@ -76,7 +79,50 @@ class DataFromApi {
   static Doctor _doctor;
   Doctor get getSelectedDoctor => _doctor;
   // ___________________________________________________________________________
+  // Sets the clinic employee variable if already exists in the database
+  // by call get employee by phone from the API
+  Future saveClinicEmployeeFromDatabaseINIT() async {
+    String phone = _storageService.getPhoneNumber.toString();
+    var clinicEmp = await _apiServices.getClinicEmployeeByPhone(phone);
+    if (clinicEmp != null) {
+      _employee = clinicEmp;
+      _storageService.setUID(clinicEmp.id);
+      _storageService.setName(clinicEmp.name);
+      _storageService.setEmailAddress(clinicEmp.email);
+      _storageService.setGenderAndDateOfBirth(
+          gender: clinicEmp.gender, dob: clinicEmp.dob);
+      _storageService.setAddressDetails(address: clinicEmp.address.homeAddress);
+      _storageService.setRoleType(clinicEmp.role);
+    } else
+      _navigatorService.pushNamedAndRemoveUntil(Routes.root,
+          predicate: (route) => false);
+  }
+
+  //-------------------------------------------------------------------
+  Future saveClinicForEmployeeINIT(String id) async {
+    await _storageService.setClinicId(id);
+    await _apiServices.addOrUpdateClinicEmployeeToClinic(id);
+
+    await _storageService.setClinicId(getClinic.id);
+    await _storageService.setClinicDetails(
+      clinicName: getClinic.name,
+      clinicLogo: Uint8List.fromList(getClinic.logo.codeUnits),
+    );
+    print(getClinic.address.city);
+    await _storageService.setClinicDescription(
+        clinicCityName: getClinic.address.city,
+        clinicAddressProof:
+            Uint8List.fromList(getClinic.addressProof.codeUnits));
+    await _storageService.setClinicOwnerDetails(
+      clinicOwnerIdProof: Uint8List.fromList(getClinic.ownerIdProof.codeUnits),
+      clinicOwnerName: getClinic.ownerName,
+    );
+  }
+
+  // ___________________________________________________________________________
   // Helper Function
+  //-------------------------------------------------------------------
+  // Get all the list
   Future setDoctorsList() async {
     _doctorsList = [];
     _doctorsList = await _apiServices.getAllDoctors();
@@ -95,6 +141,7 @@ class DataFromApi {
     print("All diagnostic customers saved");
   }
 
+  //-------------------------------------------------------------------
   Future setClinicDetails() async {
     _clinic = Clinic();
     await _apiServices.getClinicFromApiAndSetGlobally();
@@ -103,7 +150,7 @@ class DataFromApi {
 
   Future setEmployeeDetails() async {
     _employee = ClinicEmployee();
-    await _apiServices.getClinicEmployeeFromApiAndSetGlobally();
+    await _apiServices.getClinicEmployeeByIdFromApiAndSetGlobally();
     print("Clinic Employee saved");
   }
 

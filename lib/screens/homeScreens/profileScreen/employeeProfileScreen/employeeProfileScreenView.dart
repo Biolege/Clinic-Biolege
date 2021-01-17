@@ -90,21 +90,25 @@ class _EmployeeProfileScreenViewState extends State<EmployeeProfileScreenView> {
                           ),
                         ),
                         Divider(),
-                        FadeInLTR(
-                          0.6,
-                          ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 5),
-                            title: Text(
-                              "Email",
-                              style: TextStyle(fontSize: 12, color: offBlack3),
-                            ),
-                            subtitle: Text(
-                              model.getEmployeeEmail,
-                              style: TextStyle(fontSize: 18, color: offBlack2),
-                            ),
-                          ),
-                        ),
+                        model.getEmployeeEmail != null
+                            ? FadeInLTR(
+                                0.6,
+                                ListTile(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 25, vertical: 5),
+                                  title: Text(
+                                    "Email",
+                                    style: TextStyle(
+                                        fontSize: 12, color: offBlack3),
+                                  ),
+                                  subtitle: Text(
+                                    model.getEmployeeEmail,
+                                    style: TextStyle(
+                                        fontSize: 18, color: offBlack2),
+                                  ),
+                                ),
+                              )
+                            : Container(),
                         FadeInLTR(
                           0.9,
                           ListTile(

@@ -130,14 +130,38 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                     ),
                     FadeInLTR(
                         1.5,
-                        buildOutlineButton(
-                          "Continue",
-                          !model.getErrorStatus
-                              ? null
-                              : () {
-                                  model.startVerifingOTP();
-                                },
-                        )),
+                        !model.isBusy
+                            ? buildOutlineButton(
+                                "Continue",
+                                !model.getErrorStatus
+                                    ? null
+                                    : model.startVerifingOTP,
+                              )
+                            : buildOutlineButtonCustomWidget(
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          getProportionateScreenHeight(20),
+                                      vertical: 2),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text("    "),
+                                      Container(
+                                        width: 25,
+                                        height: 25,
+                                        child: CircularProgressIndicator(
+                                          backgroundColor: white,
+                                        ),
+                                      ),
+                                      Text("    "),
+                                      SizedBox(
+                                        width: getProportionateScreenWidth(10),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                null)),
                     SizedBox(
                       height: getProportionateScreenHeight(60),
                     ),

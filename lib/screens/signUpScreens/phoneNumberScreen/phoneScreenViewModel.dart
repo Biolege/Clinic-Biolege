@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
+import '../../../services/services/dataFromApi_service.dart';
 import '../../../services/services/auth_service.dart';
 import '../../../app/locator.dart';
 import '../../../services/services/local_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 
 class PhoneViewModel extends BaseViewModel {
   // __________________________________________________________________________
@@ -10,6 +11,7 @@ class PhoneViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final StorageService _storageService = locator<StorageService>();
+  final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // __________________________________________________________________________
   // Controller and Variables
   TextEditingController phoneNumber = TextEditingController();
@@ -30,12 +32,15 @@ class PhoneViewModel extends BaseViewModel {
   void startVerifyPhoneAuthentication() async {
     phoneNumberFormKey.currentState.save();
     if (!phoneNumberFormKey.currentState.validate()) return;
+    setBusy(true);
     await _storageService.setPhoneNumber(int.parse(phoneNumber.text));
-    verifyPhoneAuthentication("+91" + phoneNumber.text);
+    await _dataFromApiService.saveClinicEmployeeFromDatabaseINIT();
+    await verifyPhoneAuthentication("+91" + phoneNumber.text);
+    setBusy(false);
   }
 
-  void verifyPhoneAuthentication(String phone) async {
-    await _authenticationService.verifyPhoneNumber(phone);
-  }
+  Future verifyPhoneAuthentication(String phone) async =>
+      await _authenticationService.verifyPhoneNumber(phone);
+
   // __________________________________________________________________________
 }

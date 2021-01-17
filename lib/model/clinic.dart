@@ -124,12 +124,14 @@ class Address {
 }
 
 class ClinicEmployeeObject {
-  ClinicEmployeeObject();
+  ClinicEmployeeObject({this.id});
+
+  String id;
 
   factory ClinicEmployeeObject.fromJson(Map<String, dynamic> json) =>
-      ClinicEmployeeObject();
+      ClinicEmployeeObject(id: json["_id"]);
 
-  Map<String, dynamic> toJson() => {};
+  Map<String, dynamic> toJson() => {"_id": id};
 }
 
 class CustomerElement {
