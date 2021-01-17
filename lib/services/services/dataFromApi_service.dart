@@ -25,7 +25,7 @@ class DataFromApi {
   // ___________________________________________________________________________
   // Data to be used globally for current employee
   static ClinicEmployee _employee;
-  get getClinicEmployee => _employee;
+  ClinicEmployee get getClinicEmployee => _employee;
   void setClinicEmployee(ClinicEmployee x) => _employee = x;
   // ___________________________________________________________________________
   // Data to be used in the doctors tab in bottom navigation bar for doctor's

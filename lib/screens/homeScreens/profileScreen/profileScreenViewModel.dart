@@ -2,17 +2,17 @@ import 'dart:typed_data';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/locator.dart';
-import '../../../services/services/local_storage.dart';
 import '../../../app/router.gr.dart';
 import '../../../services/services/auth_service.dart';
-
+import '../../../services/services/dataFromApi_service.dart';
 import '../../../services/services/filePicker_service.dart';
 
+// import '../../../services/services/local_storage.dart';
 // import '../../../services/services/helperData_service.dart';
 class ProfileScreenViewModel extends FutureViewModel {
   // __________________________________________________________________________
   // Locating the Dependencies
-  final StorageService _storageService = locator<StorageService>();
+  // final StorageService _storageService = locator<StorageService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
   final FilePickHelperService _filePickHelperService =
       locator<FilePickHelperService>();
@@ -20,12 +20,12 @@ class ProfileScreenViewModel extends FutureViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final DialogService _dialogService = locator<DialogService>();
+  final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // final DoctorAppointments _doctorAppointmentsDetailservice =
   //     locator<DoctorAppointments>();
 
   // final Clinic _clinicDataService = locator<Clinic>();
   // final ClinicEmployee _clinicEmployeeDataService = locator<ClinicEmployee>();
-  // final DataFromApi _dataFromApiService = locator<DataFromApi>();
 
   // __________________________________________________________________________
   // Variables
@@ -58,8 +58,8 @@ class ProfileScreenViewModel extends FutureViewModel {
   @override
   Future futureToRun() async {
     try {
-      _clinicName = _storageService.getClinicName;
-      _clinicLogo = _storageService.getClinicLogo;
+      _clinicName = _dataFromApiService.getClinic.name;
+      _clinicLogo = _dataFromApiService.getClinic.logo;
       _clinicLogoToDisplay =
           _filePickHelperService.dataFromBase64String(_clinicLogo);
     } catch (e) {

@@ -7,27 +7,27 @@ import 'package:stacked_services/stacked_services.dart';
 import 'doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import 'appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../../app/locator.dart';
-import '../../services/services/local_storage.dart';
+import '../../services/services/dataFromApi_service.dart';
 import '../../services/services/helperData_service.dart';
 import 'profileScreen/profileScreenView.dart';
+// import '../../services/services/local_storage.dart';
 // import '../../model/clinic.dart';
 // import '../../model/clinicEmployee.dart';
 // import '../../services/services/auth_service.dart';
-// import '../../services/services/dataFromApi_service.dart';
 
 class HomeScreenViewModel extends FutureViewModel<String> {
   // __________________________________________________________________________
   // Locating the Dependencies
-  final StorageService _storageService = locator<StorageService>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
   final DoctorAppointments _doctorAppointmentsDetailservice =
       locator<DoctorAppointments>();
+  final DataFromApi _dataFromApiService = locator<DataFromApi>();
+  // final StorageService _storageService = locator<StorageService>();
   // final NavigationService _navigatorService = locator<NavigationService>();
   // final AuthenticationService _authenticationService =
   //     locator<AuthenticationService>();
   // final Clinic _clinicDataService = locator<Clinic>();
   // final ClinicEmployee _clinicEmployeeDataService = locator<ClinicEmployee>();
-  // final DataFromApi _dataFromApiService = locator<DataFromApi>();
 
   // __________________________________________________________________________
   // Date Selectors
@@ -101,7 +101,7 @@ class HomeScreenViewModel extends FutureViewModel<String> {
     try {
       _doctorAppointmentsDetailservice
           .setSelectedDateInAppointmentTab(_selectedDate);
-      return _storageService.getClinicName;
+      return _dataFromApiService.getClinic.name;
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());
     }

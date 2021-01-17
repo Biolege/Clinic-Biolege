@@ -1,12 +1,11 @@
-import 'package:clinicapp/app/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../../../app/router.gr.dart';
 import '../../../model/doctor.dart';
 import '../../../app/locator.dart';
 import '../../../services/services/dataFromApi_service.dart';
 import '../../../services/services/helperData_service.dart';
-import '../../../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 // import '../../../model/clinic.dart';
 // import '../../../model/clinicEmployee.dart';
 // import '../../../services/services/auth_service.dart';

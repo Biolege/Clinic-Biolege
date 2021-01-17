@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:clinicapp/model/clinic.dart';
-import 'package:clinicapp/model/diagnosticCustomer.dart';
-import 'package:clinicapp/model/doctor.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
 import 'package:http_parser/http_parser.dart';
@@ -12,9 +9,12 @@ import 'helperData_service.dart';
 import 'local_storage.dart';
 import '../../app/locator.dart';
 import '../../model/clinicEmployee.dart';
+import '../../model/clinic.dart';
+import '../../model/diagnosticCustomer.dart';
+import '../../model/doctor.dart';
 
 class APIServices {
-  // __________________________________________________________________________
+  // ___________________________________________________________________________
   // Variables for Clinic API
   String url = "https://biolegenew.herokuapp.com/api/";
   // -------------------------------------------------------------
@@ -40,15 +40,15 @@ class APIServices {
   String urlUpdateDiagnosticCustomer = "diagnostic/customer";
   String urlDiagnosticCustomerGet = "diagnostic/customer";
   String urlGetAllDiagnosticCustomers = "diagnostic/customers";
-  // -------------------------------------------------------------------------
-  // -------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Create a new Clinic Employee and stores the response in the local storage
   Future<ClinicEmployee> createClinicEmployee() async {
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     // Locating Dependencies
     final StorageService _storageService = locator<StorageService>();
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    // _______________________________________________________________________
+    // _________________________________________________________________________
     try {
       // URL to be called
       var uri = Uri.parse('$url$urlClinicEmployeeCreate');

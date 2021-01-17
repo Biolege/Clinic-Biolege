@@ -14,10 +14,10 @@ class ClinicProfileScreenViewModel extends FutureViewModel {
   // Locating the Dependencies
   final SnackbarService _snackBarService = locator<SnackbarService>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
-  final StorageService _storageService = locator<StorageService>();
-  // final NavigationService _navigatorService = locator<NavigationService>();
   final FilePickHelperService _filePickHelperService =
       locator<FilePickHelperService>();
+  final StorageService _storageService = locator<StorageService>();
+  // final NavigationService _navigatorService = locator<NavigationService>();
 
   // __________________________________________________________________________
   // Variables
@@ -50,10 +50,12 @@ class ClinicProfileScreenViewModel extends FutureViewModel {
       _clinic = _dataFromApiService.getClinic;
 
       _clinicLogoToDisplay = _filePickHelperService
-          .dataFromBase64String(_storageService.getClinicLogo);
+          .dataFromBase64String(_dataFromApiService.getClinic.logo);
       _clinicLocationType = _storageService.getClinicLocationType == 0
           ? "Attach to pharmacy"
-          : "Separate clinic";
+          : _storageService.getClinicLocationType == null
+              ? "Separate clinic"
+              : "Separate clinic";
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());
     }
