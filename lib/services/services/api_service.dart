@@ -90,6 +90,7 @@ class APIServices {
     }
   }
 
+  // ---------------------------------------------------------------------------
   // Fetches clinic data from the api by using CLINIC Id stored in local
   Future<ClinicEmployee> getClinicEmployeeById() async {
     // _________________________________________________________________________
@@ -126,6 +127,44 @@ class APIServices {
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // Fetches clinic data from the api by using CLINIC Id stored in local
+  Future<ClinicEmployee> getClinicEmployeeByPhone() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final StorageService _storageService = locator<StorageService>();
+    // _________________________________________________________________________
+    // Retreiving clinic id
+    String clinicEmployeeId = _storageService.getUID;
+    // _________________________________________________________________________
+    try {
+      // _______________________________________________________________________
+      // URL to be called
+      var getClinicUri =
+          Uri.parse('$url$urlGetClinicEmployee/$clinicEmployeeId');
+
+      // _______________________________________________________________________
+      // Creating get requests
+      var getClinicEmployeeRequest = new http.Request("GET", getClinicUri);
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var getClinicEmployeeResponse = await getClinicEmployeeRequest.send();
+      var getClinicEmployeeResponseString =
+          await getClinicEmployeeResponse.stream.bytesToString();
+      var getClinicEmployeeResponseJson =
+          json.decode(getClinicEmployeeResponseString);
+
+      // Clinic Employee object generated from the incoming json
+      return ClinicEmployee.fromJson(getClinicEmployeeResponseJson);
+    } catch (e) {
+      print("At get clinic employee by ID : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // Fetches clinic data from the api and saves globally
   Future getClinicEmployeeFromApiAndSetGlobally() async {
     // _________________________________________________________________________
@@ -180,7 +219,7 @@ class APIServices {
     }
   }
 
-  // ___________________________________________________________________________
+  // ---------------------------------------------------------------------------
   // Create a new clinic
   Future<Clinic> createClinic() async {
     // _________________________________________________________________________
@@ -246,6 +285,7 @@ class APIServices {
     }
   }
 
+  // ---------------------------------------------------------------------------
   // Updates all clinic related images like address proof, logo from the
   // local storages
   Future<Clinic> updateClinicImage(String clinicId) async {
@@ -305,6 +345,7 @@ class APIServices {
     }
   }
 
+  // ---------------------------------------------------------------------------
   // Fetches clinic data from the api by using CLINIC Id stored in local
   Future<Clinic> getClinicById() async {
     // _________________________________________________________________________
@@ -338,6 +379,7 @@ class APIServices {
     }
   }
 
+  // ---------------------------------------------------------------------------
   // Fetches clinic data from the api and saves globally
   Future getClinicFromApiAndSetGlobally() async {
     // _________________________________________________________________________
@@ -353,6 +395,7 @@ class APIServices {
     }
   }
 
+  // ---------------------------------------------------------------------------
   // Adds a clinic customer by first fetching the complete clinic object
   // and then checking whether the customer is already added or not. If added
   // updates the appointment date field else creates a new customer object.

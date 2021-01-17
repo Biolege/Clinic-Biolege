@@ -16,8 +16,13 @@ abstract class ThirdPartyServicesModule {
   // ---------------------------------------------------
   // Data Services
   // ---------------------------------------------------
+  // Data coming and saved from the API in the local
   DataFromApi get dataFromApi;
+  // ---------------------------------------------------
+  // Data stored in cache/local storage
   StorageService get localStorageService;
+  // ---------------------------------------------------
+  // Temporary Data buckets
   PatientDetails get patientDetailservice;
   DoctorAppointments get doctorAppointmentsDetailservice;
   // ---------------------------------------------------
