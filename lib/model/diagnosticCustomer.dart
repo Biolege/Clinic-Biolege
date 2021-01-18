@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'clinic.dart';
+
 DiagnosticCustomer diagnosticCustomerFromJson(String str) =>
     DiagnosticCustomer.fromJson(json.decode(str));
 
@@ -108,13 +110,13 @@ class DoctorObject {
     this.clinic,
   });
 
-  List<DateTime> visitingDate;
+  List<AppointmentDate> visitingDate;
   String id;
   ObjectWithID doctor;
   ObjectWithID clinic;
 
   factory DoctorObject.fromJson(Map<String, dynamic> json) => DoctorObject(
-        visitingDate: List<DateTime>.from(
+        visitingDate: List<AppointmentDate>.from(
             json["visitingDate"].map((x) => DateTime.parse(x))),
         id: json["_id"],
         doctor: ObjectWithID.fromJson(json["doctor"]),
@@ -122,15 +124,13 @@ class DoctorObject {
       );
 
   Map<String, dynamic> toJson() => {
-        "visitingDate":
-            List<dynamic>.from(visitingDate.map((x) => x.toIso8601String())),
+        "visitingDate": List<dynamic>.from(visitingDate.map((x) => x.toJson())),
         "_id": id,
         "doctor": doctor.toJson(),
         "clinic": clinic.toJson(),
       };
   Map<String, dynamic> toJsonForPut() => {
-        "visitingDate":
-            List<dynamic>.from(visitingDate.map((x) => x.toIso8601String())),
+        "visitingDate": List<dynamic>.from(visitingDate.map((x) => x.toJson())),
         "doctor": doctor.toJson(),
         "clinic": clinic.toJson(),
       };

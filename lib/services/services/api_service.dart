@@ -189,9 +189,8 @@ class APIServices {
     // _________________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    final StorageService _storageService = locator<StorageService>();
     final DataFromApi _dataFromApiServices = locator<DataFromApi>();
-
+    // final StorageService _storageService = locator<StorageService>();
     // _________________________________________________________________________
     try {
       // _______________________________________________________________________
@@ -978,7 +977,11 @@ class APIServices {
           latestDiagnosticCustomerObjectFromApi.doctors;
       // _______________________________________________________________________
       DoctorObject appointmentObjectIfDoesntExist = DoctorObject(
-          visitingDate: [_patientDetailservice.getDoctorsPatientSelectedDate()],
+          visitingDate: [
+            AppointmentDate(
+                date: _patientDetailservice.getDoctorsPatientSelectedDate(),
+                isCompleted: 0)
+          ],
           clinic: ObjectWithID(id: clinicId),
           doctor: ObjectWithID(
               id: _patientDetailservice.getDoctorsPatientSelectedDoctor().id));
@@ -999,7 +1002,9 @@ class APIServices {
                     appointmentObject.doctor.id == selectedDoctorId))
             .first
             .visitingDate
-            .add(_patientDetailservice.getDoctorsPatientSelectedDate());
+            .add(AppointmentDate(
+                date: _patientDetailservice.getDoctorsPatientSelectedDate(),
+                isCompleted: 0));
       // _______________________________________________________________________
       // Preparing the data to be sent
       var object = [];
@@ -1020,7 +1025,7 @@ class APIServices {
       var responseJson = json.decode(responseString);
       // _______________________________________________________________________
       print("Update Appointment to diagnotic customer: " +
-          responseJson["doctors"].toString());
+          responseJson.toString());
 
       // _______________________________________________________________________
     } catch (e) {

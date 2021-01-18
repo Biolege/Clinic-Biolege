@@ -1,21 +1,19 @@
 // Helper class used while creating a new doctor's patient
 import 'dart:convert';
-
-import 'package:clinicapp/app/locator.dart';
-import 'package:clinicapp/model/clinic.dart';
-import 'package:clinicapp/model/diagnosticCustomer.dart';
-import 'package:stacked_services/stacked_services.dart';
-
+import '../../app/locator.dart';
+import '../../model/clinic.dart';
+import '../../model/diagnosticCustomer.dart';
 import '../../model/doctor.dart';
 import 'api_service.dart';
 import 'dataFromApi_service.dart';
-import 'local_storage.dart';
+// import 'local_storage.dart';
+// import 'package:stacked_services/stacked_services.dart';
 
 class PatientDetails {
   // Locating the Dependencies
   final APIServices _apiServices = locator<APIServices>();
-  final StorageService _storageService = locator<StorageService>();
-  final NavigationService _navigatorService = locator<NavigationService>();
+  // final StorageService _storageService = locator<StorageService>();
+  // final NavigationService _navigatorService = locator<NavigationService>();
   // ___________________________________________________________________________
   // __________________________________________________________________________
   // Variables

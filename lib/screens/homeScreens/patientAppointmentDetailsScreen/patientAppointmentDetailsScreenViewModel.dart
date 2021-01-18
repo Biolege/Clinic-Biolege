@@ -1,5 +1,6 @@
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked/stacked.dart';
+import '../../../model/clinic.dart';
 import '../../../services/services/dataFromApi_service.dart';
 import '../../../services/services/helperData_service.dart';
 import '../../../app/router.gr.dart';
@@ -41,7 +42,7 @@ class PatientAppointmentDetailsScreenViewModel extends FutureViewModel {
         .toString();
   }
 
-  List<DateTime> getAppointmentDates(int index) {
+  List<AppointmentDate> getAppointmentDates(int index) {
     return _selectedDiagnosticCustomer.doctors[index].visitingDate;
   }
 
@@ -82,8 +83,9 @@ class PatientAppointmentDetailsScreenViewModel extends FutureViewModel {
 
       _selectedDiagnosticCustomer.doctors
           .forEach((docobj) => docobj.visitingDate.forEach((datetime) {
-                if (datetime.day == x.day && datetime.month == x.month)
-                  _appoinmentDateTime = datetime;
+                if (datetime.date.day == x.day &&
+                    datetime.date.month == x.month)
+                  _appoinmentDateTime = datetime.date;
               }));
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());

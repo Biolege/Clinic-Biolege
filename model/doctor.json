@@ -121,7 +121,9 @@
     ],
     "customers": [
       {
-        "appointmentDate": ["2021-01-05T08:54:06.257Z"],
+        "appointmentDate": [
+          { "date": "2021-01-05T08:54:06.257Z", "isCompleted": 0 }
+        ],
         "_id": "5ff969a731ecfc002499f026",
         "customer": {
           "_id": "we"

@@ -242,6 +242,7 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                                     .last
                                                     .visitingDate
                                                     .last
+                                                    .date
                                                     .hour
                                                     .toString() +
                                                 ":" +
@@ -252,6 +253,7 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                                     .last
                                                     .visitingDate
                                                     .last
+                                                    .date
                                                     .minute
                                                     .toString()),
                                           ),
