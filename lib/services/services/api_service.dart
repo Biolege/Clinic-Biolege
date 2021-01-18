@@ -41,6 +41,7 @@ class APIServices {
   String urlUpdateDiagnosticCustomer = "diagnostic/customer";
   String urlDiagnosticCustomerGet = "diagnostic/customer";
   String urlGetAllDiagnosticCustomers = "diagnostic/customers";
+  String urlGetDiagnosticCustomerByPhone = "/diagnostic/customer/phone/";
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   // Create a new Clinic Employee and stores the response in the local storage
@@ -501,6 +502,7 @@ class APIServices {
       // _______________________________________________________________________
       // URL to be called
       var uri = Uri.parse('$url$urlClinicUpdate$clinicId');
+      // print(uri);
       // _______________________________________________________________________
       // Creating get requests
       var request = new http.Request("PUT", uri);
@@ -560,16 +562,15 @@ class APIServices {
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
       });
-
+      // print(request.body);
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
       var responseJson = json.decode(responseString);
-
+      // print(responseJson);
       _dataFromApiServices.setClinic(Clinic.fromJson(responseJson));
 
       // _______________________________________________________________________
-      print("Clinic Customer added" +
-          responseJson["customers"]["_id"].toString());
+      print("Clinic Customer added to " + responseJson["_id"].toString());
       // _______________________________________________________________________
       return Clinic.fromJson(responseJson);
     } catch (e) {
@@ -731,6 +732,7 @@ class APIServices {
       // _______________________________________________________________________
       // URL to be called
       var uri = Uri.parse('$url$updateDoctor/$id');
+      // print(uri);
       // _______________________________________________________________________
       // Creating get requests
       var request = new http.Request("PUT", uri);
@@ -787,13 +789,13 @@ class APIServices {
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
       });
-
+      // print(request.body);
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
       var responseJson = json.decode(responseString);
-
+      // print(responseJson);
       // _______________________________________________________________________
-      // print("Doctor Customer added : " + responseJson["customers"].toString());
+      print("Doctor Customer added to : " + responseJson["_id"].toString());
       // _______________________________________________________________________
       return Doctor.fromJson(responseJson);
     } catch (e) {
@@ -805,6 +807,43 @@ class APIServices {
 
   // ***************************************************************************
   // ***************************************************************************
+
+  // ---------------------------------------------------------------------------
+  // Fetches diagnostic customer data from the api by using customer phone
+  Future<DiagnosticCustomer> getDiagnosticCustomerByPhone(String phone) async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    // final StorageService _storageService = locator<StorageService>();
+    // _________________________________________________________________________
+    try {
+      // _______________________________________________________________________
+      // URL to be called
+      var getDiagnosticCustomerUri =
+          Uri.parse('$url$urlGetDiagnosticCustomerByPhone$phone');
+      print(getDiagnosticCustomerUri);
+      // _______________________________________________________________________
+      // Creating get requests
+      var getDiagnosticCustomerRequest =
+          new http.Request("GET", getDiagnosticCustomerUri);
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var getDiagnosticCustomerResponse =
+          await getDiagnosticCustomerRequest.send();
+      var getDiagnosticCustomerResponseString =
+          await getDiagnosticCustomerResponse.stream.bytesToString();
+      var getDiagnosticCustomerResponseJson =
+          json.decode(getDiagnosticCustomerResponseString);
+      if (getDiagnosticCustomerResponseString.length == 2) return null;
+
+      return DiagnosticCustomer.fromJson(getDiagnosticCustomerResponseJson[0]);
+    } catch (e) {
+      print("At get diagnostic customer by phone : " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
   Future addDiagnosticCustomer() async {
     // _______________________________________________________________________
     // Locating Dependencies

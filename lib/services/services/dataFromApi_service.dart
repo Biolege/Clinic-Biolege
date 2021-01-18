@@ -83,16 +83,17 @@ class DataFromApi {
   // by call get employee by phone from the API
   Future saveClinicEmployeeFromDatabaseINIT() async {
     String phone = _storageService.getPhoneNumber.toString();
-    var clinicEmp = await _apiServices.getClinicEmployeeByPhone(phone);
+    ClinicEmployee clinicEmp =
+        await _apiServices.getClinicEmployeeByPhone(phone);
     if (clinicEmp != null) {
-      _employee = clinicEmp;
-      _storageService.setUID(clinicEmp.id);
-      _storageService.setName(clinicEmp.name);
-      _storageService.setEmailAddress(clinicEmp.email);
+      setClinicEmployee(clinicEmp);
+      _storageService.setUID(_employee.id);
+      _storageService.setName(_employee.name);
+      _storageService.setEmailAddress(_employee.email);
       _storageService.setGenderAndDateOfBirth(
-          gender: clinicEmp.gender, dob: clinicEmp.dob);
-      _storageService.setAddressDetails(address: clinicEmp.address.homeAddress);
-      _storageService.setRoleType(clinicEmp.role);
+          gender: _employee.gender, dob: _employee.dob);
+      _storageService.setAddressDetails(address: _employee.address.homeAddress);
+      _storageService.setRoleType(_employee.role);
     } else
       _navigatorService.pushNamedAndRemoveUntil(Routes.root,
           predicate: (route) => false);
@@ -102,10 +103,9 @@ class DataFromApi {
   Future saveClinicForEmployeeINIT(String id) async {
     await _storageService.setClinicId(id);
     await _apiServices.addOrUpdateClinicEmployeeToClinic(id);
-
-    await _storageService.setClinicId(getClinic.id);
+    await _storageService.setClinicId(id);
     await _storageService.setClinicDetails(
-      clinicName: getClinic.name,
+      clinicName: _clinic.name,
       clinicLogo: Uint8List.fromList(getClinic.logo.codeUnits),
     );
     print(getClinic.address.city);

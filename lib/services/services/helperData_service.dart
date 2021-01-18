@@ -4,11 +4,19 @@ import 'dart:convert';
 import 'package:clinicapp/app/locator.dart';
 import 'package:clinicapp/model/clinic.dart';
 import 'package:clinicapp/model/diagnosticCustomer.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../model/doctor.dart';
+import 'api_service.dart';
 import 'dataFromApi_service.dart';
+import 'local_storage.dart';
 
 class PatientDetails {
+  // Locating the Dependencies
+  final APIServices _apiServices = locator<APIServices>();
+  final StorageService _storageService = locator<StorageService>();
+  final NavigationService _navigatorService = locator<NavigationService>();
+  // ___________________________________________________________________________
   // __________________________________________________________________________
   // Variables
   static String _doctorsPatientPhoneNumber;
@@ -96,6 +104,26 @@ class PatientDetails {
     return jsonEncode({'customers': object});
   }
 
+  Future<bool> setDiagnosticCustomerFromDatabase() async {
+    DiagnosticCustomer dgc = await _apiServices
+        .getDiagnosticCustomerByPhone(_doctorsPatientPhoneNumber);
+
+    if (dgc == null) return false;
+    _doctorsPatientDiagnosticID = dgc.id;
+    _doctorsPatientPhoneNumber = dgc.phoneNumber.toString();
+    _doctorsPatientName = dgc.name;
+    _doctorsPatientDob = dgc.dob;
+    _doctorsPatientGender = dgc.gender;
+    _doctorsPatientAge =
+        (DateTime.now().difference(dgc.dob).inDays / 365).floor();
+    _doctorsPatientBloodGroup = dgc.bloodGroup;
+    _doctorsPatientStateName = dgc.address.state;
+    _doctorsPatientCityName = dgc.address.city;
+    _doctorsPatientPinCode = dgc.address.pincode.toString();
+    _doctorsPatientHomeAddress = dgc.address.homeAddress;
+    return true;
+  }
+
   // ----------------------------------------------------------------
   void resetAllDoctorPatientVariable() {
     _doctorsPatientPhoneNumber = null;
@@ -173,5 +201,6 @@ class DoctorAppointments {
     print("Selected Diagnostic Customer for appointments tab : " + doc.name);
     _selectedDiagnosticCustomer = doc;
   }
+
   // __________________________________________________________________________
 }

@@ -57,8 +57,8 @@ class DoctorsListScreenView extends StatelessWidget {
                                       elevation: 0.3,
                                       color: model.selectedDocID ==
                                               model.data[index].id
-                                          ? white
-                                          : offWhite,
+                                          ? offWhite1
+                                          : white,
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
                                             color: white, width: 0.1),

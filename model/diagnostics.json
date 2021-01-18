@@ -1,0 +1,31 @@
+{
+  "address": {
+    "state": "Uttar and ",
+    "city": "very nice ",
+    "pincode": 568654,
+    "homeAddress": "jczgkzkgzkgzlgs"
+  },
+  "role": null,
+  "_id": "5ff73fa74014a900241d6b34",
+  "name": "Shinigani",
+  "phoneNumber": 9369396969,
+  "gender": "MALE",
+  "dob": "2021-01-07T00:00:00.000Z",
+  "bloodGroup": "XX",
+
+  "doctors": [
+    {
+      "visitingDate": ["2021-01-07T00:00:00.000Z"],
+      "_id": "5ff7d17fc8962d15e05cd582",
+      "doctor": {
+        "_id": "5ff4292e6f81800024c0fd04"
+      },
+      "clinic": {
+        "_id": "5ff4292e6f81800024c0fd04"
+      }
+    }
+  ],
+  "createdAt": "2021-01-07T17:06:47.212Z",
+  "updatedAt": "2021-01-08T03:29:03.784Z",
+  "__v": 5
+}

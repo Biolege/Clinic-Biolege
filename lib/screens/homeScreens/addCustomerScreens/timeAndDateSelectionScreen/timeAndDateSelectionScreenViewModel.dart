@@ -132,7 +132,7 @@ class TimeAndDateSelectionScreenViewModel extends BaseViewModel {
         _patientDetailservice.getDoctorsPatientSelectedDoctor().id);
     await _apiServices.updateAppointmentInDiagnosticCustomer();
     setBusy(false);
-    navigateToConfirm();
+    // navigateToConfirm();
   }
 
   void navigateToConfirm() {

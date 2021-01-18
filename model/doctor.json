@@ -1,0 +1,133 @@
+{
+  "doctor": {
+    "address": {
+      "state": "Uttar Pradesh",
+      "city": "Varanasi",
+      "pinCode": 221010,
+      "homeAddress": "Bank Colony"
+    },
+    "doctorImage": "cebkqbkvj",
+    "dob": "2017-06-01T08:30:00.000Z",
+    "phoneNumber": "1478523699",
+    "gender": "MALE",
+    "email": "mailqq@mqqail.com",
+    "specialization": ["Brain Surgeon", "Spine Surgeon"],
+    "organization": "Appolo",
+    "about": "Neurologist",
+    "services": ["Consultant", "Physician"],
+    "_id": "5ff969a731ecfc002499f01a",
+    "name": "Dr. Rupeshwar Singh",
+    "experience": [
+      {
+        "_id": "5ff969a731ecfc002499f01b",
+        "experienceTitle": "Spine Surgeon",
+        "experienceStartYear": 2005,
+        "experienceEndYear": 2016,
+        "experienceOrganization": "Surya Hospital",
+        "createdAt": "2021-01-09T08:30:31.980Z",
+        "updatedAt": "2021-01-09T08:30:31.980Z"
+      }
+    ],
+    "education": [
+      {
+        "_id": "5ff969a731ecfc002499f01d",
+        "educationRegistrationNumber": 21313213100,
+        "educationStartYear": 1994,
+        "educationEndYear": 1999,
+        "educationDegree": "M.B.B.S.",
+        "educationCollege": "APO Delhi",
+        "educationField": "Spinalogy",
+        "createdAt": "2021-01-09T08:30:31.980Z",
+        "updatedAt": "2021-01-09T08:30:31.980Z"
+      },
+      {
+        "_id": "5ff969a731ecfc002499f01c",
+        "educationRegistrationNumber": 321321321,
+        "educationStartYear": 2000,
+        "educationEndYear": 2003,
+        "educationDegree": "Master's Degree",
+        "educationCollege": "APO Delhi",
+        "educationField": "General Practitioner",
+        "createdAt": "2021-01-09T08:30:31.980Z",
+        "updatedAt": "2021-01-09T08:30:31.980Z"
+      }
+    ],
+    "feedbacks": [
+      {
+        "_id": "5ff969a731ecfc002499f01f",
+        "heading": "okwjlvkjq",
+        "body": "knqvenv",
+        "createdAt": "2021-01-09T08:30:31.981Z",
+        "updatedAt": "2021-01-09T08:30:31.981Z"
+      },
+      {
+        "_id": "5ff969a731ecfc002499f01e",
+        "heading": "okwjlvkjq",
+        "body": "knqvenv",
+        "createdAt": "2021-01-09T08:30:31.981Z",
+        "updatedAt": "2021-01-09T08:30:31.981Z"
+      }
+    ],
+    "articles": [
+      {
+        "_id": "5ff969a731ecfc002499f021",
+        "heading": "lvwlkjvqlkj",
+        "body": "lknldvnq",
+        "createdAt": "2021-01-09T08:30:31.981Z",
+        "updatedAt": "2021-01-09T08:30:31.981Z"
+      },
+      {
+        "_id": "5ff969a731ecfc002499f020",
+        "heading": "lvwlkjvqlkj",
+        "body": "lknldvnq",
+        "createdAt": "2021-01-09T08:30:31.981Z",
+        "updatedAt": "2021-01-09T08:30:31.981Z"
+      }
+    ],
+    "clinics": [
+      {
+        "_id": "5ff969a731ecfc002499f022",
+        "clinic": {
+          "_id": "5feb6ef2af81420024fa705c",
+          "name": "Namahosar",
+          "phoneNumber": "7897897"
+        },
+        "days": [
+          {
+            "_id": "5ff969a731ecfc002499f025",
+            "day": "Monday",
+            "startTime": 11,
+            "endTime": 12
+          },
+          {
+            "_id": "5ff969a731ecfc002499f024",
+            "day": "Saturday",
+            "startTime": 8,
+            "endTime": 9
+          },
+          {
+            "_id": "5ff969a731ecfc002499f023",
+            "day": "Sunday",
+            "startTime": 5,
+            "endTime": 8
+          }
+        ],
+        "fees": 312,
+        "avgTime": 321,
+        "avgPatientPerDay": 32,
+        "createdAt": "2021-01-09T08:30:31.982Z",
+        "updatedAt": "2021-01-09T08:30:31.982Z"
+      }
+    ],
+    "customers": [
+      {
+        "appointmentDate": ["2021-01-05T08:54:06.257Z"],
+        "_id": "5ff969a731ecfc002499f026",
+        "customer": {
+          "_id": "we"
+        }
+      }
+    ],
+    "__v": 0
+  }
+}
