@@ -84,7 +84,7 @@ class PatientDetails {
       id: _doctorsPatientDiagnosticID,
       customer: cs,
       appointmentDate: [
-        _doctorsPatientSelectedDate,
+        AppointmentDate(date: _doctorsPatientSelectedDate, isCompleted: 0)
       ],
     );
   }

@@ -141,23 +141,44 @@ class CustomerElement {
     this.customer,
   });
 
-  List<DateTime> appointmentDate;
+  List<AppointmentDate> appointmentDate;
   String id;
   CustomerCustomer customer;
 
   factory CustomerElement.fromJson(Map<String, dynamic> json) =>
       CustomerElement(
-        appointmentDate: List<DateTime>.from(
-            json["appointmentDate"].map((x) => DateTime.parse(x))),
+        appointmentDate: List<AppointmentDate>.from(
+            json["appointmentDate"].map((x) => AppointmentDate.fromJson(x))),
         id: json["_id"],
         customer: CustomerCustomer.fromJson(json["customer"]),
       );
 
   Map<String, dynamic> toJson() => {
         "appointmentDate":
-            List<dynamic>.from(appointmentDate.map((x) => x.toIso8601String())),
+            List<dynamic>.from(appointmentDate.map((x) => x.toJson())),
         "_id": id,
         "customer": customer.toJson(),
+      };
+}
+
+class AppointmentDate {
+  AppointmentDate({
+    this.date,
+    this.isCompleted,
+  });
+
+  DateTime date;
+  int isCompleted;
+
+  factory AppointmentDate.fromJson(Map<String, dynamic> json) =>
+      AppointmentDate(
+        date: DateTime.parse(json["date"]),
+        isCompleted: json["isCompleted"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "date": date.toIso8601String(),
+        "isCompleted": isCompleted,
       };
 }
 

@@ -51,7 +51,8 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
         _dataFromApiService.getDiagnosticCustomersMappedList;
 
     selectedDoctor.customers.forEach((customer) => ((customer.appointmentDate
-                .any((dt) => dt.day == x.day && dt.month == x.month)) ==
+                .any((dt) =>
+                    dt.date.day == x.day && dt.date.month == x.month)) ==
             true)
         ? temporaryList.add(mapped[customer.id])
         : null);

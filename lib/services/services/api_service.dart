@@ -513,7 +513,6 @@ class APIServices {
 
       String diagnosticID =
           _patientDetailservice.getDoctorsPatientDiagnosticID();
-
       // _______________________________________________________________________
       // Preparing the data to be sent
       CustomerElement
@@ -545,8 +544,9 @@ class APIServices {
         latestCustomersListFromApi
             .where((customer) => customer.customer.id == diagnosticID)
             .forEach((customer) {
-          customer.appointmentDate
-              .add(_patientDetailservice.getDoctorsPatientSelectedDate());
+          customer.appointmentDate.add(AppointmentDate(
+              date: _patientDetailservice.getDoctorsPatientSelectedDate(),
+              isCompleted: 0));
         });
         // ________________________________________________________
         var object = [];
@@ -773,8 +773,9 @@ class APIServices {
         latestCustomersListFromApi
             .where((customer) => customer.customer.id == diagnosticID)
             .forEach((customer) {
-          customer.appointmentDate
-              .add(_patientDetailservice.getDoctorsPatientSelectedDate());
+          customer.appointmentDate.add(AppointmentDate(
+              date: _patientDetailservice.getDoctorsPatientSelectedDate(),
+              isCompleted: 0));
         });
         // ________________________________________________________
         request.body = _patientDetailservice
