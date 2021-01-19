@@ -117,7 +117,7 @@ class DoctorObject {
 
   factory DoctorObject.fromJson(Map<String, dynamic> json) => DoctorObject(
         visitingDate: List<AppointmentDate>.from(
-            json["visitingDate"].map((x) => DateTime.parse(x))),
+            json["visitingDate"].map((x) => AppointmentDate.fromJson(x))),
         id: json["_id"],
         doctor: ObjectWithID.fromJson(json["doctor"]),
         clinic: ObjectWithID.fromJson(json["clinic"]),

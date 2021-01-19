@@ -49,10 +49,10 @@ class RootViewModel extends BaseViewModel {
       // To be used when the user is filling up the detail and not yet created
       // clinic and user
       await _storageService.initLocalStorages();
-      // Get all the doctors in the beginning itself
+      // Get all the clinics in the beginning itself
       if (_dataFromApiService.getAllClinics == null)
         await _dataFromApiService.setClinicsList();
-      // Get all the diagnotic customer in the beginning itself
+      // Get all the doctors in the beginning itself
       if (_dataFromApiService.getDoctorsList == null)
         await _dataFromApiService.setDoctorsList();
       // Get all the diagnotic customer in the beginning itself

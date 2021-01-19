@@ -41,7 +41,7 @@ class APIServices {
   String urlUpdateDiagnosticCustomer = "diagnostic/customer";
   String urlDiagnosticCustomerGet = "diagnostic/customer";
   String urlGetAllDiagnosticCustomers = "diagnostic/customers";
-  String urlGetDiagnosticCustomerByPhone = "/diagnostic/customer/phone/";
+  String urlGetDiagnosticCustomerByPhone = "diagnostic/customer/phone/";
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   // Create a new Clinic Employee and stores the response in the local storage
@@ -196,7 +196,7 @@ class APIServices {
       // _______________________________________________________________________
       // URL to be called
       var uri = Uri.parse('$url$urlClinicUpdate$clinicId');
-      print(uri);
+      // print(uri);
       // _______________________________________________________________________
       // Creating get requests
       var request = new http.Request("PUT", uri);
@@ -1012,6 +1012,7 @@ class APIServices {
           .forEach((apt) => object.add(apt.toJsonForPut()));
 
       request.body = jsonEncode({'doctors': object});
+      print(request.body);
 
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -1051,6 +1052,7 @@ class APIServices {
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
       var responseJson = json.decode(responseString);
+      print(responseJson);
       // _______________________________________________________________________
       return DiagnosticCustomer.fromJson(responseJson);
     } catch (e) {

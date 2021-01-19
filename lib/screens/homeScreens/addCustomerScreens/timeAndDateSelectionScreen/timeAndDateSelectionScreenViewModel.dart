@@ -6,6 +6,7 @@ import '../../../../app/locator.dart';
 import '../../../../app/router.gr.dart';
 import '../../../../services/services/api_service.dart';
 import '../../../../services/services/helperData_service.dart';
+import '../../../../services/services/dataFromApi_service.dart';
 
 class TimeAndDateSelectionScreenViewModel extends BaseViewModel {
   // _________________________________________________________________________
@@ -15,6 +16,7 @@ class TimeAndDateSelectionScreenViewModel extends BaseViewModel {
   final SnackbarService _snackBarService = locator<SnackbarService>();
   final APIServices _apiServices = locator<APIServices>();
   final PatientDetails _patientDetailservice = locator<PatientDetails>();
+  final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // _________________________________________________________________________
   // Controllers and Variables
   String timeSlotStartTime, timeSlotEndTime, timeSlotDay;
@@ -131,8 +133,15 @@ class TimeAndDateSelectionScreenViewModel extends BaseViewModel {
     await _apiServices.addOrUpdateDiagnosticCustomersToDoctor(
         _patientDetailservice.getDoctorsPatientSelectedDoctor().id);
     await _apiServices.updateAppointmentInDiagnosticCustomer();
+    //  Get all the clinics in the beginning itself
+    await _dataFromApiService.setClinicsList();
+    // Get all the doctors in the beginning itself
+    await _dataFromApiService.setDoctorsList();
+    // Get all the diagnotic customer in the beginning itself
+    await _dataFromApiService.setDiagnosticCustomersList();
+    await _dataFromApiService.setDoctorsListForClinic();
     setBusy(false);
-    // navigateToConfirm();
+    navigateToConfirm();
   }
 
   void navigateToConfirm() {
