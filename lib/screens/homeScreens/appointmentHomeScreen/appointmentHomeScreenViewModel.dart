@@ -26,12 +26,14 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
   Doctor selectedDoctor;
   Clinic _clinic;
   List<DiagnosticCustomer> customersForSelectedDoctor = [];
+  Map<String, AppointmentDate> appointmentCorrespondingToCustomers = {};
   List<DiagnosticCustomer> temporaryList = [];
   List<DiagnosticCustomer> customerForSelectedDateSelectedDoctor = [];
 
   // __________________________________________________________________________
   void openPatientDetailsView(DiagnosticCustomer dgtcst) {
-    _doctorAppointmentsDetailservice.setSelectedDiagnosticCustomer(dgtcst);
+    _doctorAppointmentsDetailservice
+        .setSelectedDiagnosticCustomerForAppointmentDetails(dgtcst);
     _navigatorService.navigateTo(PatientAppointmentDetailsScreenView.routeName);
   }
 
@@ -43,26 +45,42 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
     setBusy(true);
     temporaryList.clear();
     customersForSelectedDoctor.clear();
-    DateTime x =
+    DateTime appoinmentScreenDate =
         _doctorAppointmentsDetailservice.getSelectedDateInAppointmentTab;
-    selectedDoctor = _doctorAppointmentsDetailservice.getSelectedDoctor();
+
+    selectedDoctor = _doctorAppointmentsDetailservice.getSelectedDoctor;
 
     Map<String, DiagnosticCustomer> mapped =
         _dataFromApiService.getDiagnosticCustomersMappedList;
 
     selectedDoctor.customers.forEach((customer) => ((customer.appointmentDate
                 .any((dt) =>
-                    dt.date.day == x.day && dt.date.month == x.month)) ==
+                    dt.date.day == appoinmentScreenDate.day &&
+                    dt.date.month == appoinmentScreenDate.month)) ==
             true)
         ? temporaryList.add(mapped[customer.id])
         : null);
 
     temporaryList.forEach((dgcCustomer) {
-      dgcCustomer.doctors.forEach((x) => (x.clinic.id == _clinic.id)
-          ? customersForSelectedDoctor.add(dgcCustomer)
-          : null);
+      dgcCustomer.doctors
+          .forEach((doctorObject) => (doctorObject.clinic.id == _clinic.id)
+              ? {
+                  customersForSelectedDoctor.add(dgcCustomer),
+                  doctorObject.visitingDate
+                      .where((appointment) =>
+                          appointment.date.day == appoinmentScreenDate.day &&
+                          appointment.date.month == appoinmentScreenDate.month)
+                      .forEach((element) {
+                    appointmentCorrespondingToCustomers[dgcCustomer.id] =
+                        element;
+                  })
+                }
+              : null);
     });
 
+    _doctorAppointmentsDetailservice
+        .setAppointmentCorrespondingToSelectedCustomers(
+            appointmentCorrespondingToCustomers);
     setBusy(false);
     notifyListeners();
   }

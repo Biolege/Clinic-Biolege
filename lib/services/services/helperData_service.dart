@@ -17,6 +17,11 @@ class PatientDetails {
   // ___________________________________________________________________________
   // __________________________________________________________________________
   // Variables
+
+  static String _appointmentId;
+  String get getAppointmentID => _appointmentId;
+  void setAppointmentID(String x) => _appointmentId = x;
+  // ----------------------------------------------------------------
   static String _doctorsPatientPhoneNumber;
   String getDoctorsPatientPhoneNumber() => _doctorsPatientPhoneNumber;
   void setDoctorsPatientPhoneNumber(String phone) =>
@@ -63,17 +68,17 @@ class PatientDetails {
       _doctorsPatientHomeAddress = address;
   // ----------------------------------------------------------------
   static String _doctorsPatientDiagnosticID;
-  String getDoctorsPatientDiagnosticID() => _doctorsPatientDiagnosticID;
+  String get getDoctorsPatientDiagnosticID => _doctorsPatientDiagnosticID;
   void setDoctorsPatientDiagnosticID(String id) =>
       _doctorsPatientDiagnosticID = id;
   // ----------------------------------------------------------------
   static Doctor _doctorsPatientSelectedDoctor;
-  Doctor getDoctorsPatientSelectedDoctor() => _doctorsPatientSelectedDoctor;
+  Doctor get getDoctorsPatientSelectedDoctor => _doctorsPatientSelectedDoctor;
   void setDoctorsPatientSelectedDoctor(Doctor doc) =>
       _doctorsPatientSelectedDoctor = doc;
   // ----------------------------------------------------------------
   static DateTime _doctorsPatientSelectedDate;
-  DateTime getDoctorsPatientSelectedDate() => _doctorsPatientSelectedDate;
+  DateTime get getDoctorsPatientSelectedDate => _doctorsPatientSelectedDate;
   void setDoctorsPatientSelectedDate(DateTime dt) =>
       _doctorsPatientSelectedDate = dt;
   // __________________________________________________________________________
@@ -85,12 +90,15 @@ class PatientDetails {
   // ----------------------------------------------------------------
   // Prepare the data for sending to the Clinic and Doctor Object
   CustomerElement customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist(
-      CustomerCustomer cs) {
+      CustomerCustomer cs, bool isCompleted) {
     return CustomerElement(
       id: _doctorsPatientDiagnosticID,
       customer: cs,
       appointmentDate: [
-        AppointmentDate(date: _doctorsPatientSelectedDate, isCompleted: 0)
+        AppointmentDate(
+            id: _appointmentId,
+            date: _doctorsPatientSelectedDate,
+            isCompleted: isCompleted == false ? 0 : 1)
       ],
     );
   }
@@ -144,20 +152,29 @@ class PatientDetails {
 // Helper class used when creating a new doctor's customers
 class DoctorAppointments {
   // __________________________________________________________________________
+  // Locating Dependencies
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   // __________________________________________________________________________
   // Variables and their setters
-
-  static Doctor _selectedDoctorToShow;
-  Doctor getSelectedDoctorToShow() => _selectedDoctorToShow;
-  void setSelectedDoctorToShow(Doctor doc) {
-    print(doc.name);
-    _selectedDoctorToShow = doc;
-  }
+  static Map<String, AppointmentDate>
+      appointmentCorrespondingToSelectedCustomers;
+  void setAppointmentCorrespondingToSelectedCustomers(
+          Map<String, AppointmentDate> x) =>
+      appointmentCorrespondingToSelectedCustomers = x;
+  Map<String, AppointmentDate>
+      get getAppointmentCorrespondingToSelectedCustomers =>
+          appointmentCorrespondingToSelectedCustomers;
 
   static void Function() _refesh;
   void setRefreshAppointmentList(void Function() x) => _refesh = x;
   void Function() get getRefreshAppointmentList => _refesh;
+
+  static Doctor _selectedDoctorToShow;
+  Doctor get getSelectedDoctorToShow => _selectedDoctorToShow;
+  void setSelectedDoctorToShow(Doctor doc) {
+    print(doc.name);
+    _selectedDoctorToShow = doc;
+  }
 
   static DateTime _selectedDateInAppointmentTab;
   DateTime get getSelectedDateInAppointmentTab => _selectedDateInAppointmentTab;
@@ -165,25 +182,19 @@ class DoctorAppointments {
       _selectedDateInAppointmentTab = dt;
 
   static ClinicElement _clinicDetailsForSelectedDoctorToShow;
-  ClinicElement getClinicDetailsForSelectedDoctorToShow() =>
+  ClinicElement get getClinicDetailsForSelectedDoctorToShow =>
       _clinicDetailsForSelectedDoctorToShow;
   void setClinicDetailsForSelectedDoctorToShow(ClinicElement clielem) {
     _clinicDetailsForSelectedDoctorToShow = clielem;
   }
 
   static bool isFromClinic;
-  bool getIsFromClinic() => isFromClinic;
-  void setIsFromClinic(bool x) {
-    print(x);
-    isFromClinic = x;
-  }
+  bool get getIsFromClinic => isFromClinic;
+  void setIsFromClinic(bool x) => isFromClinic = x;
 
   static Doctor _selectedDoctor;
-  Doctor getSelectedDoctor() => _selectedDoctor;
-  void setSelectedDoctor(Doctor doc) {
-    print("Selected Doctor for appointments tab : " + doc.name);
-    _selectedDoctor = doc;
-  }
+  Doctor get getSelectedDoctor => _selectedDoctor;
+  void setSelectedDoctor(Doctor doc) => _selectedDoctor = doc;
 
   void setDefaultSelectedDoctor() {
     if (_dataFromApiService.getDoctorsListForClinic != null &&
@@ -192,13 +203,12 @@ class DoctorAppointments {
   }
 
   // ----------------------------------------------------------------
-  static DiagnosticCustomer _selectedDiagnosticCustomer;
-  DiagnosticCustomer getSelectedDiagnosticCustomer() =>
-      _selectedDiagnosticCustomer;
-  void setSelectedDiagnosticCustomer(DiagnosticCustomer doc) {
-    print("Selected Diagnostic Customer for appointments tab : " + doc.name);
-    _selectedDiagnosticCustomer = doc;
-  }
+  static DiagnosticCustomer _selectedDiagnosticCustomerForAppointmentDetails;
+  DiagnosticCustomer get getSelectedDiagnosticCustomer =>
+      _selectedDiagnosticCustomerForAppointmentDetails;
+  void setSelectedDiagnosticCustomerForAppointmentDetails(
+          DiagnosticCustomer dgcCustomer) =>
+      _selectedDiagnosticCustomerForAppointmentDetails = dgcCustomer;
 
   // __________________________________________________________________________
 }

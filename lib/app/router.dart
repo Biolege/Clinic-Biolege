@@ -4,6 +4,7 @@
 // flutter pub run build_runner build --delete-conflicting-outputs
 // _____________________________________________________________________________
 import 'package:auto_route/auto_route_annotations.dart';
+import '../screens/homeScreens/addCustomerScreens/customerDoctorSelectionScreen/customerDoctorSelectionScreenView.dart';
 import '../screens/homeScreens/profileScreen/employeeProfileScreen/employeeProfileScreenView.dart';
 import '../screens/homeScreens/profileScreen/clinicProfileScreen/clinicProfileScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerAddressScreen/addCustomerAddressScreenView.dart';
@@ -31,7 +32,6 @@ import '../screens/homeScreens/addCustomerScreens/confirmationScreen/confirmScre
 import '../screens/homeScreens/addCustomerScreens/timeAndDateSelectionScreen/timeAndDateSelectionScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addBiolegeCardScreen/addBiolegeScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerScreen/addCustomerScreenView.dart';
-import '../screens/homeScreens/customerDoctorSelectionScreen/customerDoctorSelectionScreenView.dart';
 import '../screens/homeScreens/changeAppointmentDetailsScreen/changeAppointmentDetailsScreenView.dart';
 import '../screens/homeScreens/appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../screens/homeScreens/homeScreenView.dart';

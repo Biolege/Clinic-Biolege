@@ -485,7 +485,7 @@ class APIServices {
   // updates the appointment date field else creates a new customer object.
   // Finally, prepares a modified version of the recieved clinic object and
   // updaates via API.
-  Future<Clinic> addOrUpdateDiagnosticCustomerToClinic() async {
+  Future<Clinic> addOrUpdateDiagnosticCustomerToClinic(bool isComplete) async {
     // _________________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
@@ -512,15 +512,15 @@ class APIServices {
       List<CustomerElement> latestCustomersListFromApi =
           latestDoctorObjectFromApi.customers;
 
-      String diagnosticID =
-          _patientDetailservice.getDoctorsPatientDiagnosticID();
+      String diagnosticID = _patientDetailservice.getDoctorsPatientDiagnosticID;
       // _______________________________________________________________________
       // Preparing the data to be sent
       CustomerElement
           customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist =
           _patientDetailservice
               .customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist(
-                  _patientDetailservice.customerDetailsToBeSentIfDoesntExist());
+                  _patientDetailservice.customerDetailsToBeSentIfDoesntExist(),
+                  isComplete);
       // _______________________________________________________________________
       // Finding customer in the customers object of the clinic and
       // returns the iterator
@@ -546,7 +546,7 @@ class APIServices {
             .where((customer) => customer.customer.id == diagnosticID)
             .forEach((customer) {
           customer.appointmentDate.add(AppointmentDate(
-              date: _patientDetailservice.getDoctorsPatientSelectedDate(),
+              date: _patientDetailservice.getDoctorsPatientSelectedDate,
               isCompleted: 0));
         });
         // ________________________________________________________
@@ -718,7 +718,8 @@ class APIServices {
 
   // ---------------------------------------------------------------------------
 
-  Future<Doctor> addOrUpdateDiagnosticCustomersToDoctor(String id) async {
+  Future<Doctor> addOrUpdateDiagnosticCustomersToDoctor(
+      String id, bool isComplete) async {
     // _________________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
@@ -737,8 +738,7 @@ class APIServices {
       var request = new http.Request("PUT", uri);
       // _______________________________________________________________________
       // Diagnostic Customer ID
-      String diagnosticID =
-          _patientDetailservice.getDoctorsPatientDiagnosticID();
+      String diagnosticID = _patientDetailservice.getDoctorsPatientDiagnosticID;
       // Clinic object from get clinic by id (API)
       Doctor latestDoctorObjectFromApi = await _apiServices.getDoctorById(id);
       // List of customer of the respective clinic (API)
@@ -751,7 +751,8 @@ class APIServices {
           customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist =
           _patientDetailservice
               .customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist(
-                  _patientDetailservice.customerDetailsToBeSentIfDoesntExist());
+                  _patientDetailservice.customerDetailsToBeSentIfDoesntExist(),
+                  isComplete);
       // _______________________________________________________________________
       // Finding customer in the customers object of the clinic and
       // returns the iterator
@@ -775,7 +776,7 @@ class APIServices {
             .where((customer) => customer.customer.id == diagnosticID)
             .forEach((customer) {
           customer.appointmentDate.add(AppointmentDate(
-              date: _patientDetailservice.getDoctorsPatientSelectedDate(),
+              date: _patientDetailservice.getDoctorsPatientSelectedDate,
               isCompleted: 0));
         });
         // ________________________________________________________
@@ -820,7 +821,7 @@ class APIServices {
       // URL to be called
       var getDiagnosticCustomerUri =
           Uri.parse('$url$urlGetDiagnosticCustomerByPhone$phone');
-      print(getDiagnosticCustomerUri);
+      // print(getDiagnosticCustomerUri);
       // _______________________________________________________________________
       // Creating get requests
       var getDiagnosticCustomerRequest =
@@ -956,11 +957,10 @@ class APIServices {
     try {
       // _______________________________________________________________________
       // Variables to be used
-      String diagnostisId =
-          _patientDetailservice.getDoctorsPatientDiagnosticID();
+      String diagnostisId = _patientDetailservice.getDoctorsPatientDiagnosticID;
       String clinicId = _storageService.getClinicId;
       String selectedDoctorId =
-          _patientDetailservice.getDoctorsPatientSelectedDoctor().id;
+          _patientDetailservice.getDoctorsPatientSelectedDoctor.id;
       // _______________________________________________________________________
       // URL to be called
       var uri = Uri.parse('$url$urlUpdateDiagnosticCustomer/$diagnostisId');
@@ -979,12 +979,13 @@ class APIServices {
       DoctorObject appointmentObjectIfDoesntExist = DoctorObject(
           visitingDate: [
             AppointmentDate(
-                date: _patientDetailservice.getDoctorsPatientSelectedDate(),
+                id: _patientDetailservice.getAppointmentID,
+                date: _patientDetailservice.getDoctorsPatientSelectedDate,
                 isCompleted: 0)
           ],
           clinic: ObjectWithID(id: clinicId),
           doctor: ObjectWithID(
-              id: _patientDetailservice.getDoctorsPatientSelectedDoctor().id));
+              id: _patientDetailservice.getDoctorsPatientSelectedDoctor.id));
       // _______________________________________________________________________
       // Check whether a an appointment this doctor is already exists or not
       Iterable<DoctorObject> foundAppointment =
@@ -1003,7 +1004,7 @@ class APIServices {
             .first
             .visitingDate
             .add(AppointmentDate(
-                date: _patientDetailservice.getDoctorsPatientSelectedDate(),
+                date: _patientDetailservice.getDoctorsPatientSelectedDate,
                 isCompleted: 0));
       // _______________________________________________________________________
       // Preparing the data to be sent
@@ -1012,7 +1013,7 @@ class APIServices {
           .forEach((apt) => object.add(apt.toJsonForPut()));
 
       request.body = jsonEncode({'doctors': object});
-      print(request.body);
+      // print(request.body);
 
       request.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -1026,7 +1027,7 @@ class APIServices {
       var responseJson = json.decode(responseString);
       // _______________________________________________________________________
       print("Update Appointment to diagnotic customer: " +
-          responseJson.toString());
+          responseJson['_id'].toString());
 
       // _______________________________________________________________________
     } catch (e) {
@@ -1057,6 +1058,95 @@ class APIServices {
       return DiagnosticCustomer.fromJson(responseJson);
     } catch (e) {
       print("At get diagnotic customer by Id " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return null;
+    }
+  }
+
+// ---------------------------------------------------------------------------
+  Future updateAppoinment() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final DataFromApi _dataFromApiServices = locator<DataFromApi>();
+    final PatientDetails _patientDetailservice = locator<PatientDetails>();
+    final DoctorAppointments _doctorAppointmentservice =
+        locator<DoctorAppointments>();
+    // final StorageService _storageService = locator<StorageService>();
+    // _________________________________________________________________________
+    try {
+      Clinic clinic = _dataFromApiServices.getClinic;
+      Doctor doctor = _doctorAppointmentservice.getSelectedDoctor;
+      DiagnosticCustomer diagnosticCustomer =
+          _doctorAppointmentservice.getSelectedDiagnosticCustomer;
+      AppointmentDate appointmentDate = _doctorAppointmentservice
+              .getAppointmentCorrespondingToSelectedCustomers[
+          diagnosticCustomer.id];
+
+      print(appointmentDate.id);
+
+      // // _______________________________________________________________________
+      // // URL to be called
+      // var uri = Uri.parse('$url$urlClinicUpdate$clinicId');
+      // // print(uri);
+      // // _______________________________________________________________________
+      // // Creating get requests
+      // var request = new http.Request("PUT", uri);
+      // // _______________________________________________________________________
+      // // Clinic object from get clinic by id (API)
+
+      // Clinic latestClinicFromApi = await getClinicById();
+      // // List of employee of the respective clinic (API)
+      // List<ClinicEmployeeObject> latestClinicEmployeeListFromApi =
+      //     latestClinicFromApi.clinicEmployee;
+
+      // String clinicEmployeeID = _dataFromApiServices.getClinicEmployee.id;
+      // // _______________________________________________________________________
+      // // Preparing the data to be sent
+      // ClinicEmployeeObject clinicEmplyeeObjectToBeSentIfDoesntExist =
+      //     ClinicEmployeeObject(id: clinicEmployeeID);
+      // // _______________________________________________________________________
+      // // Finding customer in the customers object of the clinic and
+      // // returns the iterator
+      // Iterable<ClinicEmployeeObject> foundEmployee =
+      //     latestClinicEmployeeListFromApi
+      //         .where((employee) => employee.id == clinicEmployeeID);
+      // // _______________________________________________________________________
+      // // Logic for updating employee object of doctor
+      // if (foundEmployee.isEmpty) {
+      //   // If not found add the "clinicEmplyeeObjectToBeSentIfDoesntExist" to
+      //   // latest employee list and covert all the employee to jsonobject
+      //   latestClinicEmployeeListFromApi
+      //       .add(clinicEmplyeeObjectToBeSentIfDoesntExist);
+      //   // ________________________________________________________
+      //   var object = [];
+      //   latestClinicEmployeeListFromApi
+      //       .forEach((employee) => object.add(employee.toJson()));
+      //   request.body = jsonEncode({'clinicEmployee': object});
+      //   // ________________________________________________________
+      // } else {
+      //   var object = [];
+      //   latestClinicEmployeeListFromApi
+      //       .forEach((employee) => object.add(employee.toJson()));
+      //   request.body = jsonEncode({'clinicEmployee': object});
+      // }
+
+      // // _______________________________________________________________________
+      // // Preparing the headers
+      // request.headers.addAll({
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      // });
+
+      // var response = await request.send();
+      // var responseString = await response.stream.bytesToString();
+      // var responseJson = json.decode(responseString);
+
+      // Clinic clinic = Clinic.fromJson(responseJson);
+      // _dataFromApiServices.setClinic(clinic);
+
+      // return clinic;
+    } catch (e) {
+      print("At add or Update Appoinment : " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
     }

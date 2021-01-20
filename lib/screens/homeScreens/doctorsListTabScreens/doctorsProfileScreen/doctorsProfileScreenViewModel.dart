@@ -70,10 +70,10 @@ class DoctorsProfileScreenViewModel extends FutureViewModel {
   Future futureToRun() async {
     try {
       _selectedDoctorToShow =
-          _doctorAppointmentsDetailservice.getSelectedDoctorToShow();
+          _doctorAppointmentsDetailservice.getSelectedDoctorToShow;
       _clinicDetailsForSelectedDoctorToShow = _doctorAppointmentsDetailservice
-          .getClinicDetailsForSelectedDoctorToShow();
-      _isFromClinic = _doctorAppointmentsDetailservice.getIsFromClinic();
+          .getClinicDetailsForSelectedDoctorToShow;
+      _isFromClinic = _doctorAppointmentsDetailservice.getIsFromClinic;
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());
     }

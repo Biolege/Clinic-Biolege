@@ -27,11 +27,11 @@ import '../screens/homeScreens/addCustomerScreens/addCustomerDetailsScreen/addCu
 import '../screens/homeScreens/addCustomerScreens/addCustomerNameScreen/addPatientNameScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/addCustomerScreen/addCustomerScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/confirmationScreen/confirmScreenView.dart';
+import '../screens/homeScreens/addCustomerScreens/customerDoctorSelectionScreen/customerDoctorSelectionScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/showCustomerDetailsSummaryScreens/showCustomerDetailsSummaryScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/timeAndDateSelectionScreen/timeAndDateSelectionScreenView.dart';
 import '../screens/homeScreens/appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../screens/homeScreens/changeAppointmentDetailsScreen/changeAppointmentDetailsScreenView.dart';
-import '../screens/homeScreens/customerDoctorSelectionScreen/customerDoctorSelectionScreenView.dart';
 import '../screens/homeScreens/doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../screens/homeScreens/homeScreenView.dart';
@@ -304,8 +304,14 @@ class Router extends RouterBase {
       );
     },
     ChangeAppointmentDetailsScreenView: (data) {
+      final args = data.getArgs<ChangeAppointmentDetailsScreenViewArguments>(
+        orElse: () => ChangeAppointmentDetailsScreenViewArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => ChangeAppointmentDetailsScreenView(),
+        builder: (context) => ChangeAppointmentDetailsScreenView(
+          doctor: args.doctor,
+          clinicDetails: args.clinicDetails,
+        ),
         settings: data,
       );
     },
@@ -399,6 +405,14 @@ class Router extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// ChangeAppointmentDetailsScreenView arguments holder class
+class ChangeAppointmentDetailsScreenViewArguments {
+  final Doctor doctor;
+  final ClinicElement clinicDetails;
+  ChangeAppointmentDetailsScreenViewArguments(
+      {this.doctor, this.clinicDetails});
+}
 
 /// TimeAndDateSelectionScreenView arguments holder class
 class TimeAndDateSelectionScreenViewArguments {

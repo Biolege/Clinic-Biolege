@@ -1,12 +1,11 @@
-import 'package:clinicapp/widgets/animations.dart';
-
-import '../../../theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../widgets/animations.dart';
+import '../../../../theme/theme.dart';
+import '../../../../widgets/reusables.dart';
+import '../../../../app/size_configuration.dart';
 import 'customerDoctorSelectionScreenViewModel.dart';
-import '../../../widgets/reusables.dart';
-import '../../../app/size_configuration.dart';
 
 class CustomerDoctorSelectionScreenView extends StatelessWidget {
   static const routeName = "/customerDoctorSelectionScreenView";
@@ -17,11 +16,6 @@ class CustomerDoctorSelectionScreenView extends StatelessWidget {
         return !model.isBusy
             ? Scaffold(
                 appBar: buildAppBarWithLogoAndText(context, "", Text("Today")),
-                // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-                // floatingActionButton: buildOutlineButton(
-                //   "Continue",
-                //   () {},
-                // ),
                 body: SafeArea(
                     child: SingleChildScrollView(
                   child: Padding(

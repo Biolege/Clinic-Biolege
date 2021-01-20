@@ -1,9 +1,10 @@
+import 'package:clinicapp/screens/homeScreens/changeAppointmentDetailsScreen/changeAppointmentDetailsScreenView.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked/stacked.dart';
 import '../../../model/clinic.dart';
 import '../../../services/services/dataFromApi_service.dart';
 import '../../../services/services/helperData_service.dart';
-import '../../../app/router.gr.dart';
+// import '../../../app/router.gr.dart';
 import '../../../app/locator.dart';
 import '../../../model/diagnosticCustomer.dart';
 import '../../../model/doctor.dart';
@@ -67,8 +68,16 @@ class PatientAppointmentDetailsScreenViewModel extends FutureViewModel {
   }
 
   // __________________________________________________________________________
-  void changeAppointmentDetails() {
-    _navigatorService.navigateTo(Routes.changeAppointmentDetailsScreenView);
+  void changeAppointmentDetails() async {
+    Doctor doctor = _doctorAppointmentsDetailService.getSelectedDoctor;
+    print(doctor);
+    ClinicElement detailsForTheClinicOfDoctor =
+        _dataFromApiService.getClinicDetailsOfDoctor[doctor.id];
+
+    _navigatorService.navigateToView(ChangeAppointmentDetailsScreenView(
+      doctor: doctor,
+      clinicDetails: detailsForTheClinicOfDoctor,
+    ));
   }
 
   @override
@@ -76,7 +85,7 @@ class PatientAppointmentDetailsScreenViewModel extends FutureViewModel {
     try {
       _doctorsMapped = _dataFromApiService.getDoctorsListMapped;
       _selectedDiagnosticCustomer =
-          _doctorAppointmentsDetailService.getSelectedDiagnosticCustomer();
+          _doctorAppointmentsDetailService.getSelectedDiagnosticCustomer;
 
       DateTime x =
           _doctorAppointmentsDetailService.getSelectedDateInAppointmentTab;

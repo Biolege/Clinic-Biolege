@@ -49,7 +49,7 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
                       child: CircularProgressIndicator(
                         backgroundColor: white,
                       )),
-                  onPressed: () => model.setAppointment(),
+                  onPressed: null,
                   backgroundColor: primaryColor,
                 ),
           body: SafeArea(

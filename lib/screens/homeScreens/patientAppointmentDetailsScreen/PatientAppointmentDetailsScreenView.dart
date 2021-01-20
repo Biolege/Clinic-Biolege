@@ -158,18 +158,21 @@ class PatientAppointmentDetailsScreenView extends StatelessWidget {
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
-                              ListTile(
-                                leading: Icon(Entypo.drop),
-                                title: Text(
-                                  "Blood group",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                subtitle: Text(
-                                  model
-                                      .getSelectedDiagnosticCustomer.bloodGroup,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
+                              model.getSelectedDiagnosticCustomer.bloodGroup !=
+                                      null
+                                  ? ListTile(
+                                      leading: Icon(Entypo.drop),
+                                      title: Text(
+                                        "Blood group",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      subtitle: Text(
+                                        model.getSelectedDiagnosticCustomer
+                                            .bloodGroup,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    )
+                                  : Container(),
                             ],
                           ),
                         ),

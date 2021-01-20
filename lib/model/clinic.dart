@@ -163,20 +163,23 @@ class CustomerElement {
 
 class AppointmentDate {
   AppointmentDate({
+    this.id,
     this.date,
     this.isCompleted,
   });
-
+  String id;
   DateTime date;
   int isCompleted;
 
   factory AppointmentDate.fromJson(Map<String, dynamic> json) =>
       AppointmentDate(
+        id: json["_id"],
         date: DateTime.parse(json["date"]),
         isCompleted: json["isCompleted"],
       );
 
   Map<String, dynamic> toJson() => {
+        "_id": id,
         "date": date.toIso8601String(),
         "isCompleted": isCompleted,
       };

@@ -2,9 +2,9 @@ import 'package:clinicapp/screens/homeScreens/addCustomerScreens/timeAndDateSele
 import 'package:clinicapp/services/services/helperData_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../model/doctor.dart';
-import '../../../services/services/dataFromApi_service.dart';
-import '../../../app/locator.dart';
+import '../../../../model/doctor.dart';
+import '../../../../services/services/dataFromApi_service.dart';
+import '../../../../app/locator.dart';
 
 class CustomerDoctorSelectionScreenViewModel
     extends FutureViewModel<List<Doctor>> {

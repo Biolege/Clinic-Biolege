@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:objectid/objectid.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
@@ -127,11 +128,11 @@ class TimeAndDateSelectionScreenViewModel extends BaseViewModel {
       return;
     }
     _patientDetailservice.setDoctorsPatientSelectedDate(_selectedDate);
-
+    _patientDetailservice.setAppointmentID(ObjectId().hexString);
     setBusy(true);
-    await _apiServices.addOrUpdateDiagnosticCustomerToClinic();
+    await _apiServices.addOrUpdateDiagnosticCustomerToClinic(false);
     await _apiServices.addOrUpdateDiagnosticCustomersToDoctor(
-        _patientDetailservice.getDoctorsPatientSelectedDoctor().id);
+        _patientDetailservice.getDoctorsPatientSelectedDoctor.id, false);
     await _apiServices.updateAppointmentInDiagnosticCustomer();
     //  Get all the clinics in the beginning itself
     await _dataFromApiService.setClinicsList();
