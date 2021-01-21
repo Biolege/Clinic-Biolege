@@ -73,8 +73,6 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           )
                         ]),
                     body: PageView(
-                      dragStartBehavior: DragStartBehavior.down,
-                      pageSnapping: true,
                       onPageChanged: (index) =>
                           model.selectCurrentPageForNavBar(index),
                       controller: model.pageController,

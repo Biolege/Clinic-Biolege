@@ -39,7 +39,7 @@ class ChangeAppointmentDetailsScreenView extends StatelessWidget {
                               backgroundColor: white,
                             )),
                         onPressed: null,
-                        backgroundColor: offBlack2,
+                        backgroundColor: offBlack3,
                       ),
                 body: SafeArea(
                     child: SingleChildScrollView(

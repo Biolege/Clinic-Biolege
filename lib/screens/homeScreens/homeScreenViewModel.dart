@@ -64,7 +64,7 @@ class HomeScreenViewModel extends FutureViewModel<String> {
   List<Widget> widgetOptions = [
     DoctorsListScreenView(),
     AppointmentHomeScreenView(),
-    Text('Notification'),
+    Center(child: Text('No new notification !')),
     ProfileScreenView(),
   ];
 
@@ -84,15 +84,12 @@ class HomeScreenViewModel extends FutureViewModel<String> {
 
   void setCurrentIndexForPageView(int selIndex) {
     _index = selIndex;
-
-    pageController.animateToPage(selIndex,
-        duration: Duration(milliseconds: 200), curve: Curves.elasticInOut);
+    pageController.jumpToPage(selIndex);
     notifyListeners();
   }
 
   void selectCurrentPageForNavBar(int selIndex) {
     _index = selIndex;
-    print(_index);
     notifyListeners();
   }
 

@@ -1142,8 +1142,8 @@ class APIServices {
                     isCompleted: aptDate.isCompleted,
                     date: _patientDetailservice.getDoctorsPatientSelectedDate);
           }
-          clinicObject.add(foundCustomerClinic.elementAt(i).toJson());
         }
+        clinicObject.add(foundCustomerClinic.elementAt(i).toJson());
       }
 
       var doctorObject = [];
@@ -1163,8 +1163,8 @@ class APIServices {
                     isCompleted: aptDate.isCompleted,
                     date: _patientDetailservice.getDoctorsPatientSelectedDate);
           }
-          doctorObject.add(foundCustomerDoctor.elementAt(i).toJson());
         }
+        doctorObject.add(foundCustomerDoctor.elementAt(i).toJson());
       }
 
       var diagnosticCustomerObject = [];
@@ -1189,9 +1189,9 @@ class APIServices {
                     isCompleted: aptDate.isCompleted,
                     date: _patientDetailservice.getDoctorsPatientSelectedDate);
           }
-          diagnosticCustomerObject
-              .add(foundDoctorDiagnosticCustomer.elementAt(i).toJson());
         }
+        diagnosticCustomerObject
+            .add(foundDoctorDiagnosticCustomer.elementAt(i).toJson());
       }
 
       // .forEach((docObj) => docObj.visitingDate.forEach((aptDate) {
