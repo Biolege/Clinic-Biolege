@@ -129,11 +129,12 @@ class DoctorObject {
         "doctor": doctor.toJson(),
         "clinic": clinic.toJson(),
       };
-  Map<String, dynamic> toJsonForPut() => {
-        "visitingDate": List<dynamic>.from(visitingDate.map((x) => x.toJson())),
-        "doctor": doctor.toJson(),
-        "clinic": clinic.toJson(),
-      };
+
+  // Map<String, dynamic> toJsonForPut() => {
+  //       "visitingDate": List<dynamic>.from(visitingDate.map((x) => x.toJson())),
+  //       "doctor": doctor.toJson(),
+  //       "clinic": clinic.toJson(),
+  //     };
 }
 
 class ObjectWithID {

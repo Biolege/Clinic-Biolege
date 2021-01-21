@@ -132,14 +132,20 @@ class ChangeAppointmentDetailsScreenViewModel extends FutureViewModel {
     _patientDetailservice.setDoctorsPatientSelectedDate(_selectedDate);
 
     setBusy(true);
+
     await _apiServices.updateAppoinment();
-    // //  Get all the clinics in the beginning itself
-    // await _dataFromApiService.setClinicsList();
-    // // Get all the doctors in the beginning itself
-    // await _dataFromApiService.setDoctorsList();
-    // // Get all the diagnotic customer in the beginning itself
-    // await _dataFromApiService.setDiagnosticCustomersList();
-    // await _dataFromApiService.setDoctorsListForClinic();
+    //  Get all the clinics in the beginning itself
+    await _dataFromApiService.setClinicsList();
+    // Get all the doctors in the beginning itself
+    await _dataFromApiService.setDoctorsList();
+    // Get all the diagnotic customer in the beginning itself
+    await _dataFromApiService.setDiagnosticCustomersList();
+    // Setter for all the doctors available in the clinic
+    await _dataFromApiService.setDoctorsListForClinic();
+    // Setter for clinic details
+    await _dataFromApiService.setClinicDetails();
+    // Setter for clinic employee details
+    await _dataFromApiService.setEmployeeDetails();
     setBusy(false);
     navigateToConfirm();
   }

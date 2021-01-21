@@ -2,7 +2,7 @@
     package="com.biolege.clinicapp">
    <application   
         android:label="clinicapp"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <!-- <meta-data android:name="com.google.android.maps.v2.API_KEY"
                android:value="AIzaSyCEpa93jAu-ogcsr81oZpNm5o3vYuhdCVs"/> -->
         <meta-data android:name="com.google.android.geo.API_KEY" 

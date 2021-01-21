@@ -17,7 +17,7 @@ class ChangeAppointmentDetailsScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChangeAppointmentDetailsScreenViewModel>.reactive(
       builder: (context, model, child) {
-        return !model.isBusy
+        return !model.dataReady
             ? Scaffold(
                 appBar: buildAppBarWithLogo(context),
                 floatingActionButtonLocation:
@@ -39,7 +39,7 @@ class ChangeAppointmentDetailsScreenView extends StatelessWidget {
                               backgroundColor: white,
                             )),
                         onPressed: null,
-                        backgroundColor: primaryColor,
+                        backgroundColor: offBlack2,
                       ),
                 body: SafeArea(
                     child: SingleChildScrollView(

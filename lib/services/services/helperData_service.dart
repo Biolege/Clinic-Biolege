@@ -1,5 +1,4 @@
 // Helper class used while creating a new doctor's patient
-import 'dart:convert';
 import '../../app/locator.dart';
 import '../../model/clinic.dart';
 import '../../model/diagnosticCustomer.dart';
@@ -104,11 +103,6 @@ class PatientDetails {
   }
 
   // ----------------------------------------------------------------
-  String latestCustomersListToBeSent(List<CustomerElement> lce) {
-    var object = [];
-    lce.forEach((customer) => object.add(customer.toJson()));
-    return jsonEncode({'customers': object});
-  }
 
   Future<bool> setDiagnosticCustomerFromDatabase() async {
     DiagnosticCustomer dgc = await _apiServices

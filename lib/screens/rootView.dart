@@ -1,6 +1,10 @@
-import 'package:clinicapp/screens/rootViewModel.dart';
+import '../screens/rootViewModel.dart';
+import '../main.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
+
+import 'splashScreen/splashItem.dart';
 
 class Root extends StatelessWidget {
   static const routeName = "/root";
@@ -9,7 +13,14 @@ class Root extends StatelessWidget {
     return ViewModelBuilder.reactive(
       builder: (context, child, model) {
         return Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+          body: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              buildSplashContent(mainLogo, subLogo),
+              LottieBuilder.asset('asset/images/loader.json'),
+            ],
+          )),
         );
       },
       onModelReady: (model) => model.handleStartupLogic(),

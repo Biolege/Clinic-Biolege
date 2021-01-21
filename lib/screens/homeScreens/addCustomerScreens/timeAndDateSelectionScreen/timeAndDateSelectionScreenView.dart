@@ -50,7 +50,7 @@ class TimeAndDateSelectionScreenView extends StatelessWidget {
                         backgroundColor: white,
                       )),
                   onPressed: null,
-                  backgroundColor: primaryColor,
+                  backgroundColor: offBlack,
                 ),
           body: SafeArea(
               child: SingleChildScrollView(

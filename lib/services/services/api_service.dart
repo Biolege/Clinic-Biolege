@@ -203,7 +203,7 @@ class APIServices {
       // _______________________________________________________________________
       // Clinic object from get clinic by id (API)
 
-      Clinic latestClinicFromApi = await getClinicById();
+      Clinic latestClinicFromApi = await getClinic();
       // List of employee of the respective clinic (API)
       List<ClinicEmployeeObject> latestClinicEmployeeListFromApi =
           latestClinicFromApi.clinicEmployee;
@@ -431,7 +431,7 @@ class APIServices {
 
   // ---------------------------------------------------------------------------
   // Fetches clinic data from the api by using CLINIC Id stored in local
-  Future<Clinic> getClinicById() async {
+  Future<Clinic> getClinic() async {
     // _________________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
@@ -472,7 +472,7 @@ class APIServices {
     final DataFromApi _dataFromApi = locator<DataFromApi>();
     // _________________________________________________________________________
     try {
-      _dataFromApi.setClinic(await getClinicById());
+      _dataFromApi.setClinic(await getClinic());
     } catch (e) {
       print("At saving clinic globally: " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
@@ -507,7 +507,7 @@ class APIServices {
       var request = new http.Request("PUT", uri);
       // _______________________________________________________________________
       // Clinic object from get clinic by id (API)
-      Clinic latestDoctorObjectFromApi = await _apiServices.getClinicById();
+      Clinic latestDoctorObjectFromApi = await _apiServices.getClinic();
       // List of customer of the respective clinic (API)
       List<CustomerElement> latestCustomersListFromApi =
           latestDoctorObjectFromApi.customers;
@@ -546,6 +546,7 @@ class APIServices {
             .where((customer) => customer.customer.id == diagnosticID)
             .forEach((customer) {
           customer.appointmentDate.add(AppointmentDate(
+              id: _patientDetailservice.getAppointmentID,
               date: _patientDetailservice.getDoctorsPatientSelectedDate,
               isCompleted: 0));
         });
@@ -766,8 +767,10 @@ class APIServices {
         latestCustomersListFromApi
             .add(customerDetailsWithAppointmentDateObjectToBeSentIfDoesntExist);
         // ________________________________________________________
-        request.body = _patientDetailservice
-            .latestCustomersListToBeSent(latestCustomersListFromApi);
+        var object = [];
+        latestCustomersListFromApi
+            .forEach((customer) => object.add(customer.toJson()));
+        request.body = jsonEncode({'customers': object});
         // ________________________________________________________
       } else {
         // If found update the appointment date where Customer ID is same as
@@ -776,12 +779,15 @@ class APIServices {
             .where((customer) => customer.customer.id == diagnosticID)
             .forEach((customer) {
           customer.appointmentDate.add(AppointmentDate(
+              id: _patientDetailservice.getAppointmentID,
               date: _patientDetailservice.getDoctorsPatientSelectedDate,
               isCompleted: 0));
         });
         // ________________________________________________________
-        request.body = _patientDetailservice
-            .latestCustomersListToBeSent(latestCustomersListFromApi);
+        var object = [];
+        latestCustomersListFromApi
+            .forEach((customer) => object.add(customer.toJson()));
+        request.body = jsonEncode({'customers': object});
       }
 
       // _______________________________________________________________________
@@ -1004,13 +1010,14 @@ class APIServices {
             .first
             .visitingDate
             .add(AppointmentDate(
+                id: _patientDetailservice.getAppointmentID,
                 date: _patientDetailservice.getDoctorsPatientSelectedDate,
                 isCompleted: 0));
       // _______________________________________________________________________
       // Preparing the data to be sent
       var object = [];
       latestDoctorsAppointmentListFromApi
-          .forEach((apt) => object.add(apt.toJsonForPut()));
+          .forEach((apt) => object.add(apt.toJson()));
 
       request.body = jsonEncode({'doctors': object});
       // print(request.body);
@@ -1053,7 +1060,7 @@ class APIServices {
       var response = await request.send();
       var responseString = await response.stream.bytesToString();
       var responseJson = json.decode(responseString);
-      print(responseJson);
+      // print(responseJson);
       // _______________________________________________________________________
       return DiagnosticCustomer.fromJson(responseJson);
     } catch (e) {
@@ -1079,72 +1086,166 @@ class APIServices {
       Doctor doctor = _doctorAppointmentservice.getSelectedDoctor;
       DiagnosticCustomer diagnosticCustomer =
           _doctorAppointmentservice.getSelectedDiagnosticCustomer;
-      AppointmentDate appointmentDate = _doctorAppointmentservice
+      AppointmentDate appointmentDateObject = _doctorAppointmentservice
               .getAppointmentCorrespondingToSelectedCustomers[
           diagnosticCustomer.id];
 
-      print(appointmentDate.id);
+      // _______________________________________________________________________
+      // Uri
 
-      // // _______________________________________________________________________
-      // // URL to be called
-      // var uri = Uri.parse('$url$urlClinicUpdate$clinicId');
-      // // print(uri);
-      // // _______________________________________________________________________
-      // // Creating get requests
-      // var request = new http.Request("PUT", uri);
-      // // _______________________________________________________________________
-      // // Clinic object from get clinic by id (API)
+      var uriUpdateClinic = Uri.parse('$url$urlClinicUpdate${clinic.id}');
+      var uriUpdateDoctor = Uri.parse('$url$updateDoctor/${doctor.id}');
+      var uriUpdateDiagnosticCustomer = Uri.parse(
+          '$url$urlUpdateDiagnosticCustomer/${diagnosticCustomer.id}');
 
-      // Clinic latestClinicFromApi = await getClinicById();
-      // // List of employee of the respective clinic (API)
-      // List<ClinicEmployeeObject> latestClinicEmployeeListFromApi =
-      //     latestClinicFromApi.clinicEmployee;
+      // print(uriUpdateClinic);
+      // print(uriUpdateDoctor);
+      // print(uriUpdateDiagnosticCustomer);
+      // _______________________________________________________________________
+      // Requests
+      var requestUriUpdateClinic = new http.Request("PUT", uriUpdateClinic);
+      var requestUriUpdateDoctor = new http.Request("PUT", uriUpdateDoctor);
+      var requestUriUpdateDiagnosticCustomer =
+          new http.Request("PUT", uriUpdateDiagnosticCustomer);
+      // _______________________________________________________________________
+      //  Fetching doctor, clinic, diagnostic customer
+      Clinic latestClinicFromApi = await getClinic();
+      Doctor latestDoctorFromApi = await getDoctorById(doctor.id);
+      DiagnosticCustomer latestDiagnosticCustomerObjectFromApi =
+          await getDiagnoticCustomerById(diagnosticCustomer.id);
+      // _______________________________________________________________________
+      // Extracting object to be updated
+      List<CustomerElement> latestCustomersListFromApiClinic =
+          latestClinicFromApi.customers;
+      List<CustomerElement> latestCustomersListFromApiDoctor =
+          latestDoctorFromApi.customers;
+      List<DoctorObject> latestDoctorsAppointmentListFromApiCustomer =
+          latestDiagnosticCustomerObjectFromApi.doctors;
+      // _______________________________________________________________________
+      // Finding the required object
+      var clinicObject = [];
+      Iterable<CustomerElement> foundCustomerClinic =
+          latestCustomersListFromApiClinic.where(
+              (customer) => customer.customer.id == diagnosticCustomer.id);
 
-      // String clinicEmployeeID = _dataFromApiServices.getClinicEmployee.id;
-      // // _______________________________________________________________________
-      // // Preparing the data to be sent
-      // ClinicEmployeeObject clinicEmplyeeObjectToBeSentIfDoesntExist =
-      //     ClinicEmployeeObject(id: clinicEmployeeID);
-      // // _______________________________________________________________________
-      // // Finding customer in the customers object of the clinic and
-      // // returns the iterator
-      // Iterable<ClinicEmployeeObject> foundEmployee =
-      //     latestClinicEmployeeListFromApi
-      //         .where((employee) => employee.id == clinicEmployeeID);
-      // // _______________________________________________________________________
-      // // Logic for updating employee object of doctor
-      // if (foundEmployee.isEmpty) {
-      //   // If not found add the "clinicEmplyeeObjectToBeSentIfDoesntExist" to
-      //   // latest employee list and covert all the employee to jsonobject
-      //   latestClinicEmployeeListFromApi
-      //       .add(clinicEmplyeeObjectToBeSentIfDoesntExist);
-      //   // ________________________________________________________
-      //   var object = [];
-      //   latestClinicEmployeeListFromApi
-      //       .forEach((employee) => object.add(employee.toJson()));
-      //   request.body = jsonEncode({'clinicEmployee': object});
-      //   // ________________________________________________________
-      // } else {
-      //   var object = [];
-      //   latestClinicEmployeeListFromApi
-      //       .forEach((employee) => object.add(employee.toJson()));
-      //   request.body = jsonEncode({'clinicEmployee': object});
-      // }
+      for (int i = 0; i < foundCustomerClinic.length; i++) {
+        for (int j = 0;
+            j < foundCustomerClinic.elementAt(i).appointmentDate.length;
+            j++) {
+          var aptDate =
+              foundCustomerClinic.elementAt(i).appointmentDate.elementAt(j);
 
-      // // _______________________________________________________________________
-      // // Preparing the headers
-      // request.headers.addAll({
-      //   'Content-Type': 'application/json; charset=UTF-8',
-      // });
+          if (aptDate.id == appointmentDateObject.id) {
+            foundCustomerClinic.elementAt(i).appointmentDate[j] =
+                AppointmentDate(
+                    id: aptDate.id,
+                    isCompleted: aptDate.isCompleted,
+                    date: _patientDetailservice.getDoctorsPatientSelectedDate);
+          }
+          clinicObject.add(foundCustomerClinic.elementAt(i).toJson());
+        }
+      }
 
-      // var response = await request.send();
-      // var responseString = await response.stream.bytesToString();
-      // var responseJson = json.decode(responseString);
+      var doctorObject = [];
+      Iterable<CustomerElement> foundCustomerDoctor =
+          latestCustomersListFromApiDoctor.where(
+              (customer) => customer.customer.id == diagnosticCustomer.id);
+      for (int i = 0; i < foundCustomerDoctor.length; i++) {
+        for (int j = 0;
+            j < foundCustomerDoctor.elementAt(i).appointmentDate.length;
+            j++) {
+          var aptDate =
+              foundCustomerDoctor.elementAt(i).appointmentDate.elementAt(j);
+          if (aptDate.id == appointmentDateObject.id) {
+            foundCustomerDoctor.elementAt(i).appointmentDate[j] =
+                AppointmentDate(
+                    id: aptDate.id,
+                    isCompleted: aptDate.isCompleted,
+                    date: _patientDetailservice.getDoctorsPatientSelectedDate);
+          }
+          doctorObject.add(foundCustomerDoctor.elementAt(i).toJson());
+        }
+      }
 
-      // Clinic clinic = Clinic.fromJson(responseJson);
-      // _dataFromApiServices.setClinic(clinic);
+      var diagnosticCustomerObject = [];
+      Iterable<DoctorObject> foundDoctorDiagnosticCustomer =
+          latestDoctorsAppointmentListFromApiCustomer.where(
+              (appointmentObject) =>
+                  (appointmentObject.clinic.id == clinic.id &&
+                      appointmentObject.doctor.id == doctor.id));
 
-      // return clinic;
+      for (int i = 0; i < foundDoctorDiagnosticCustomer.length; i++) {
+        for (int j = 0;
+            j < foundDoctorDiagnosticCustomer.elementAt(i).visitingDate.length;
+            j++) {
+          var aptDate = foundDoctorDiagnosticCustomer
+              .elementAt(i)
+              .visitingDate
+              .elementAt(j);
+          if (aptDate.id == appointmentDateObject.id) {
+            foundDoctorDiagnosticCustomer.elementAt(i).visitingDate[j] =
+                AppointmentDate(
+                    id: aptDate.id,
+                    isCompleted: aptDate.isCompleted,
+                    date: _patientDetailservice.getDoctorsPatientSelectedDate);
+          }
+          diagnosticCustomerObject
+              .add(foundDoctorDiagnosticCustomer.elementAt(i).toJson());
+        }
+      }
+
+      // .forEach((docObj) => docObj.visitingDate.forEach((aptDate) {
+      //       if (aptDate.id == appointmentDateObject.id) {
+      //         aptDate = AppointmentDate(
+      //             id: aptDate.id,
+      //             isCompleted: aptDate.isCompleted,
+      //             date:
+      //                 _patientDetailservice.getDoctorsPatientSelectedDate);
+      //       }
+      //       diagnosticCustomerObject.add(docObj.toJson());
+      //     }));
+      // _______________________________________________________________________
+      requestUriUpdateClinic.headers.addAll({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      requestUriUpdateDoctor.headers.addAll({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      requestUriUpdateDiagnosticCustomer.headers.addAll({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      // _______________________________________________________________________
+      //  Setting Object to send in JSON format
+
+      requestUriUpdateClinic.body = jsonEncode({'customers': clinicObject});
+
+      requestUriUpdateDoctor.body = jsonEncode({'customers': doctorObject});
+
+      requestUriUpdateDiagnosticCustomer.body =
+          jsonEncode({'doctors': diagnosticCustomerObject});
+
+      // print(requestUriUpdateClinic.body);
+      // print(requestUriUpdateDoctor.body);
+      // print(requestUriUpdateDiagnosticCustomer.body);
+      // _______________________________________________________________________
+      // Sending the request
+      var responseClinic = await requestUriUpdateClinic.send();
+      var responseStringClinic = await responseClinic.stream.bytesToString();
+      var responseJsonClinic = json.decode(responseStringClinic);
+
+      var responseDoctor = await requestUriUpdateDoctor.send();
+      var responseStringDoctor = await responseDoctor.stream.bytesToString();
+      var responseJsonDoctor = json.decode(responseStringDoctor);
+
+      var responseDiogCust = await requestUriUpdateDiagnosticCustomer.send();
+      var responseStringDiogCust =
+          await responseDiogCust.stream.bytesToString();
+      var responseJsonDiogCust = json.decode(responseStringDiogCust);
+
+      // _______________________________________________________________________
+      print(responseJsonClinic);
+      print(responseJsonDoctor);
+      print(responseJsonDiogCust);
     } catch (e) {
       print("At add or Update Appoinment : " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());

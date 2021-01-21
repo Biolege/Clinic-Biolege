@@ -59,7 +59,8 @@ class RootViewModel extends BaseViewModel {
       if (_dataFromApiService.getDiagnosticCustomerList == null)
         await _dataFromApiService.setDiagnosticCustomersList();
       // ---------------------------------------------------------------------
-      print("----------------------------------------------------------------");
+      print(
+          "*----------------------------------------------------------------*");
       print("Phone        : " + _storageService.getPhoneNumber.toString());
       print("Name         : " + _storageService.getName.toString());
       print("Email        : " + _storageService.getEmailAddress.toString());
@@ -69,7 +70,8 @@ class RootViewModel extends BaseViewModel {
       print("Clinic Name  : " + _storageService.getClinicName.toString());
       print("Clinic City  : " + _storageService.getClinicCityName.toString());
       print("Clinic Owner  : " + _storageService.getClinicOwnerName.toString());
-      print("----------------------------------------------------------------");
+      print(
+          "*----------------------------------------------------------------*");
       // ---------------------------------------------------------------------
       if (hasLoggedIn) {
         if (_storageService.getName == null)
