@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:stacked_services/stacked_services.dart';
-import '../../app/router.gr.dart';
 import '../../model/clinic.dart';
 import '../../model/clinicEmployee.dart';
 import '../../model/diagnosticCustomer.dart';
@@ -85,6 +84,7 @@ class DataFromApi {
     String phone = _storageService.getPhoneNumber.toString();
     ClinicEmployee clinicEmp =
         await _apiServices.getClinicEmployeeByPhone(phone);
+
     if (clinicEmp != null) {
       setClinicEmployee(clinicEmp);
       _storageService.setUID(_employee.id);
@@ -94,9 +94,7 @@ class DataFromApi {
           gender: _employee.gender, dob: _employee.dob);
       _storageService.setAddressDetails(address: _employee.address.homeAddress);
       _storageService.setRoleType(_employee.role);
-    } else
-      _navigatorService.pushNamedAndRemoveUntil(Routes.root,
-          predicate: (route) => false);
+    }
   }
 
   //-------------------------------------------------------------------
@@ -104,11 +102,12 @@ class DataFromApi {
     await _storageService.setClinicId(id);
     await _apiServices.addOrUpdateClinicEmployeeToClinic(id);
     await _storageService.setClinicId(id);
+
     await _storageService.setClinicDetails(
       clinicName: _clinic.name,
       clinicLogo: Uint8List.fromList(getClinic.logo.codeUnits),
     );
-    print(getClinic.address.city);
+
     await _storageService.setClinicDescription(
         clinicCityName: getClinic.address.city,
         clinicAddressProof:

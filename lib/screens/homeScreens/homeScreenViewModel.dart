@@ -98,6 +98,8 @@ class HomeScreenViewModel extends FutureViewModel<String> {
     try {
       _doctorAppointmentsDetailservice
           .setSelectedDateInAppointmentTab(_selectedDate);
+      _doctorAppointmentsDetailservice
+          .setNavigateToAppointment(setCurrentIndexForPageView);
       return _dataFromApiService.getClinic.name;
     } catch (e) {
       _snackBarService.showSnackbar(message: e.toString());

@@ -196,6 +196,11 @@ class DoctorAppointments {
       _selectedDoctor = _dataFromApiService.getDoctorsListForClinic[0];
   }
 
+  static void Function(int i) _navigateToAppointment;
+  void Function(int i) get getNavigateToAppointment => _navigateToAppointment;
+  void setNavigateToAppointment(void Function(int i) x) =>
+      _navigateToAppointment = x;
+
   // ----------------------------------------------------------------
   static DiagnosticCustomer _selectedDiagnosticCustomerForAppointmentDetails;
   DiagnosticCustomer get getSelectedDiagnosticCustomer =>

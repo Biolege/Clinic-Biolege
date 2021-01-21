@@ -187,7 +187,6 @@ class StorageService {
   Future setPhoneNumber(int phone) async {
     SharedPreferences _localStorage = await SharedPreferences.getInstance();
     _phoneNumber = phone;
-    print(_phoneNumber);
     await _localStorage.setInt(phoneNumberLocalStorageKey, _phoneNumber);
   }
 

@@ -30,9 +30,12 @@ class SearchClinicViewModel extends FutureViewModel {
   void searchClinic() {
     results.clear();
     allClinic
-        .where((clinic) => clinic.name.contains(search.text))
+        .where((clinic) =>
+            clinic.name.toLowerCase().contains(search.text.toLowerCase()))
         .forEach((clinic) => results.add(clinic));
-    print(results);
+
+    if (search.text.length == 0) results.clear();
+
     notifyListeners();
   }
 

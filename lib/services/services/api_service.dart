@@ -50,6 +50,7 @@ class APIServices {
     // Locating Dependencies
     final StorageService _storageService = locator<StorageService>();
     final SnackbarService _snackBarService = locator<SnackbarService>();
+    final DataFromApi _dataFromApiService = locator<DataFromApi>();
     // _________________________________________________________________________
     try {
       // URL to be called
@@ -83,8 +84,12 @@ class APIServices {
       print("Clinic employee created with used id : " +
           responseJson["clinicEmployee"]["_id"]);
       _storageService.setUID(responseJson["clinicEmployee"]["_id"]);
+
+      ClinicEmployee x =
+          ClinicEmployee.fromJson(responseJson["clinicEmployee"]);
+      _dataFromApiService.setClinicEmployee(x);
       // _______________________________________________________________________
-      return ClinicEmployee.fromJson(responseJson["clinicEmployee"]);
+      return x;
     } catch (e) {
       print("At create clinic employee :" + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
@@ -196,7 +201,7 @@ class APIServices {
       // _______________________________________________________________________
       // URL to be called
       var uri = Uri.parse('$url$urlClinicUpdate$clinicId');
-      // print(uri);
+      print(uri);
       // _______________________________________________________________________
       // Creating get requests
       var request = new http.Request("PUT", uri);

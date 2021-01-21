@@ -81,6 +81,7 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
     _doctorAppointmentsDetailservice
         .setAppointmentCorrespondingToSelectedCustomers(
             appointmentCorrespondingToCustomers);
+
     setBusy(false);
     notifyListeners();
   }
