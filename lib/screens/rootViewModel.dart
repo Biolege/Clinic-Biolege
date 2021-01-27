@@ -1,7 +1,7 @@
 import 'package:location/location.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../services/services/dataFromApi_service.dart';
+import '../services/services/dataFromApiService.dart';
 import '../services/services/local_storage.dart';
 import '../app/locator.dart';
 import '../app/router.gr.dart';

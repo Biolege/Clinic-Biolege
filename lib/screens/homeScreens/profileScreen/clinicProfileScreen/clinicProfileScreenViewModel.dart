@@ -7,7 +7,7 @@ import '../../../../app/locator.dart';
 import '../../../../services/services/local_storage.dart';
 import '../../../../services/services/filePicker_service.dart';
 import '../../../../model/clinic.dart';
-import '../../../../services/services/dataFromApi_service.dart';
+import '../../../../services/services/dataFromApiService.dart';
 
 class ClinicProfileScreenViewModel extends FutureViewModel {
   // __________________________________________________________________________

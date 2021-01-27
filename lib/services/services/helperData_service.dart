@@ -4,7 +4,7 @@ import '../../model/clinic.dart';
 import '../../model/diagnosticCustomer.dart';
 import '../../model/doctor.dart';
 import 'api_service.dart';
-import 'dataFromApi_service.dart';
+import 'dataFromApiService.dart';
 // import 'local_storage.dart';
 // import 'package:stacked_services/stacked_services.dart';
 

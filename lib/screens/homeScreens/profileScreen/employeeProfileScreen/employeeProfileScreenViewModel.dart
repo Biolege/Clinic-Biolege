@@ -1,5 +1,5 @@
 import 'package:clinicapp/model/clinicEmployee.dart';
-import 'package:clinicapp/services/services/dataFromApi_service.dart';
+import 'package:clinicapp/services/services/dataFromApiService.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';

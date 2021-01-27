@@ -7,7 +7,7 @@ import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';
 import '../../../services/services/api_service.dart';
 import '../../../services/services/helperData_service.dart';
-import '../../../services/services/dataFromApi_service.dart';
+import '../../../services/services/dataFromApiService.dart';
 
 class ChangeAppointmentDetailsScreenViewModel extends FutureViewModel {
   // _________________________________________________________________________

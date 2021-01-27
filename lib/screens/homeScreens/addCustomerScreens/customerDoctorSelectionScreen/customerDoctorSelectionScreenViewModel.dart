@@ -3,7 +3,7 @@ import 'package:clinicapp/services/services/helperData_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../model/doctor.dart';
-import '../../../../services/services/dataFromApi_service.dart';
+import '../../../../services/services/dataFromApiService.dart';
 import '../../../../app/locator.dart';
 
 class CustomerDoctorSelectionScreenViewModel

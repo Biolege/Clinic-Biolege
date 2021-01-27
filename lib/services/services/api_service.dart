@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
 import 'package:http_parser/http_parser.dart';
-import 'dataFromApi_service.dart';
+import 'dataFromApiService.dart';
 import 'helperData_service.dart';
 import 'local_storage.dart';
 import '../../app/locator.dart';

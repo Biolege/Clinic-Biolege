@@ -4,7 +4,7 @@ import '../../../../app/router.gr.dart';
 import '../../../../services/services/helperData_service.dart';
 import '../../../../model/doctor.dart';
 import '../../../../app/locator.dart';
-import '../../../../services/services/dataFromApi_service.dart';
+import '../../../../services/services/dataFromApiService.dart';
 
 class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
   // __________________________________________________________________________

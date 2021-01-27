@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../services/services/dataFromApi_service.dart';
+import '../../../services/services/dataFromApiService.dart';
 import '../../../services/services/helperData_service.dart';
 import '../../../app/locator.dart';
 import '../../../app/router.gr.dart';

@@ -6,7 +6,7 @@ import '../services/services/filePicker_service.dart';
 import '../services/services/auth_service.dart';
 import '../services/services/local_storage.dart';
 import '../services/services/api_service.dart';
-import '../services/services/dataFromApi_service.dart';
+import '../services/services/dataFromApiService.dart';
 import '../services/services/helperData_service.dart';
 
 final locator = GetIt.instance;

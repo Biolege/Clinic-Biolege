@@ -4,7 +4,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/router.gr.dart';
 import '../../../../app/locator.dart';
 import '../../../../model/clinic.dart';
-import '../../../../services/services/dataFromApi_service.dart';
+import '../../../../services/services/dataFromApiService.dart';
 // import '../../../../services/services/api_service.dart';
 // import '../../../../services/services/auth_service.dart';
 // import '../../../../services/services/local_storage.dart';

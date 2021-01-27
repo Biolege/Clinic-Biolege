@@ -2,7 +2,7 @@ import 'package:clinicapp/screens/homeScreens/changeAppointmentDetailsScreen/cha
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked/stacked.dart';
 import '../../../model/clinic.dart';
-import '../../../services/services/dataFromApi_service.dart';
+import '../../../services/services/dataFromApiService.dart';
 import '../../../services/services/helperData_service.dart';
 // import '../../../app/router.gr.dart';
 import '../../../app/locator.dart';

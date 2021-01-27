@@ -8,7 +8,7 @@ import '../../app/router.gr.dart';
 // import '../../services/services/auth_service.dart';
 // import '../../model/clinic.dart';
 // import '../../model/clinicEmployee.dart';
-import '../../services/services/dataFromApi_service.dart';
+import '../../services/services/dataFromApiService.dart';
 
 // import '../../services/services/api_service.dart';
 class WelcomeScreenViewModel extends FutureViewModel<Map<String, String>> {

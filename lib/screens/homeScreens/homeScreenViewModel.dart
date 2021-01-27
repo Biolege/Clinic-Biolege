@@ -7,7 +7,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'doctorsListTabScreens/doctorsListScreen/doctorListScreenView.dart';
 import 'appointmentHomeScreen/appointmentHomeScreenView.dart';
 import '../../app/locator.dart';
-import '../../services/services/dataFromApi_service.dart';
+import '../../services/services/dataFromApiService.dart';
 import '../../services/services/helperData_service.dart';
 import 'profileScreen/profileScreenView.dart';
 // import '../../services/services/local_storage.dart';
