@@ -16,6 +16,7 @@ class RootViewModel extends BaseViewModel {
   final StorageService _storageService = locator<StorageService>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
+
   // __________________________________________________________________________
   // Reroutes the user to either Emailscreenview or Onboarding Screen
 
@@ -50,6 +51,7 @@ class RootViewModel extends BaseViewModel {
       // clinic and user
       await _storageService.initLocalStorages();
       // Get all the clinics in the beginning itself
+      DateTime start = DateTime.now();
       if (_dataFromApiService.getAllClinics == null)
         await _dataFromApiService.setClinicsList();
       // Get all the doctors in the beginning itself
@@ -58,6 +60,12 @@ class RootViewModel extends BaseViewModel {
       // Get all the diagnotic customer in the beginning itself
       if (_dataFromApiService.getDiagnosticCustomerList == null)
         await _dataFromApiService.setDiagnosticCustomersList();
+      DateTime end = DateTime.now();
+      print(
+          "*----------------------------------------------------------------*");
+      print("Time to set/fetch Clinic/Doctor/DiagnosticCustomer: " +
+          (end.difference(start)).inSeconds.toString() +
+          " seconds");
       // ---------------------------------------------------------------------
       print(
           "*----------------------------------------------------------------*");
@@ -88,13 +96,26 @@ class RootViewModel extends BaseViewModel {
           _navigatorService
               .clearStackAndShow(Routes.createOrSearchClinicScreenView);
         else {
+          // ___________________________________________________________________
+          DateTime start = DateTime.now();
+          // Setter for all the clinic employee
+          await _dataFromApiService.setEmployeeList();
           // Setter for all the doctors available in the clinic
           await _dataFromApiService.setDoctorsListForClinic();
           // Setter for clinic details
           await _dataFromApiService.setClinicDetails();
           // Setter for clinic employee details
           await _dataFromApiService.setEmployeeDetails();
-
+          // ___________________________________________________________________
+          DateTime end = DateTime.now();
+          print(
+              "*------------------------------------------------------------*");
+          print(
+              "Time to set/fetch Employee/DoctorsListForClinic/ClinicDetails/EmployeeDetails " +
+                  (end.difference(start)).inSeconds.toString() +
+                  " seconds");
+          print(
+              "*------------------------------------------------------------*");
           _navigatorService.pushNamedAndRemoveUntil(Routes.welcomeScreenView,
               predicate: (_) => false);
         }

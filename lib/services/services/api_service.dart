@@ -21,6 +21,7 @@ class APIServices {
   // Clinic Employee
   String urlClinicEmployeeCreate = "clinicemployee/create";
   String urlGetClinicEmployee = "clinicemployee";
+  String urlGetAllClinicEmployee = "clinicemployees";
   String urlGetClinicEmployeeByPhone = "clinicemployee/phone/";
   // -------------------------------------------------------------
   // Clinic
@@ -265,6 +266,41 @@ class APIServices {
       print("At add clinic customer : " + e.toString());
       _snackBarService.showSnackbar(message: e.toString());
       return null;
+    }
+  }
+  // ___________________________________________________________________________
+
+  // Fetches all clinics from the API and stores in data services class
+  Future<List<ClinicEmployee>> getAllClinicEmployee() async {
+    // _________________________________________________________________________
+    // Locating Dependencies
+    final SnackbarService _snackBarService = locator<SnackbarService>();
+    final DataFromApi _dataFromApiService = locator<DataFromApi>();
+    // _________________________________________________________________________
+    try {
+      // URL to be called
+      var uri = Uri.parse('$url$urlGetAllClinicEmployee');
+      // Creating a get request
+      var request = new http.Request("GET", uri);
+      // _______________________________________________________________________
+
+      // _______________________________________________________________________
+      // Receiving the JSON response
+      var response = await request.send();
+      var responseString = await response.stream.bytesToString();
+      var responseJson = json.decode(responseString);
+      // _______________________________________________________________________
+      // Serializing Json to Doctor Class
+      List<ClinicEmployee> clist = [];
+
+      responseJson.forEach(
+          (clcEmp) => clist.add(clinicEmployeeFromJson(json.encode(clcEmp))));
+      // _______________________________________________________________________
+      return clist;
+    } catch (e) {
+      print("At get all clinic's employee: " + e.toString());
+      _snackBarService.showSnackbar(message: e.toString());
+      return [];
     }
   }
 

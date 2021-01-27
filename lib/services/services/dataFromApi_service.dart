@@ -30,6 +30,11 @@ class DataFromApi {
   ClinicEmployee get getClinicEmployee => _employee;
   void setClinicEmployee(ClinicEmployee x) => _employee = x;
   // ___________________________________________________________________________
+  // Data to be used to show clinic employees
+  static List<ClinicEmployee> _clinicEmployeeList;
+  List<ClinicEmployee> get getClinicEmployeeList => _clinicEmployeeList;
+  void setClinicEmployeeList(List<ClinicEmployee> x) => _clinicEmployeeList = x;
+  // ___________________________________________________________________________
   // Data to be used in the doctors tab in bottom navigation bar for doctor's
   // customer
   static List<DiagnosticCustomer> _diagnosticCustomersList;
@@ -39,11 +44,6 @@ class DataFromApi {
       _diagnosticCustomersList = x;
   void setDiagnosticCustomer(DiagnosticCustomer x) =>
       _diagnosticCustomersList.add(x);
-  // ___________________________________________________________________________
-  // Data to be used to show clinic employees
-  static List<ClinicEmployee> _clinicEmployeeList;
-  List<ClinicEmployee> get getClinicEmployeeList => _clinicEmployeeList;
-  void setClinicEmployeeList(List<ClinicEmployee> x) => _clinicEmployeeList = x;
   // ___________________________________________________________________________
   // Data to be used in the doctors tab in bottom navigation bar
   static List<Doctor> _doctorsListForClinic;
@@ -122,6 +122,12 @@ class DataFromApi {
   // Helper Function
   //-------------------------------------------------------------------
   // Get all the list
+  Future setEmployeeList() async {
+    _clinicEmployeeList = [];
+    _clinicEmployeeList = await _apiServices.getAllClinicEmployee();
+    print("All clinic's employee saved");
+  }
+
   Future setDoctorsList() async {
     _doctorsList = [];
     _doctorsList = await _apiServices.getAllDoctors();

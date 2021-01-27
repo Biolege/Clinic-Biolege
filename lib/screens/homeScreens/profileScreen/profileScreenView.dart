@@ -1,4 +1,5 @@
 import 'package:clinicapp/theme/theme.dart';
+import 'package:clinicapp/widgets/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stacked/stacked.dart';
@@ -21,95 +22,101 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    InkWell(
-                      onTap: model.openClinicDetails,
-                      child: Container(
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: offWhite1),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 15),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    model.getClinicName,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    "Tap for details",
-                                    style: TextStyle(
-                                        fontSize: 12, color: offBlack3),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  model.getClinicLogoToShow != null
-                                      ? CircleAvatar(
-                                          child: ClipOval(
-                                            child: Image.memory(
-                                              model.getClinicLogoToShow,
-                                              width: 50,
-                                              height: 50,
-                                              fit: BoxFit.cover,
+                    FadeInDTU(
+                      0.3,
+                      InkWell(
+                        onTap: model.openClinicDetails,
+                        child: Container(
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: offWhite1),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 15),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      model.getClinicName,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      "Tap for details",
+                                      style: TextStyle(
+                                          fontSize: 12, color: offBlack3),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    model.getClinicLogoToShow != null
+                                        ? CircleAvatar(
+                                            child: ClipOval(
+                                              child: Image.memory(
+                                                model.getClinicLogoToShow,
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
+                                            radius: 25.0,
+                                            backgroundColor: Colors.black12,
+                                          )
+                                        : CircleAvatar(
+                                            radius: 25.0,
+                                            backgroundColor: Colors.black12,
                                           ),
-                                          radius: 25.0,
-                                          backgroundColor: Colors.black12,
-                                        )
-                                      : CircleAvatar(
-                                          radius: 25.0,
-                                          backgroundColor: Colors.black12,
-                                        ),
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  Icon(
-                                    AntDesign.right,
-                                    size: 10,
-                                  )
-                                ],
-                              )
-                            ],
+                                    SizedBox(
+                                      width: 12,
+                                    ),
+                                    Icon(
+                                      AntDesign.right,
+                                      size: 10,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            onTap: model.openClinicEmployeeDetails,
-                            contentPadding: const EdgeInsets.all(10),
-                            leading: Icon(
-                              MaterialCommunityIcons.account,
+                    FadeInDTU(
+                      0.6,
+                      Container(
+                        margin: const EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              onTap: model.openClinicEmployeeDetails,
+                              contentPadding: const EdgeInsets.all(10),
+                              leading: Icon(
+                                MaterialCommunityIcons.account,
+                              ),
+                              title: Text('My Details'),
+                              trailing: Icon(
+                                AntDesign.right,
+                                size: 10,
+                              ),
                             ),
-                            title: Text('My Details'),
-                            trailing: Icon(
-                              AntDesign.right,
-                              size: 10,
+                            ListTile(
+                              onTap: model.logOut,
+                              contentPadding: const EdgeInsets.all(10),
+                              leading: Icon(AntDesign.logout),
+                              title: Text('Log Out'),
+                              trailing: Icon(
+                                AntDesign.right,
+                                size: 10,
+                              ),
                             ),
-                          ),
-                          ListTile(
-                            onTap: model.logOut,
-                            contentPadding: const EdgeInsets.all(10),
-                            leading: Icon(AntDesign.logout),
-                            title: Text('Log Out'),
-                            trailing: Icon(
-                              AntDesign.right,
-                              size: 10,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     )
                   ],

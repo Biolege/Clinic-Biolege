@@ -29,13 +29,6 @@ class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
     _navigatorService.navigateTo(Routes.doctorsProfileScreenView);
   }
 
-  void setDoctorToShowInAppointments(Doctor x) async {
-    selectedDocID = x.id;
-    _doctorAppointmentsDetailservice.setSelectedDoctor(x);
-    _doctorAppointmentsDetailservice.getNavigateToAppointment(1);
-    notifyListeners();
-  }
-
   void navigateToAddDoctorToClinicScreen() {
     _navigatorService.navigateTo(Routes.selectDoctorClinicScreen);
   }
@@ -43,7 +36,7 @@ class DoctorsListScreenViewModel extends FutureViewModel<List<Doctor>> {
   @override
   Future<List<Doctor>> futureToRun() async {
     try {
-      var x = _dataFromApiService.getDoctorsListForClinic;
+      List<Doctor> x = _dataFromApiService.getDoctorsListForClinic;
       selectedDocID = _doctorAppointmentsDetailservice.getSelectedDoctor.id;
       return x;
     } catch (e) {

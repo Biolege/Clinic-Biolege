@@ -42,6 +42,7 @@ abstract class ThirdPartyServicesModule {
   APIServices get aPIServices;
   DialogService get dialogService;
   SnackbarService get snackbarService;
+  BottomSheetService get bottomSheetService;
   FilePickHelperService get filePickHelperService;
   // ---------------------------------------------------
   // __________________________________________________________________________

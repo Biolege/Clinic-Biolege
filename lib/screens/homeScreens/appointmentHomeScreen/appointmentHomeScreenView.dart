@@ -55,6 +55,11 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                         style: TextStyle(color: offBlack2),
                                       )
                                     : Container(),
+                                trailing: IconButton(
+                                  icon: Icon(Icons.arrow_drop_down),
+                                  onPressed: () =>
+                                      model.showDoctorsList(context),
+                                ),
                               ),
                             ),
                             FadeInDTU(
@@ -67,7 +72,7 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                     decoration: BoxDecoration(
                                         color: Colors.blue,
                                         borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
+                                          // topLeft: Radius.circular(30),
                                           topRight: Radius.circular(30),
                                         )),
                                     height: getProportionateScreenHeight(150),
@@ -152,7 +157,7 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                     decoration: BoxDecoration(
                                         color: offWhite,
                                         borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
+                                          // topLeft: Radius.circular(30),
                                           topRight: Radius.circular(30),
                                         )),
                                     height: getProportionateScreenHeight(50),
