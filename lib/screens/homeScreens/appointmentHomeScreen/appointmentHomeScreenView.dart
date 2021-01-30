@@ -72,7 +72,7 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                     decoration: BoxDecoration(
                                         color: Colors.blue,
                                         borderRadius: BorderRadius.only(
-                                          // topLeft: Radius.circular(30),
+                                          topLeft: Radius.circular(30),
                                           topRight: Radius.circular(30),
                                         )),
                                     height: getProportionateScreenHeight(150),
@@ -103,7 +103,8 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                                       fontSize: 12),
                                                 ),
                                                 Text(
-                                                  "30",
+                                                  model.totalCustomers
+                                                      .toString(),
                                                   style: TextStyle(
                                                       color: offWhite,
                                                       fontSize: 15),
@@ -121,7 +122,8 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                                       fontSize: 12),
                                                 ),
                                                 Text(
-                                                  "30",
+                                                  model.completedCustomers
+                                                      .toString(),
                                                   style: TextStyle(
                                                       color: offWhite,
                                                       fontSize: 15),
@@ -139,7 +141,8 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                                       fontSize: 12),
                                                 ),
                                                 Text(
-                                                  "30",
+                                                  model.scheduledCustomers
+                                                      .toString(),
                                                   style: TextStyle(
                                                       color: offWhite,
                                                       fontSize: 15),
@@ -157,7 +160,7 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                     decoration: BoxDecoration(
                                         color: offWhite,
                                         borderRadius: BorderRadius.only(
-                                          // topLeft: Radius.circular(30),
+                                          topLeft: Radius.circular(30),
                                           topRight: Radius.circular(30),
                                         )),
                                     height: getProportionateScreenHeight(50),
@@ -167,10 +170,13 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                       children: [
                                         FlatButton(
                                           color: Colors.transparent,
-                                          onPressed: () {},
+                                          onPressed: () => model.setListType(0),
                                           child: Text(
                                             "Schedule",
-                                            style: TextStyle(color: blue),
+                                            style: TextStyle(
+                                                color: !model.listType
+                                                    ? blue
+                                                    : offBlack),
                                           ),
                                         ),
                                         Container(
@@ -179,10 +185,13 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                           width: 1,
                                         ),
                                         FlatButton(
-                                            onPressed: () {},
+                                            onPressed: () =>
+                                                model.setListType(1),
                                             child: Text("Completed",
                                                 style: TextStyle(
-                                                    color: offBlack2))),
+                                                    color: model.listType
+                                                        ? blue
+                                                        : offBlack))),
                                       ],
                                     ),
                                   ),
@@ -207,18 +216,18 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                 ),
                               ),
                             ),
-                            model.customersForSelectedDoctor != null &&
-                                    model.customersForSelectedDoctor.length != 0
+                            model.customerToDisplay != null &&
+                                    model.customerToDisplay.length != 0
                                 ? FadeInDTU(
-                                    1,
+                                    0.1,
                                     ListView.builder(
                                         primary: false,
-                                        itemCount: model
-                                            .customersForSelectedDoctor.length,
+                                        itemCount:
+                                            model.customerToDisplay.length,
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
-                                          return FadeInLTR(
-                                            0.2,
+                                          return FadeInDTU(
+                                            0.1,
                                             Card(
                                               color: offWhite,
                                               shape: RoundedRectangleBorder(
@@ -230,7 +239,7 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                               child: ListTile(
                                                 onTap: () => model
                                                     .openPatientDetailsView(
-                                                        model.customersForSelectedDoctor[
+                                                        model.customerToDisplay[
                                                             index]),
                                                 contentPadding:
                                                     const EdgeInsets.symmetric(
@@ -244,16 +253,14 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                                       Colors.transparent,
                                                 ),
                                                 title: Text(model
-                                                    .customersForSelectedDoctor[
-                                                        index]
+                                                    .customerToDisplay[index]
                                                     .name),
                                                 subtitle: Text(model
-                                                    .customersForSelectedDoctor[
-                                                        index]
+                                                    .customerToDisplay[index]
                                                     .phoneNumber
                                                     .toString()),
                                                 trailing: Text(model
-                                                        .customersForSelectedDoctor[
+                                                        .customerToDisplay[
                                                             index]
                                                         .doctors
                                                         .last
@@ -264,7 +271,7 @@ class AppointmentHomeScreenViewState extends State<AppointmentHomeScreenView> {
                                                         .toString() +
                                                     ":" +
                                                     model
-                                                        .customersForSelectedDoctor[
+                                                        .customerToDisplay[
                                                             index]
                                                         .doctors
                                                         .last

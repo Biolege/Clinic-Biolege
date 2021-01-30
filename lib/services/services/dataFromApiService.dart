@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:stacked_services/stacked_services.dart';
 import '../../model/clinic.dart';
 import '../../model/clinicEmployee.dart';
 import '../../model/diagnosticCustomer.dart';
@@ -7,13 +6,14 @@ import '../../services/services/local_storage.dart';
 import '../../app/locator.dart';
 import '../../services/services/api_service.dart';
 import '../../model/doctor.dart';
+// import 'package:stacked_services/stacked_services.dart';
 
 class DataFromApi {
   // ___________________________________________________________________________
   // Locating the Dependencies
   final APIServices _apiServices = locator<APIServices>();
   final StorageService _storageService = locator<StorageService>();
-  final NavigationService _navigatorService = locator<NavigationService>();
+  // final NavigationService _navigatorService = locator<NavigationService>();
   // ___________________________________________________________________________
   // Data to be used globally for current clinic
   static Clinic _clinic;

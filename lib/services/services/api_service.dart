@@ -275,7 +275,7 @@ class APIServices {
     // _________________________________________________________________________
     // Locating Dependencies
     final SnackbarService _snackBarService = locator<SnackbarService>();
-    final DataFromApi _dataFromApiService = locator<DataFromApi>();
+    // final DataFromApi _dataFromApiService = locator<DataFromApi>();
     // _________________________________________________________________________
     try {
       // URL to be called

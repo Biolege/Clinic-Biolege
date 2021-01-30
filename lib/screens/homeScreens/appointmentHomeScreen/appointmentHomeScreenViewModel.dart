@@ -1,4 +1,3 @@
-import 'package:clinicapp/screens/homeScreens/doctorsListTabScreens/doctorsListScreen/doctorListScreenViewModel.dart';
 import 'package:clinicapp/theme/theme.dart';
 import 'package:clinicapp/widgets/animations.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,36 +20,73 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   final DoctorAppointments _doctorAppointmentsDetailservice =
       locator<DoctorAppointments>();
-  final BottomSheetService _bottomSheetService = locator<BottomSheetService>();
+  // final BottomSheetService _bottomSheetService = locator<BottomSheetService>();
   // final SnackbarService _snackBarService = locator<SnackbarService>();
   // __________________________________________________________________________
   // Variables
-  BuildContext context;
 
+  BuildContext viewBuildContext;
   TextEditingController searchedPatient = TextEditingController();
+  // Selected list type
+  // false : Scheduled , true: Completed
+  bool listType = false;
+  // Counter Variables
+  int totalCustomers = 0, completedCustomers = 0, scheduledCustomers = 0;
+  // Doctors Variables
   Doctor selectedDoctor;
+  String selectedDocID;
+  // Clinic Variables
   Clinic _clinic;
+  // Doctors List to Display
   List<Doctor> _doctorsListForClinic = [];
   List<DiagnosticCustomer> customersForSelectedDoctor = [];
+  // Scheduled and Completed Customers for the selected doctor
+  List<DiagnosticCustomer> customerToDisplay = [];
+  List<DiagnosticCustomer> scheduledCustomersForSelectedDoctor = [];
+  List<DiagnosticCustomer> completedCustomersForSelectedDoctor = [];
+  // Helper variables
   Map<String, AppointmentDate> appointmentCorrespondingToCustomers = {};
   List<DiagnosticCustomer> temporaryList = [];
   List<DiagnosticCustomer> customerForSelectedDateSelectedDoctor = [];
-  String selectedDocID;
+
   // __________________________________________________________________________
+  // Helper Functions
+
+  void setListType(int v) {
+    if (v == 0)
+      listType = false;
+    else
+      listType = true;
+
+    if (listType == false)
+      customerToDisplay = scheduledCustomersForSelectedDoctor;
+    else
+      customerToDisplay = completedCustomersForSelectedDoctor;
+
+    notifyListeners();
+  }
+
   void openPatientDetailsView(DiagnosticCustomer dgtcst) {
     _doctorAppointmentsDetailservice
         .setSelectedDiagnosticCustomerForAppointmentDetails(dgtcst);
     _navigatorService.navigateTo(PatientAppointmentDetailsScreenView.routeName);
   }
 
-  void addPatientView() {
-    _navigatorService.navigateTo(Routes.addCustomerScreenView);
-  }
+  void addPatientView() =>
+      _navigatorService.navigateTo(Routes.addCustomerScreenView);
 
   void refresh() {
     setBusy(true);
+
+    // Resetting all the values
+    setListType(!listType ? 0 : 1);
+    scheduledCustomers = 0;
+    completedCustomers = 0;
+    scheduledCustomersForSelectedDoctor.clear();
+    completedCustomersForSelectedDoctor.clear();
     temporaryList.clear();
     customersForSelectedDoctor.clear();
+
     DateTime appoinmentScreenDate =
         _doctorAppointmentsDetailservice.getSelectedDateInAppointmentTab;
 
@@ -59,6 +95,8 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
     Map<String, DiagnosticCustomer> mapped =
         _dataFromApiService.getDiagnosticCustomersMappedList;
 
+    // First store all the patients that have appointments same as
+    // tbe appoinmentScreenDate date vairable (displayed on the screen)
     selectedDoctor.customers.forEach((customer) => ((customer.appointmentDate
                 .any((dt) =>
                     dt.date.day == appoinmentScreenDate.day &&
@@ -67,6 +105,7 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
         ? temporaryList.add(mapped[customer.id])
         : null);
 
+    // Then filter out the patient of this clinic
     temporaryList.forEach((dgcCustomer) {
       dgcCustomer.doctors
           .forEach((doctorObject) => (doctorObject.clinic.id == _clinic.id)
@@ -76,14 +115,29 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
                       .where((appointment) =>
                           appointment.date.day == appoinmentScreenDate.day &&
                           appointment.date.month == appoinmentScreenDate.month)
-                      .forEach((element) {
-                    appointmentCorrespondingToCustomers[dgcCustomer.id] =
-                        element;
-                  })
+                      .forEach((appointmentDate) =>
+                          appointmentCorrespondingToCustomers[dgcCustomer.id] =
+                              appointmentDate)
                 }
               : null);
     });
 
+    // Logic to calculate scheduled and completed counter variables
+    appointmentCorrespondingToCustomers.forEach((key, value) {
+      if (value.isCompleted == 0) {
+        print(mapped[key].id);
+        scheduledCustomersForSelectedDoctor.add(mapped[key]);
+        scheduledCustomers++;
+      } else {
+        print(mapped[key].id);
+        completedCustomersForSelectedDoctor.add(mapped[key]);
+        completedCustomers++;
+      }
+    });
+
+    totalCustomers = scheduledCustomers + completedCustomers;
+
+    // Set the selected diagnostic customer in the appointment tab
     _doctorAppointmentsDetailservice
         .setAppointmentCorrespondingToSelectedCustomers(
             appointmentCorrespondingToCustomers);
@@ -92,16 +146,22 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
     notifyListeners();
   }
 
-  void setDoctorToShowInAppointments(Doctor x) async {
-    selectedDocID = x.id;
-    _doctorAppointmentsDetailservice.setSelectedDoctor(x);
-    Navigator.pop(context);
+  void setDoctorToShowInAppointments(Doctor doc) async {
+    selectedDocID = doc.id;
+    _doctorAppointmentsDetailservice.setSelectedDoctor(doc);
+    Navigator.pop(viewBuildContext);
     notifyListeners();
   }
 
   Future<void> showDoctorsList(BuildContext ctx) async {
-    context = ctx;
-    await showModalBottomSheet(
+    viewBuildContext = ctx;
+    await buildSelectableDoctorsBottomSheet();
+    refresh();
+    notifyListeners();
+  }
+
+  Future buildSelectableDoctorsBottomSheet() {
+    return showModalBottomSheet(
       isScrollControlled: true,
       builder: (BuildContext context) {
         return Padding(
@@ -164,10 +224,8 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
           ),
         );
       },
-      context: context,
+      context: viewBuildContext,
     );
-
-    refresh();
   }
 
   @override
