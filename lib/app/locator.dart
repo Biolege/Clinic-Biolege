@@ -26,6 +26,7 @@ void setupLocator() {
   // Data
   locator.registerLazySingleton(() => DataFromApi());
   // Helper Data Service (Data inside these classes changes)
+  locator.registerLazySingleton(() => PatientDetailsAccountScreen());
   locator.registerLazySingleton(() => PatientDetails());
   locator.registerLazySingleton(() => DoctorAppointments());
 }

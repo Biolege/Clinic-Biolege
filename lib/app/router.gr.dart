@@ -36,8 +36,10 @@ import '../screens/homeScreens/doctorsListTabScreens/doctorsListScreen/doctorLis
 import '../screens/homeScreens/doctorsListTabScreens/doctorsProfileScreen/doctorsProfileScreenView.dart';
 import '../screens/homeScreens/homeScreenView.dart';
 import '../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
+import '../screens/homeScreens/profileScreen/clinicEmployeeScreen/clinicEmployeeListScreenView.dart';
 import '../screens/homeScreens/profileScreen/clinicProfileScreen/clinicProfileScreenView.dart';
 import '../screens/homeScreens/profileScreen/employeeProfileScreen/employeeProfileScreenView.dart';
+import '../screens/homeScreens/profileScreen/patientsScreen/showPatientsScreenView.dart';
 import '../screens/homeScreens/selectDoctorForClinicScreen/selectDoctorClinicScreen.dart';
 import '../screens/onBoardingScreen/onBoardingScreenView.dart';
 import '../screens/rootView.dart';
@@ -92,6 +94,9 @@ class Routes {
   static const String selectDoctorClinicScreen = '/selectDoctorClinicScreen';
   static const String clinicProfileScreenView = '/clinicProfileScreenView';
   static const String employeeProfileScreenView = '/employeeProfileScreenView';
+  static const String showPatientsScreenView = '/showPatientsScreenView';
+  static const String clinicEmployeeListScreenView =
+      '/clinicEmployeeListScreenView';
   static const all = <String>{
     root,
     onBoardingScreen,
@@ -127,6 +132,8 @@ class Routes {
     selectDoctorClinicScreen,
     clinicProfileScreenView,
     employeeProfileScreenView,
+    showPatientsScreenView,
+    clinicEmployeeListScreenView,
   };
 }
 
@@ -179,6 +186,9 @@ class Router extends RouterBase {
     RouteDef(Routes.selectDoctorClinicScreen, page: SelectDoctorClinicScreen),
     RouteDef(Routes.clinicProfileScreenView, page: ClinicProfileScreenView),
     RouteDef(Routes.employeeProfileScreenView, page: EmployeeProfileScreenView),
+    RouteDef(Routes.showPatientsScreenView, page: ShowPatientsScreenView),
+    RouteDef(Routes.clinicEmployeeListScreenView,
+        page: ClinicEmployeeListScreenView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -396,6 +406,18 @@ class Router extends RouterBase {
     EmployeeProfileScreenView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => EmployeeProfileScreenView(),
+        settings: data,
+      );
+    },
+    ShowPatientsScreenView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ShowPatientsScreenView(),
+        settings: data,
+      );
+    },
+    ClinicEmployeeListScreenView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ClinicEmployeeListScreenView(),
         settings: data,
       );
     },

@@ -25,6 +25,7 @@ abstract class ThirdPartyServicesModule {
   // Temporary Data buckets
   PatientDetails get patientDetailservice;
   DoctorAppointments get doctorAppointmentsDetailservice;
+  PatientDetailsAccountScreen get patientDetailsAccountScreen;
   // ---------------------------------------------------
   // Navigation Services
   NavigationService get navigationService;

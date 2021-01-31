@@ -211,3 +211,71 @@ class DoctorAppointments {
 
   // __________________________________________________________________________
 }
+
+class PatientDetailsAccountScreen {
+  // __________________________________________________________________________
+  // Locating Dependencies
+  final DataFromApi _dataFromApiService = locator<DataFromApi>();
+  // __________________________________________________________________________
+  // Variables and their setters
+  static Map<String, AppointmentDate>
+      appointmentCorrespondingToSelectedCustomers;
+  void setAppointmentCorrespondingToSelectedCustomers(
+          Map<String, AppointmentDate> x) =>
+      appointmentCorrespondingToSelectedCustomers = x;
+  Map<String, AppointmentDate>
+      get getAppointmentCorrespondingToSelectedCustomers =>
+          appointmentCorrespondingToSelectedCustomers;
+
+  static void Function() _refesh;
+  void setRefreshAppointmentList(void Function() x) => _refesh = x;
+  void Function() get getRefreshAppointmentList => _refesh;
+
+  static Doctor _selectedDoctorToShow;
+  Doctor get getSelectedDoctorToShow => _selectedDoctorToShow;
+  void setSelectedDoctorToShow(Doctor doc) {
+    print(doc.name);
+    _selectedDoctorToShow = doc;
+  }
+
+  static DateTime _selectedDateInAppointmentTab;
+  DateTime get getSelectedDateInAppointmentTab => _selectedDateInAppointmentTab;
+  void setSelectedDateInAppointmentTab(DateTime dt) =>
+      _selectedDateInAppointmentTab = dt;
+
+  static ClinicElement _clinicDetailsForSelectedDoctorToShow;
+  ClinicElement get getClinicDetailsForSelectedDoctorToShow =>
+      _clinicDetailsForSelectedDoctorToShow;
+  void setClinicDetailsForSelectedDoctorToShow(ClinicElement clielem) {
+    _clinicDetailsForSelectedDoctorToShow = clielem;
+  }
+
+  static bool isFromClinic;
+  bool get getIsFromClinic => isFromClinic;
+  void setIsFromClinic(bool x) => isFromClinic = x;
+
+  static Doctor _selectedDoctor;
+  Doctor get getSelectedDoctor => _selectedDoctor;
+  void setSelectedDoctor(Doctor doc) => _selectedDoctor = doc;
+
+  void setDefaultSelectedDoctor() {
+    if (_dataFromApiService.getDoctorsListForClinic != null &&
+        _dataFromApiService.getDoctorsListForClinic.length != 0)
+      _selectedDoctor = _dataFromApiService.getDoctorsListForClinic[0];
+  }
+
+  static void Function(int i) _navigateToAppointment;
+  void Function(int i) get getNavigateToAppointment => _navigateToAppointment;
+  void setNavigateToAppointment(void Function(int i) x) =>
+      _navigateToAppointment = x;
+
+  // ----------------------------------------------------------------
+  static DiagnosticCustomer _selectedDiagnosticCustomerForAppointmentDetails;
+  DiagnosticCustomer get getSelectedDiagnosticCustomer =>
+      _selectedDiagnosticCustomerForAppointmentDetails;
+  void setSelectedDiagnosticCustomerForAppointmentDetails(
+          DiagnosticCustomer dgcCustomer) =>
+      _selectedDiagnosticCustomerForAppointmentDetails = dgcCustomer;
+
+  // __________________________________________________________________________
+}

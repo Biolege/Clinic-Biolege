@@ -52,7 +52,8 @@ class RootViewModel extends BaseViewModel {
       await _storageService.initLocalStorages();
       // Get all the clinics in the beginning itself
       DateTime start = DateTime.now();
-      if (hasLoggedIn == null) await _dataFromApiService.setClinicsList();
+      if (_dataFromApiService.getAllClinics == null)
+        await _dataFromApiService.setClinicsList();
       // Get all the doctors in the beginning itself
       if (_dataFromApiService.getDoctorsList == null)
         await _dataFromApiService.setDoctorsList();

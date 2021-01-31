@@ -93,18 +93,45 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                         margin: const EdgeInsets.all(10),
                         child: Column(
                           children: [
+                            Divider(),
                             ListTile(
                               onTap: model.openClinicEmployeeDetails,
                               contentPadding: const EdgeInsets.all(10),
                               leading: Icon(
                                 MaterialCommunityIcons.account,
                               ),
-                              title: Text('My Details'),
+                              title: Text('Account Details'),
                               trailing: Icon(
                                 AntDesign.right,
                                 size: 10,
                               ),
                             ),
+                            Divider(),
+                            ListTile(
+                              onTap: model.openShowPatientsDetails,
+                              contentPadding: const EdgeInsets.all(10),
+                              leading: Icon(
+                                MaterialCommunityIcons.doctor,
+                              ),
+                              title: Text('Clinic Patients'),
+                              trailing: Icon(
+                                AntDesign.right,
+                                size: 10,
+                              ),
+                            ),
+                            ListTile(
+                              onTap: model.openShowClinicEmployees,
+                              contentPadding: const EdgeInsets.all(10),
+                              leading: Icon(
+                                MaterialCommunityIcons.bag_personal,
+                              ),
+                              title: Text('Clinic Employees'),
+                              trailing: Icon(
+                                AntDesign.right,
+                                size: 10,
+                              ),
+                            ),
+                            Divider(),
                             ListTile(
                               onTap: model.logOut,
                               contentPadding: const EdgeInsets.all(10),
@@ -115,6 +142,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                                 size: 10,
                               ),
                             ),
+                            Divider(),
                           ],
                         ),
                       ),

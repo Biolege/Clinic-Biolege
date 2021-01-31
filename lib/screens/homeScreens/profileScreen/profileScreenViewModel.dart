@@ -41,6 +41,11 @@ class ProfileScreenViewModel extends FutureViewModel {
   void openClinicEmployeeDetails() =>
       _navigatorService.navigateTo(Routes.employeeProfileScreenView);
 
+  void openShowPatientsDetails() =>
+      _navigatorService.navigateTo(Routes.showPatientsScreenView);
+  void openShowClinicEmployees() =>
+      _navigatorService.navigateTo(Routes.clinicEmployeeListScreenView);
+
   void logOut() async {
     var response = await _dialogService.showConfirmationDialog(
         title: "Do you want to log out ?",

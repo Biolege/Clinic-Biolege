@@ -1235,16 +1235,6 @@ class APIServices {
             .add(foundDoctorDiagnosticCustomer.elementAt(i).toJson());
       }
 
-      // .forEach((docObj) => docObj.visitingDate.forEach((aptDate) {
-      //       if (aptDate.id == appointmentDateObject.id) {
-      //         aptDate = AppointmentDate(
-      //             id: aptDate.id,
-      //             isCompleted: aptDate.isCompleted,
-      //             date:
-      //                 _patientDetailservice.getDoctorsPatientSelectedDate);
-      //       }
-      //       diagnosticCustomerObject.add(docObj.toJson());
-      //     }));
       // _______________________________________________________________________
       requestUriUpdateClinic.headers.addAll({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -1265,9 +1255,6 @@ class APIServices {
       requestUriUpdateDiagnosticCustomer.body =
           jsonEncode({'doctors': diagnosticCustomerObject});
 
-      // print(requestUriUpdateClinic.body);
-      // print(requestUriUpdateDoctor.body);
-      // print(requestUriUpdateDiagnosticCustomer.body);
       // _______________________________________________________________________
       // Sending the request
       var responseClinic = await requestUriUpdateClinic.send();
