@@ -1,9 +1,9 @@
-import 'package:clinicapp/theme/theme.dart';
-import 'package:clinicapp/widgets/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../../../theme/theme.dart';
+import '../../../widgets/animations.dart';
 import '../../../services/services/dataFromApiService.dart';
 import '../../../services/services/helperData_service.dart';
 import '../../../app/locator.dart';
@@ -77,15 +77,15 @@ class AppointmentHomeScreenViewModel extends FutureViewModel {
 
   void refresh() {
     setBusy(true);
-
     // Resetting all the values
     setListType(!listType ? 0 : 1);
     scheduledCustomers = 0;
     completedCustomers = 0;
-    scheduledCustomersForSelectedDoctor.clear();
-    completedCustomersForSelectedDoctor.clear();
+
     temporaryList.clear();
     customersForSelectedDoctor.clear();
+    customerToDisplay.clear();
+    appointmentCorrespondingToCustomers.clear();
 
     DateTime appoinmentScreenDate =
         _doctorAppointmentsDetailservice.getSelectedDateInAppointmentTab;

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
+// import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
-import '../../../../app/router.gr.dart';
 import '../../../../model/clinic.dart';
 import '../../../../model/diagnosticCustomer.dart';
 import '../../../../model/doctor.dart';
-import '../../../../screens/homeScreens/patientAppointmentDetailsScreen/PatientAppointmentDetailsScreenView.dart';
 import '../../../../services/services/dataFromApiService.dart';
 import '../../../../services/services/helperData_service.dart';
 import '../../../../theme/theme.dart';
@@ -16,7 +14,7 @@ import '../../../../widgets/animations.dart';
 class ShowPatientsScreenViewModel extends FutureViewModel {
 // __________________________________________________________________________
   // Locating the Dependencies
-  final NavigationService _navigatorService = locator<NavigationService>();
+  // final NavigationService _navigatorService = locator<NavigationService>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   final PatientDetailsAccountScreen _patientDetailsAccountScreenService =
       locator<PatientDetailsAccountScreen>();
@@ -42,14 +40,14 @@ class ShowPatientsScreenViewModel extends FutureViewModel {
   // __________________________________________________________________________
   // Helper Functions
 
-  void openPatientDetailsView(DiagnosticCustomer dgtcst) {
-    _patientDetailsAccountScreenService
-        .setSelectedDiagnosticCustomerForAppointmentDetails(dgtcst);
-    _navigatorService.navigateTo(PatientAppointmentDetailsScreenView.routeName);
-  }
+  // void openPatientDetailsView(DiagnosticCustomer dgtcst) {
+  //   _patientDetailsAccountScreenService
+  //       .setSelectedDiagnosticCustomerForAppointmentDetails(dgtcst);
+  //   _navigatorService.navigateTo(PatientAppointmentDetailsScreenView.routeName);
+  // }
 
-  void addPatientView() =>
-      _navigatorService.navigateTo(Routes.addCustomerScreenView);
+  // void addPatientView() =>
+  //     _navigatorService.navigateTo(Routes.addCustomerScreenView);
 
   void refresh() {
     setBusy(true);
@@ -94,9 +92,9 @@ class ShowPatientsScreenViewModel extends FutureViewModel {
     });
 
     // Set the selected diagnostic customer in the appointment tab
-    _patientDetailsAccountScreenService
-        .setAppointmentCorrespondingToSelectedCustomers(
-            appointmentCorrespondingToCustomers);
+    // _patientDetailsAccountScreenService
+    //     .setAppointmentCorrespondingToSelectedCustomers(
+    //         appointmentCorrespondingToCustomers);
 
     setBusy(false);
     notifyListeners();

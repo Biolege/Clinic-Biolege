@@ -8,7 +8,7 @@ class ClinicEmployeeListScreenViewModel
     extends FutureViewModel<List<ClinicEmployee>> {
   // __________________________________________________________________________
   // Locating the Dependencies
-  final NavigationService _navigatorService = locator<NavigationService>();
+  // final NavigationService _navigatorService = locator<NavigationService>();
   final DataFromApi _dataFromApiService = locator<DataFromApi>();
   final SnackbarService _snackBarService = locator<SnackbarService>();
 
