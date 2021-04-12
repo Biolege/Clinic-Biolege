@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
 
   # Basic Flutter Dependencies
+  ffi: ^1.0.0
   cupertino_icons: ^1.0.0
   flutter_icons: ^1.1.0
   # Splash Screen
@@ -44,7 +45,7 @@ dependencies:
   validators: ^2.0.1
   pin_code_fields: ^6.0.1
   toggle_switch: ^0.1.8
-  provider: ^4.3.2+2
+  provider:
   shared_preferences: ^0.5.12+4
   sms_autofill: ^1.2.6
   rename: ^1.2.0

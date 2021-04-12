@@ -251,8 +251,8 @@ class Day {
 
   String id;
   String day;
-  int startTime;
-  int endTime;
+  String startTime;
+  String endTime;
 
   factory Day.fromJson(Map<String, dynamic> json) => Day(
         id: json["_id"],

@@ -30,11 +30,14 @@ Padding customSuffixIcon(Icon icon) {
   );
 }
 
-RaisedButton buildOutlineButton(text, function) {
-  return RaisedButton(
-    shape: new RoundedRectangleBorder(
-      borderRadius: new BorderRadius.circular(40.0),
-    ),
+ElevatedButton buildOutlineButton(text, function) {
+  return ElevatedButton(
+    style: ButtonStyle(
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+            new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(40.0),
+        )),
+        backgroundColor: MaterialStateProperty.all<Color>(primaryColor)),
     onPressed: function,
     child: Padding(
       padding: EdgeInsets.all(getProportionateScreenHeight(15)),
@@ -62,11 +65,14 @@ RaisedButton buildOutlineButton(text, function) {
   );
 }
 
-RaisedButton buildOutlineButtonCustomWidget(widget, function) {
-  return RaisedButton(
-    shape: new RoundedRectangleBorder(
-      borderRadius: new BorderRadius.circular(40.0),
-    ),
+ElevatedButton buildOutlineButtonCustomWidget(widget, function) {
+  return ElevatedButton(
+    style: ButtonStyle(
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+            new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(40),
+        )),
+        backgroundColor: MaterialStateProperty.all<Color>(primaryColor)),
     onPressed: function,
     child: Padding(
         padding: EdgeInsets.all(getProportionateScreenHeight(15)),
@@ -74,52 +80,59 @@ RaisedButton buildOutlineButtonCustomWidget(widget, function) {
   );
 }
 
-OutlineButton buildBasicOutlineButton(Widget child, void Function() function) {
-  return OutlineButton(
-      highlightedBorderColor: offWhite1,
-      hoverColor: offWhite2,
-      splashColor: offWhite1,
-      shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(40.0),
-      ),
-      padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(10),
-          horizontal: getProportionateScreenWidth(15)),
+OutlinedButton buildBasicOutlineButton(Widget child, void Function() function) {
+  return OutlinedButton(
+      style: ButtonStyle(
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+              new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(40.0),
+          )),
+          padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+              horizontal: getProportionateScreenWidth(15))),
+          backgroundColor: MaterialStateProperty.all<Color>(offWhite1),
+          overlayColor: MaterialStateProperty.all<Color>(offWhite2)),
       onPressed: () => function(),
       child: child);
 }
 
-OutlineButton buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
+OutlinedButton buildBasicOutlineButtonWithLessPaddingAndRounderCorners(
     Widget child, void Function() function) {
-  return OutlineButton(
-      highlightedBorderColor: offWhite1,
-      hoverColor: offWhite2,
-      splashColor: offWhite1,
-      shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(10.0),
-      ),
-      padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(10),
-          horizontal: getProportionateScreenWidth(5)),
+  return OutlinedButton(
+      style: ButtonStyle(
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+              new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(10.0),
+          )),
+          padding: MaterialStateProperty.all(
+            EdgeInsets.symmetric(
+                vertical: getProportionateScreenHeight(10),
+                horizontal: getProportionateScreenWidth(5)),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(offWhite1),
+          overlayColor: MaterialStateProperty.all<Color>(offWhite2)),
       onPressed: () => function(),
       child: child);
 }
 
-FlatButton
+TextButton
     buildBasicOutlineButtonWithLessPaddingAndRounderCornersWithCustomBackground(
         Widget child, void Function() function, Color bgColor) {
-  return FlatButton(
-      height: 50,
-      minWidth: 200,
-      hoverColor: offWhite2,
-      splashColor: bgColor,
-      color: bgColor,
-      shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(8.0),
-      ),
-      padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(10),
-          horizontal: getProportionateScreenWidth(5)),
+  return TextButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+            new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(8.0),
+        )),
+        padding: MaterialStateProperty.all(
+          EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+              horizontal: getProportionateScreenWidth(5)),
+        ),
+        minimumSize: MaterialStateProperty.all<Size>(Size(100.0, 50.0)),
+        backgroundColor: MaterialStateProperty.all<Color>(offWhite2),
+        overlayColor: MaterialStateProperty.all<Color>(bgColor),
+      ), // color: bgColor,
       onPressed: () => function(),
       child: child);
 }
