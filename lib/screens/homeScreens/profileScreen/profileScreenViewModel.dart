@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/locator.dart';
-import '../../../app/router.gr.dart';
+import '../../../app/router.router.dart';
 import '../../../services/services/auth_service.dart';
 import '../../../services/services/dataFromApiService.dart';
 import '../../../services/services/filePicker_service.dart';

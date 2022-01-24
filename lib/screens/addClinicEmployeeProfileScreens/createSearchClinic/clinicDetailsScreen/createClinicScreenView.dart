@@ -143,19 +143,18 @@ class AddClinicScreenView extends StatelessWidget {
                             1.5,
                             Center(
                               child: ToggleSwitch(
+                                  totalSwitches: 2,
                                   minWidth: SizeConfig.screenWidth / 2.4,
                                   minHeight: getProportionateScreenHeight(40),
                                   fontSize: 12,
                                   initialLabelIndex:
                                       model.getClinicLocationType,
-                                  activeBgColor: offWhite,
+                                  activeBgColor: [offWhite],
                                   activeFgColor: offBlack2,
                                   inactiveBgColor: offWhite1,
                                   inactiveFgColor: offBlack2,
-                                  activeBgColors: [
-                                    Colors.lime,
-                                    Colors.greenAccent
-                                  ],
+                                  activeBgColors: List.from(
+                                      [Colors.lime, Colors.greenAccent]),
                                   labels: [
                                     'Attached to Pharmacy',
                                     'Separate Clinic'

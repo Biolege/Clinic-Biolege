@@ -3,7 +3,6 @@
 // and run the below command
 // flutter pub run build_runner build --delete-conflicting-outputs
 // _____________________________________________________________________________
-import 'package:auto_route/auto_route_annotations.dart';
 import '../screens/homeScreens/profileScreen/clinicEmployeeScreen/clinicEmployeeListScreenView.dart';
 import '../screens/homeScreens/profileScreen/patientsScreen/showPatientsScreenView.dart';
 import '../screens/homeScreens/addCustomerScreens/customerDoctorSelectionScreen/customerDoctorSelectionScreenView.dart';
@@ -40,170 +39,168 @@ import '../screens/homeScreens/homeScreenView.dart';
 import '../screens/welcomeScreen/welcomeScreenView.dart';
 import '../screens/signUpScreens/otpScreen/otpScreenView.dart';
 import '../screens/signUpScreens/phoneNumberScreen/phoneScreenView.dart';
+import 'package:stacked/stacked_annotations.dart';
 
-@MaterialAutoRouter(routes: <AutoRoute>[
+@StackedApp(routes: [
   // ___________________________________________________________________________
-  MaterialRoute(
-    path: Root.routeName,
-    page: Root,
-  ),
+  StackedRoute(path: Root.routeName, page: Root, initial: true),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: OnBoardingScreen.routeName,
     page: OnBoardingScreen,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: PhoneScreenView.routeName,
     page: PhoneScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: OTPScreenView.routeName,
     page: OTPScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: NameScreenView.routeName,
     page: NameScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: GenderScreenView.routeName,
     page: GenderScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: EmailScreenView.routeName,
     page: EmailScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: AddressScreenView.routeName,
     page: AddressScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: RoleSelectScreenView.routeName,
     page: RoleSelectScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: CreateOrSearchClinicScreenView.routeName,
     page: CreateOrSearchClinicScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: SearchClinicScreenView.routeName,
     page: SearchClinicScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: AddClinicScreenView.routeName,
     page: AddClinicScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: AddClinicDescriptionScreenView.routeName,
     page: AddClinicDescriptionScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: AddClinicOwnerDetailsScreenView.routeName,
     page: AddClinicOwnerDetailsScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: ClinicServiceSelectionView.routeName,
     page: ClinicServiceSelectionView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: WelcomeScreenView.routeName,
     page: WelcomeScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: HomeScreenView.routeName,
     page: HomeScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: AppointmentHomeScreenView.routeName,
     page: AppointmentHomeScreenView,
   ),
   // ---------------------------------------------------------------------------
-  MaterialRoute(
+  StackedRoute(
     path: PatientAppointmentDetailsScreenView.routeName,
     page: PatientAppointmentDetailsScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: AddCustomerAddressScreenView.routeName,
     page: AddCustomerAddressScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: ChangeAppointmentDetailsScreenView.routeName,
     page: ChangeAppointmentDetailsScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: AddCustomerScreenView.routeName,
     page: AddCustomerScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: AddPatientNameScreenView.routeName,
     page: AddPatientNameScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: AddCustomerDetailsScreenView.routeName,
     page: AddCustomerDetailsScreenView,
   ),
 
-  MaterialRoute(
+  StackedRoute(
     path: ShowCustomerDetailsSummaryScreen.routeName,
     page: ShowCustomerDetailsSummaryScreen,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: AddBiolegeScreenView.routeName,
     page: AddBiolegeScreenView,
   ),
 
-  MaterialRoute(
+  StackedRoute(
     path: CustomerDoctorSelectionScreenView.routeName,
     page: CustomerDoctorSelectionScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: TimeAndDateSelectionScreenView.routeName,
     page: TimeAndDateSelectionScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: ConfirmScreenView.routeName,
     page: ConfirmScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: DoctorsListScreenView.routeName,
     page: DoctorsListScreenView,
   ),
-  MaterialRoute(
+  StackedRoute(
     path: DoctorsProfileScreenView.routeName,
     page: DoctorsProfileScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: SelectDoctorClinicScreen.routeName,
     page: SelectDoctorClinicScreen,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: ClinicProfileScreenView.routeName,
     page: ClinicProfileScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: EmployeeProfileScreenView.routeName,
     page: EmployeeProfileScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: ShowPatientsScreenView.routeName,
     page: ShowPatientsScreenView,
   ),
   // ___________________________________________________________________________
-  MaterialRoute(
+  StackedRoute(
     path: ClinicEmployeeListScreenView.routeName,
     page: ClinicEmployeeListScreenView,
   ),

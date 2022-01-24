@@ -144,19 +144,20 @@ class AddClinicOwnerDetailsScreenView extends StatelessWidget {
                             1.2,
                             Center(
                               child: ToggleSwitch(
+                                  totalSwitches: 3,
                                   minWidth: SizeConfig.screenWidth / 3.5,
                                   minHeight: getProportionateScreenHeight(40),
                                   fontSize: 12,
                                   initialLabelIndex: model.getOwnerProofType,
-                                  activeBgColor: offWhite,
+                                  activeBgColor: List.from([offWhite]),
                                   activeFgColor: offWhite1,
                                   inactiveBgColor: offWhite1,
                                   inactiveFgColor: offBlack2,
-                                  activeBgColors: [
+                                  activeBgColors: List.from([
                                     Colors.blueGrey,
                                     Colors.blueGrey,
                                     Colors.blueGrey
-                                  ],
+                                  ]),
                                   labels: [
                                     'PAN Card',
                                     'Aadhar Card',

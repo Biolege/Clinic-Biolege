@@ -4,7 +4,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
 import '../../../../services/services/helperData_service.dart';
-import '../../../../app/router.gr.dart';
+import '../../../../app/router.router.dart';
 
 class AddCustomerDetailsScreenViewModel extends BaseViewModel {
   // _________________________________________________________________________

@@ -68,6 +68,7 @@ class RoleSelectScreenView extends StatelessWidget {
                           ),
                           Center(
                             child: ToggleSwitch(
+                                totalSwitches: 3,
                                 iconSize: 12,
                                 fontSize: 12,
                                 minWidth: SizeConfig.screenWidth / 3.5,
@@ -79,15 +80,15 @@ class RoleSelectScreenView extends StatelessWidget {
                                   AntDesign.customerservice,
                                 ],
                                 initialLabelIndex: model.getRole,
-                                activeBgColor: offWhite,
+                                activeBgColor: [offWhite],
                                 activeFgColor: offWhite,
                                 inactiveBgColor: offWhite1,
                                 inactiveFgColor: offBlack2,
-                                activeBgColors: [
+                                activeBgColors: List.from([
                                   Colors.redAccent,
                                   Colors.blue,
                                   Colors.greenAccent
-                                ],
+                                ]),
                                 labels: ['Admin', 'Staff', 'Receiptionist'],
                                 onToggle: (index) => {
                                       index == 0

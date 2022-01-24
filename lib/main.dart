@@ -1,3 +1,4 @@
+import 'package:clinicapp/screens/rootView.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,7 +7,7 @@ import 'services/services/local_storage.dart';
 import 'widgets/dialog.dart';
 import 'screens/splashScreen/splashScreenView.dart';
 import 'theme/theme.dart';
-import 'app/router.gr.dart' as router;
+import 'app/router.router.dart' as router;
 import 'app/locator.dart';
 
 void main() async {
@@ -30,14 +31,16 @@ class MyApp extends StatelessWidget {
     return ThemeBuilder(
       themes: getThemeData(),
       builder: (context, regularTheme, darkTheme, themeMode) => MaterialApp(
-          themeMode: themeMode,
-          darkTheme: darkTheme,
-          theme: regularTheme,
-          debugShowCheckedModeBanner: false,
-          home: SplashScreen(mainLogo: mainLogo, subLogo: subLogo),
-          // initialRoute: Routes.signPageView,
-          navigatorKey: locator<NavigationService>().navigatorKey,
-          onGenerateRoute: router.Router().onGenerateRoute),
+        themeMode: themeMode,
+        darkTheme: darkTheme,
+        theme: regularTheme,
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(mainLogo: mainLogo, subLogo: subLogo),
+        // initialRoute: Routes.signPageView,
+        initialRoute: Root.routeName,
+        navigatorKey: StackedService.navigatorKey,
+        onGenerateRoute: router.StackedRouter().onGenerateRoute,
+      ),
     );
   }
 }

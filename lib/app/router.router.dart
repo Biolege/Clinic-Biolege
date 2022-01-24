@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// AutoRouteGenerator
+// StackedRouterGenerator
 // **************************************************************************
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked/stacked_annotations.dart';
 
 import '../model/doctor.dart';
 import '../screens/addClinicEmployeeProfileScreens/addressScreen/addressScreenView.dart';
@@ -137,7 +138,7 @@ class Routes {
   };
 }
 
-class Router extends RouterBase {
+class StackedRouter extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
@@ -191,133 +192,133 @@ class Router extends RouterBase {
         page: ClinicEmployeeListScreenView),
   ];
   @override
-  Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
-  final _pagesMap = <Type, AutoRouteFactory>{
+  Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
+  final _pagesMap = <Type, StackedRouteFactory>{
     Root: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => Root(),
         settings: data,
       );
     },
     OnBoardingScreen: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => OnBoardingScreen(),
         settings: data,
       );
     },
     PhoneScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => PhoneScreenView(),
         settings: data,
       );
     },
     OTPScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => OTPScreenView(),
         settings: data,
       );
     },
     NameScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => NameScreenView(),
         settings: data,
       );
     },
     GenderScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => GenderScreenView(),
         settings: data,
       );
     },
     EmailScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => EmailScreenView(),
         settings: data,
       );
     },
     AddressScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddressScreenView(),
         settings: data,
       );
     },
     RoleSelectScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => RoleSelectScreenView(),
         settings: data,
       );
     },
     CreateOrSearchClinicScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => CreateOrSearchClinicScreenView(),
         settings: data,
       );
     },
     SearchClinicScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => SearchClinicScreenView(),
         settings: data,
       );
     },
     AddClinicScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddClinicScreenView(),
         settings: data,
       );
     },
     AddClinicDescriptionScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddClinicDescriptionScreenView(),
         settings: data,
       );
     },
     AddClinicOwnerDetailsScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddClinicOwnerDetailsScreenView(),
         settings: data,
       );
     },
     ClinicServiceSelectionView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => ClinicServiceSelectionView(),
         settings: data,
       );
     },
     WelcomeScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => WelcomeScreenView(),
         settings: data,
       );
     },
     HomeScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => HomeScreenView(),
         settings: data,
       );
     },
     AppointmentHomeScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AppointmentHomeScreenView(),
         settings: data,
       );
     },
     PatientAppointmentDetailsScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => PatientAppointmentDetailsScreenView(),
         settings: data,
       );
     },
     AddCustomerAddressScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddCustomerAddressScreenView(),
         settings: data,
       );
     },
     ChangeAppointmentDetailsScreenView: (data) {
-      final args = data.getArgs<ChangeAppointmentDetailsScreenViewArguments>(
+      var args = data.getArgs<ChangeAppointmentDetailsScreenViewArguments>(
         orElse: () => ChangeAppointmentDetailsScreenViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => ChangeAppointmentDetailsScreenView(
           doctor: args.doctor,
           clinicDetails: args.clinicDetails,
@@ -326,46 +327,46 @@ class Router extends RouterBase {
       );
     },
     AddCustomerScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddCustomerScreenView(),
         settings: data,
       );
     },
     AddPatientNameScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddPatientNameScreenView(),
         settings: data,
       );
     },
     AddCustomerDetailsScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddCustomerDetailsScreenView(),
         settings: data,
       );
     },
     ShowCustomerDetailsSummaryScreen: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => ShowCustomerDetailsSummaryScreen(),
         settings: data,
       );
     },
     AddBiolegeScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => AddBiolegeScreenView(),
         settings: data,
       );
     },
     CustomerDoctorSelectionScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => CustomerDoctorSelectionScreenView(),
         settings: data,
       );
     },
     TimeAndDateSelectionScreenView: (data) {
-      final args = data.getArgs<TimeAndDateSelectionScreenViewArguments>(
+      var args = data.getArgs<TimeAndDateSelectionScreenViewArguments>(
         orElse: () => TimeAndDateSelectionScreenViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => TimeAndDateSelectionScreenView(
           doctor: args.doctor,
           clinicDetails: args.clinicDetails,
@@ -374,49 +375,49 @@ class Router extends RouterBase {
       );
     },
     ConfirmScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => ConfirmScreenView(),
         settings: data,
       );
     },
     DoctorsListScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => DoctorsListScreenView(),
         settings: data,
       );
     },
     DoctorsProfileScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => DoctorsProfileScreenView(),
         settings: data,
       );
     },
     SelectDoctorClinicScreen: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => SelectDoctorClinicScreen(),
         settings: data,
       );
     },
     ClinicProfileScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => ClinicProfileScreenView(),
         settings: data,
       );
     },
     EmployeeProfileScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => EmployeeProfileScreenView(),
         settings: data,
       );
     },
     ShowPatientsScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => ShowPatientsScreenView(),
         settings: data,
       );
     },
     ClinicEmployeeListScreenView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<StackedRoute<dynamic>>(
         builder: (context) => ClinicEmployeeListScreenView(),
         settings: data,
       );

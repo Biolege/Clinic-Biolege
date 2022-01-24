@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
-import '../../../../app/router.gr.dart';
+import '../../../../app/router.router.dart';
 import '../../../../services/services/helperData_service.dart';
 
 class AddCustomerScreenViewModel extends BaseViewModel {

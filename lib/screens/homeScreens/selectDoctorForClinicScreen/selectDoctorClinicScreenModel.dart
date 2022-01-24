@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../app/router.gr.dart';
+import '../../../app/router.router.dart';
 import '../../../model/doctor.dart';
 import '../../../app/locator.dart';
 import '../../../services/services/dataFromApiService.dart';
