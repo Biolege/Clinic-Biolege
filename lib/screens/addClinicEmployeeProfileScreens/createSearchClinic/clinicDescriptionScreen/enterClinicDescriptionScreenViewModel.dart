@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
-import '../../../../app/router.gr.dart';
+import '../../../../app/router.router.dart';
 import '../../../../services/services/local_storage.dart';
 import '../../../../services/services/filePicker_service.dart';
 

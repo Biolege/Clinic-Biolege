@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
-import '../../app/router.gr.dart';
+import '../../app/router.router.dart';
 import '../../widgets/dialog.dart';
 import '../../misc/errors/errors.dart';
 import 'local_storage.dart';

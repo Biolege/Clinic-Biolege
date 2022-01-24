@@ -4,7 +4,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../services/services/dataFromApiService.dart';
 import '../services/services/local_storage.dart';
 import '../app/locator.dart';
-import '../app/router.gr.dart';
+import '../app/router.router.dart';
 import '../services/services/auth_service.dart';
 
 class RootViewModel extends BaseViewModel {

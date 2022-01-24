@@ -7,7 +7,7 @@ import '../../../widgets/animations.dart';
 import '../../../services/services/dataFromApiService.dart';
 import '../../../services/services/helperData_service.dart';
 import '../../../app/locator.dart';
-import '../../../app/router.gr.dart';
+import '../../../app/router.router.dart';
 import '../../../model/diagnosticCustomer.dart';
 import '../../../model/doctor.dart';
 import '../../../model/clinic.dart';

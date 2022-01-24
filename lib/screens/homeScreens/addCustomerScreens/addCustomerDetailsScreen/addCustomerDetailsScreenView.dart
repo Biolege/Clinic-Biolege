@@ -54,6 +54,7 @@ class AddCustomerDetailsScreenView extends StatelessWidget {
                               ),
                               Center(
                                 child: ToggleSwitch(
+                                    totalSwitches: 2,
                                     iconSize: 50,
                                     minWidth: getProportionateScreenWidth(120),
                                     minHeight: 50,
@@ -62,14 +63,12 @@ class AddCustomerDetailsScreenView extends StatelessWidget {
                                       Foundation.female_symbol,
                                     ],
                                     initialLabelIndex: 0,
-                                    activeBgColor: offWhite,
+                                    activeBgColor: List.from([offWhite]),
                                     activeFgColor: offWhite,
                                     inactiveBgColor: offWhite,
                                     inactiveFgColor: offBlack2,
-                                    activeBgColors: [
-                                      Colors.blue[300],
-                                      Colors.pink
-                                    ],
+                                    activeBgColors: List.from(
+                                        [Colors.blue[300], Colors.pink]),
                                     labels: ['Male', 'Female'],
                                     onToggle: (index) => {
                                           index == 0
